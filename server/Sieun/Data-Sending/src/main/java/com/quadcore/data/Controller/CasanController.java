@@ -3,43 +3,37 @@ package com.quadcore.data.Controller;
 import com.quadcore.data.Domain.Casan;
 import com.quadcore.data.Repository.CasanRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.core.ApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.MessageHandler;
-import org.springframework.messaging.MessageHeaders;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
-import org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry;
-import org.springframework.messaging.simp.broker.SimpleBrokerMessageHandler;
-import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.*;
 
 
 @EnableScheduling
 @RequiredArgsConstructor
 @CrossOrigin
-@Controller
+@RestController
 public class CasanController {
     private final SimpMessageSendingOperations messagingTemplate;
 
-    //SimpleBrokerMessageHandler messageHandler;
-
-    @Autowired
-    SimpUserRegistry userRegistry;
-
     @Autowired
     private CasanRepository casanRepository;
+
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    RedisTemplate<String, Object> redisTemplate;
+
 
     @GetMapping(path = "/test")
     public @ResponseBody List<Casan> test() {
@@ -49,13 +43,10 @@ public class CasanController {
     }
 
     @PostMapping(path="/add")
-    public void savee() {
+    public void savee(@RequestBody Map<String, Object> m) {
+
         Casan casan = new Casan();
-        casan.setImageUrl("Sdgsdf");
-        UUID u = UUID.randomUUID();
-        casan.setId(u);
-        casan.setDescription("hi this is test.");
-        casan.setPrice(2342);
+        casan.setDesc((String)m.get("desc"));
         casanRepository.save(casan);
     }
 /*
@@ -70,12 +61,18 @@ public class CasanController {
     public Map<String, Object>
 */
 
-    @Scheduled(fixedRate = 1000)
-    public void greeting() {
-        Random rand = new Random();
-        System.out.println("rand: " + rand);
 
-        messagingTemplate.convertAndSend("/topic/message", "rnad~"+rand);
+
+
+    @Scheduled(fixedRate = 5000)
+    public void greeting() {
+        //Random rand = new Random();
+        //System.out.println("rand: " + rand);
+        List<Casan> c= casanRepository.findCasansBy(LocalDate.now(), LocalTime.now().minusSeconds(5));
+        System.out.println(c);
+        //redisTemplate.opsForValue().get("2020-")
+
+        messagingTemplate.convertAndSend("/topic/message", c);
     }
 
     @SubscribeMapping("/pub/topic/message")

@@ -6,6 +6,7 @@ import Manage from './Manage';
 import Login from './Login';
 import Normal from './Normal';
 import Follow from './Followings';
+import SocketCp from './Example';
 
 export default () => (
     <Router>
@@ -16,6 +17,7 @@ export default () => (
       <Route path="/login" component={Login} />
       <Route path="/normal" component={Normal}/>
       <Route path="/follow" component={Follow}/>
+      <Route path="/socket" component={SocketCp} />
       
     </Router>
   )

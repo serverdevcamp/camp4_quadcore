@@ -13,6 +13,7 @@ function Header() {
             &nbsp;&nbsp;&nbsp;&nbsp;
             <Link to="/normal">공용 페이지</Link>
             <Link to="/follow">내 팔로우 보기</Link>
+            <Link to="/socket">소켓테스트</Link>
       </div>
     )
   }

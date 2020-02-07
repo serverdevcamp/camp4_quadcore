@@ -1,0 +1,4 @@
+cdc_enabled: true
+cdc_total_space_in_mb: 4096
+cdc_free_space_check_interval_ms: 250
+cdc_raw_directory: /var/lib/cassandra/cdc_raw
