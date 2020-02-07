@@ -129,4 +129,5 @@ dmypy.json
 .pyre/
 
 # Twitter App Credentials
-twitter-app.credentials.txt
+twitter-app-credentials.txt
+
