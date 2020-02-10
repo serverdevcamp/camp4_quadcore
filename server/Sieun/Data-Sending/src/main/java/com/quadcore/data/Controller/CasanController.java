@@ -34,7 +34,6 @@ public class CasanController {
     @Autowired
     RedisTemplate<String, Object> redisTemplate;
 
-
     @GetMapping(path = "/test")
     public @ResponseBody List<Casan> test() {
         List<Casan> products = new ArrayList<>();
@@ -44,24 +43,28 @@ public class CasanController {
 
     @PostMapping(path="/add")
     public void savee(@RequestBody Map<String, Object> m) {
-
         Casan casan = new Casan();
         casan.setDesc((String)m.get("desc"));
         casanRepository.save(casan);
     }
+
 /*
     @MessageMapping("/chat/message")
     public void chat(String str) {
         messagingTemplate.convertAndSend("/sub/chat/", str+" 아이고야");
     }
- */
+*/
 
 /*
     @GetMapping(path="/search/{keyword}")
     public Map<String, Object>
+
+
+    @GetMapping(path="/data/get20")
+    public List<Casan> li() {
+
+    }
 */
-
-
 
     @Scheduled(fixedRate = 2000)
     public void greeting() {

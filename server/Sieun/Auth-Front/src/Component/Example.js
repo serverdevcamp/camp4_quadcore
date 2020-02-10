@@ -4,7 +4,6 @@ import React from 'react';
 import { Client } from '@stomp/stompjs';
 import cookie from 'react-cookies';
 const headers = {
-    'Content-Type': 'application/json',
     'Authorization': "Bearer " + cookie.load('access-token')
 };
 class SampleComponent extends React.Component {
@@ -50,25 +49,19 @@ class SampleComponent extends React.Component {
 
     this.client.configure({
         
-        brokerURL: 'ws://localhost:8080/ws/websocket',
+        brokerURL: 'ws://localhost:8080/wscn/websocket',
         onConnect: () => {
-          console.log('onConnect');
+          console.log(new Date());
           this.client.subscribe('/topic/message', message => {
             var datas = JSON.parse(message.body);
-            console.log(datas);
-        
               this.setState({
                 data: datas.concat(this.state.data)
               });
-              console.log("state: ");
-              this.state.data.forEach(x => console.log(x));
-            
           });
   
         },
-        beforeConnect: () => {
-          console.log("beforeConnect");
-        },
+
+        connectHeaders : headers,
         // Helps during debugging, remove in production
         debug: (str) => {
           //console.log(new Date(), str);
