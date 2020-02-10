@@ -2,7 +2,11 @@ import React from 'react';
 
 //import * as SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
-
+import cookie from 'react-cookies';
+const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': "Bearer " + cookie.load('access-token')
+};
 class SampleComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -16,6 +20,7 @@ class SampleComponent extends React.Component {
         messages : [],
         test:'',
         serverTime: null,
+        data: []
     };
 }
 
@@ -44,18 +49,25 @@ class SampleComponent extends React.Component {
     //let socket = new SockJS('http://localhost:8089/ws');
 
     this.client.configure({
-        brokerURL: 'ws://localhost:8089/ws/websocket',
+        
+        brokerURL: 'ws://localhost:8080/ws/websocket',
         onConnect: () => {
           console.log('onConnect');
-  
           this.client.subscribe('/topic/message', message => {
-            console.log(message.body);
-            this.setState({serverTime: message.body});
+            var datas = JSON.parse(message.body);
+            console.log(datas);
+        
+              this.setState({
+                data: datas.concat(this.state.data)
+              });
+              console.log("state: ");
+              this.state.data.forEach(x => console.log(x));
+            
           });
   
-          this.client.subscribe('/topic/greetings', message => {
-            alert(message.body);
-          });
+        },
+        beforeConnect: () => {
+          console.log("beforeConnect");
         },
         // Helps during debugging, remove in production
         debug: (str) => {
@@ -80,24 +92,16 @@ class SampleComponent extends React.Component {
 
  
   render() {
+                
+    const ee = this.state.data.map(
+      (dat, index) => {
+              return <div>{dat.desc} <br /></div>
+      });
 
         
     return (
       <div>
-             {/*
-        <SockJsClient url='http://localhost:8089/ws-stomp'
-            topics={['/topic/message']}
-            onMessage={(msg) => { console.log(msg); }}
-            ref={ (client) => { this.clientRef = client }}
-            onConnect={console.log("Connection established!")} 
-            onDisconnect={console.log("Disconnected!")}
-            style={[{width:'100%', height:'100%'}]}
-            />
-         
-        <input name="test" value={this.state.test} onChange={this.handleChange} />
-        <button onClick={this.sendMessage}>보내기</button>
-            */}
-      
+        {ee}
         </div>
     );
   }

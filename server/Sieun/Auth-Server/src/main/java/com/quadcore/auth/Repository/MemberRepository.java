@@ -1,6 +1,7 @@
 package com.quadcore.auth.Repository;
 
 import com.quadcore.auth.Domain.Member;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface MemberRepository extends CrudRepository<Member, Integer> {

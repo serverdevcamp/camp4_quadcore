@@ -188,8 +188,6 @@ public class MainController {
     public Map<String, Object> addNewUser (@RequestBody Member member) {
         String username = member.getUsername();
 
-
-
         Map<String, Object> map = new HashMap<>();
         System.out.println("회원가입요청 아이디: "+username + "비번: " + member.getPassword());
         member.setUsername(username);

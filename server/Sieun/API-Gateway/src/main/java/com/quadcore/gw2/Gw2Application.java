@@ -39,6 +39,8 @@ public class Gw2Application {
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder, JwtRequestFilter jwtRequestFilter) {
         String authServer="http://localhost:8083/";
         String followServer="http://localhost:8086/";
+        String webSocketServer = "ws://localhost:8089/";
+
         return builder.routes()
                 .route("path_route",  r-> r.path("/test")
                         .filters(f -> f
@@ -67,6 +69,13 @@ public class Gw2Application {
                             .filter(jwtRequestFilter.apply(new JwtRequestFilter.Config("ROLE_USER"))
                     ))
                         .uri(authServer)
+                )
+                .route("socket", r->r.path("/ws/**")
+                        .filters(f -> f
+                                .rewritePath("/ws/(?<segment>.*)", "/ws/${segment}")
+                                    //.filter(jwtRequestFilter.apply(new JwtRequestFilter.Config("ROLE_USER")))
+                                )
+                        .uri(webSocketServer)
                 )
                 .route("admin", r->r.path("/admin/**")
                         .filters(f -> f

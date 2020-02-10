@@ -63,20 +63,17 @@ public class CasanController {
 
 
 
-
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 2000)
     public void greeting() {
-        //Random rand = new Random();
-        //System.out.println("rand: " + rand);
-        List<Casan> c= casanRepository.findCasansBy(LocalDate.now(), LocalTime.now().minusSeconds(5));
-        System.out.println(c);
-        //redisTemplate.opsForValue().get("2020-")
-
-        messagingTemplate.convertAndSend("/topic/message", c);
+        List<Casan> c= casanRepository.findCasansBy(LocalDate.now(), LocalTime.now().minusSeconds(2));
+        if (!c.isEmpty()) {
+            messagingTemplate.convertAndSend("/topic/message", c);
+        }
     }
 
     @SubscribeMapping("/pub/topic/message")
     public void whenSubscribe() {
         System.out.println("NEW SUBSCRIBER");
     }
+
 }
