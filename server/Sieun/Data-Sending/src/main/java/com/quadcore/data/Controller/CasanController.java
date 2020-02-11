@@ -1,5 +1,6 @@
 package com.quadcore.data.Controller;
 
+import com.google.gson.Gson;
 import com.quadcore.data.Domain.Casan;
 import com.quadcore.data.Repository.CasanRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +45,9 @@ public class CasanController {
     @PostMapping(path="/add")
     public void savee(@RequestBody Map<String, Object> m) {
         Casan casan = new Casan();
-        casan.setTest1((String)m.get("test1"));
+        Gson gson = new Gson();
+        String t1 = gson.toJson(m.get("test1"), LinkedHashMap.class);
+        casan.setTest1(t1);
         casan.setTest2((String)m.get("test2"));
         casan.setTest3((String)m.get("test3"));
         casanRepository.save(casan);

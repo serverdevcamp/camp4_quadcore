@@ -19,16 +19,35 @@ public class FilterChannelInterceptor implements ChannelInterceptor {
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(message);
-        System.out.println("full message:" + message);
-        LinkedMultiValueMap<String, Object> li =  (LinkedMultiValueMap)headerAccessor.getHeader("nativeHeaders");
-        System.out.println("auth:" + li.get("Authorization"));
-        System.out.println(headerAccessor.getHeader("nativeHeaders").getClass());
-        //System.out.println("presend in serv: " + LocalDateTime.now());
-        if (StompCommand.CONNECT.equals(headerAccessor.getCommand())) {
-            System.out.println("msg: " + "conne");
 
+        System.out.println("full message:" + message);
+        //LinkedMultiValueMap<String, Object> li =  (LinkedMultiValueMap)headerAccessor.getHeader("nativeHeaders");
+
+        System.out.println(headerAccessor.getHeader("nativeHeaders").getClass());
+        //System.out.println("Tttt "+headerAccessor.getNativeHeader("Authorization"));
+        //System.out.println("presend in serv: " + LocalDateTime.now());
+
+        if (StompCommand.CONNECT.equals(headerAccessor.getCommand())) {
+            //System.out.println("msg: " + "conne");
         }
+        headerAccessor.setHeader("stompCommand", StompCommand.ERROR);
+        headerAccessor.setHeader("inpresend", "hee");
+        headerAccessor.setNativeHeader("WHAT", "SDgsd");
         //throw new MessagingException("no permission! ");
+
         return message;
     }
+
+    @Override
+    public Message<?> postReceive(Message<?> message, MessageChannel channel) {
+        StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(message);
+        headerAccessor.setHeader("stompCommand", StompCommand.ERROR);
+        headerAccessor.setHeader("ttt", "what");
+
+        headerAccessor.setNativeHeader("inpostRed", "SDgsd");
+        System.out.println("in postReceive");
+        return message;
+    }
+
+
 }

@@ -49,22 +49,24 @@ class SampleComponent extends React.Component {
 
     this.client.configure({
         
-        brokerURL: 'ws://localhost:8089/wscn/websocket',
-        onConnect: () => {
-          console.log(new Date());
+        brokerURL: 'ws://localhost:8080/wscn/websocket',
+        onConnect: (e) => {
+
+          console.log(e);
           this.client.subscribe('/topic/message', message => {
             var datas = JSON.parse(message.body);
+            console.log(message);
               this.setState({
                 data: datas.concat(this.state.data)
               });
-          });
+          }, {test:" this is t e s t"});
   
         },
 
         connectHeaders : headers,
         // Helps during debugging, remove in production
         debug: (str) => {
-          //console.log(new Date(), str);
+          console.log(new Date(), str);
         }
       });
   
