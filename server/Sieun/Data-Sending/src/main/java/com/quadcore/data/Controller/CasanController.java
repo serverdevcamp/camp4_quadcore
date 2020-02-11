@@ -44,7 +44,9 @@ public class CasanController {
     @PostMapping(path="/add")
     public void savee(@RequestBody Map<String, Object> m) {
         Casan casan = new Casan();
-        casan.setDesc((String)m.get("desc"));
+        casan.setTest1((String)m.get("test1"));
+        casan.setTest2((String)m.get("test2"));
+        casan.setTest3((String)m.get("test3"));
         casanRepository.save(casan);
     }
 

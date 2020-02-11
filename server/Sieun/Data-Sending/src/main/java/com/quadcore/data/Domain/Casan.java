@@ -28,7 +28,9 @@ public class Casan implements Serializable {
     @CassandraType(type = DataType.Name.UUID)
     private UUID id= UUIDs.timeBased();
 
-    private String desc;
+    private String test1;
+    private String test2;
+    private String test3;
 
     @PrimaryKeyColumn(ordinal=1, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
     private LocalTime create_at= LocalTime.now();

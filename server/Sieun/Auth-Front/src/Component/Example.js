@@ -49,7 +49,7 @@ class SampleComponent extends React.Component {
 
     this.client.configure({
         
-        brokerURL: 'ws://localhost:8080/wscn/websocket',
+        brokerURL: 'ws://localhost:8089/wscn/websocket',
         onConnect: () => {
           console.log(new Date());
           this.client.subscribe('/topic/message', message => {
@@ -88,7 +88,11 @@ class SampleComponent extends React.Component {
                 
     const ee = this.state.data.map(
       (dat, index) => {
-              return <div>{dat.desc} <br /></div>
+              return <div>
+              {dat.test1} <br />
+              {dat.test2} < br/>
+              {dat.test3}
+              </div>
       });
 
         
