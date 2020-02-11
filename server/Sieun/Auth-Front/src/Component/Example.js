@@ -54,10 +54,11 @@ class SampleComponent extends React.Component {
           console.log(new Date());
           this.client.subscribe('/topic/message', message => {
             var datas = JSON.parse(message.body);
+            console.log(message);
               this.setState({
                 data: datas.concat(this.state.data)
               });
-          });
+          }, {test:" this is t e s t"});
   
         },
 

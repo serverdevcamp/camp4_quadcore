@@ -26,7 +26,9 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
         System.out.println("URI:" + request.getURI());
 
         HttpServletRequest req = ssreq.getServletRequest();
-        System.out.println(req);
+        System.out.println(req.getHeaderNames());
+
+
         return true;
     }
 }

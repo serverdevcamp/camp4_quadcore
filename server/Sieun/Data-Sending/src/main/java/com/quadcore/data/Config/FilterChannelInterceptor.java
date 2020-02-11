@@ -18,17 +18,8 @@ import java.util.Date;
 public class FilterChannelInterceptor implements ChannelInterceptor {
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
-        StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(message);
-        System.out.println("full message:" + message);
-        LinkedMultiValueMap<String, Object> li =  (LinkedMultiValueMap)headerAccessor.getHeader("nativeHeaders");
-        System.out.println("auth:" + li.get("Authorization"));
-        System.out.println(headerAccessor.getHeader("nativeHeaders").getClass());
-        //System.out.println("presend in serv: " + LocalDateTime.now());
-        if (StompCommand.CONNECT.equals(headerAccessor.getCommand())) {
-            System.out.println("msg: " + "conne");
 
-        }
-        //throw new MessagingException("no permission! ");
         return message;
     }
+
 }
