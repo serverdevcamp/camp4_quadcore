@@ -1,6 +1,7 @@
 package com.quadcore.gw2;
 
 import com.quadcore.gw2.jwt.JwtRequestFilter;
+import com.quadcore.gw2.jwt.WebSocketJwtFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.gateway.handler.RoutePredicateHandlerMapping;
@@ -36,10 +37,10 @@ public class Gw2Application {
 
 
     @Bean
-    public RouteLocator customRouteLocator(RouteLocatorBuilder builder, JwtRequestFilter jwtRequestFilter) {
+    public RouteLocator customRouteLocator(RouteLocatorBuilder builder, JwtRequestFilter jwtRequestFilter, WebSocketJwtFilter webSocketJwtFilter) {
         String authServer="http://localhost:8083/";
         String followServer="http://localhost:8086/";
-        String webSocketServer = "ws://localhost:8089/";
+        String webSocketServer = "ws://localhost:8888/";
         String dataServer = "http://localhost:8089/";
 
         return builder.routes()
@@ -74,18 +75,10 @@ public class Gw2Application {
 
                 .route("socket", r->r.path("/wscn/**") //.and().method("GET")
                         .filters(f -> f
-                                .rewritePath("/ws/(?<segment>.*)", "/ws/${segment}")
-                                //.filter(jwtRequestFilter.apply(new JwtRequestFilter.Config("ROLE_USER")))
-                                )
+                                .rewritePath("/wscn/(?<segment>.*)", "/wscn/${segment}")
+                                .filter(webSocketJwtFilter.apply(new WebSocketJwtFilter.Config("ROLE_USER")))
+                        )
                         .uri(webSocketServer)
-                )
-                .route("data-sending",
-                        r->r.path("/data/**")
-                        .filters(f -> f
-                                .rewritePath("/data/(?<segment>.*)", "/data/${segment}")
-                                .filter(jwtRequestFilter.apply(new JwtRequestFilter.Config("ROLE_USER"))
-                        ))
-                        .uri(dataServer)
                 )
 
                 .route("admin", r->r.path("/admin/**")

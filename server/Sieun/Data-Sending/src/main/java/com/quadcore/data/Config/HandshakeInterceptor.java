@@ -5,10 +5,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.lang.Nullable;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Map;
 
 
@@ -30,5 +32,20 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
 
 
         return true;
+    }
+
+    @Override
+    public void afterHandshake(ServerHttpRequest request,
+                                  ServerHttpResponse response,
+                                  WebSocketHandler wsHandler,
+                                  @Nullable
+                                              Exception exception)  {
+        System.out.println("headers : " +  response.getHeaders());
+        try {
+            System.out.println("bodys : " +  response.getBody());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
     }
 }
