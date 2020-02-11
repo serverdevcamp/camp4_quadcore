@@ -56,7 +56,7 @@ public class WebSocketJwtFilter extends
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
             logger.info("SDfdsgdsgdsf");
-            System.out.println(exchange.getRequest().getHeaders().get("Origin"));
+            System.out.println(exchange.getRequest().getHeaders().get("Upgrade"));
 
                     //.getHeaders().get("Authorization").get(0).substring(7);
                         /*
