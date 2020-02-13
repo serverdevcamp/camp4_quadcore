@@ -5,6 +5,8 @@ const headers = {
     'Content-Type': 'application/json',
     'Authorization': "Bearer " + cookie.load('access-token')
 };
+const ip="20.41.86.4:8080";
+//const ip="localhost:8080";
 const data = {
     accessToken: cookie.load('access-token')
 };
@@ -51,7 +53,7 @@ class Login extends Component {
     */
     findpw = () => {
        
-        axios.post("http://20.41.86.4:8080/auth/getpwmail", {
+        axios.post(`http://${ip}/auth/getpwmail`, {
             username : this.state.username
         }).then(res => {
             if (res.data.errorCode == 10) {
@@ -67,7 +69,7 @@ class Login extends Component {
             'Content-Type': 'application/json',
             'Authorization': "Bearer " + cookie.load('access-token')
         };
-        axios.post("http://20.41.86.4:8080/auth/out", data, {
+        axios.post(`http://${ip}/auth/out`, data, {
             headers: headers
         }).then(res => {
             if (res.data.errorCode == 10) {
@@ -82,7 +84,7 @@ class Login extends Component {
     }
 
     componentDidMount(){
-        axios.post("http://20.41.86.4:8080/auth/name", data, {
+        axios.post(`http://${ip}/auth/name`, data, {
             headers: headers
            }).then(res => {
             console.log(res);
@@ -109,7 +111,7 @@ class Login extends Component {
 
     handleLogin = (e) => {
         e.preventDefault();
-        axios.post("http://localhost:8080/auth/login",
+        axios.post(`http://${ip}/auth/login`,
             {
                 username: this.state.username,
                 password: this.state.password
@@ -118,8 +120,9 @@ class Login extends Component {
             .then(res => {
                 console.log(res);
                 if (res.data.errorCode == 10) {
-                    cookie.save('access-token', res.data.accessToken, { path: '/' })
-                    cookie.save('refresh-token', res.data.refreshToken, { path: '/' })
+                    cookie.save('access-token', res.data.accessToken, { path: '/' });
+                    cookie.save('refresh-token', res.data.refreshToken, { path: '/' });
+                    cookie.save('user-name', this.state.username);
                     window.location.reload();
                 } else {
                     alert("로그인불가능");

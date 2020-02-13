@@ -18,4 +18,8 @@ public interface CasanRepository extends CrudRepository<Casan, UUID> {
 
     @Query("SELECT * FROM examples WHERE test2=:keyword ALLOW FILTERING")
     public List<Casan> findCasansBy(@Param("keyword") String keyword);
+
+    @Query("SELECT * FROM examples WHERE date=:date AND create_at > :time AND test2=:keyword ALLOW FILTERING")
+    public List<Casan> findCasansBy(@Param("date") LocalDate date, @Param("time") LocalTime time, @Param("keyword") String keyword);
+
 }

@@ -25,7 +25,6 @@ import java.util.concurrent.TimeUnit;
 
 @EnableScheduling
 @RequiredArgsConstructor
-@CrossOrigin
 @RestController
 public class CasanController {
     private final SimpMessageSendingOperations messagingTemplate;
@@ -125,7 +124,7 @@ public class CasanController {
         Set hm = stringRedisTemplate.opsForSet().members("search-keywords");
         for (Object s: hm) {
 
-            List<Casan> c= casanRepository.findCasansBy((String)s);
+            List<Casan> c= casanRepository.findCasansBy(LocalDate.now(), LocalTime.now().minusSeconds(2), (String)s);
             if (!c.isEmpty()) {
                // System.out.println("not empty key: " + s + "result: \n" + c);
                 messagingTemplate.convertAndSend("/topic/" + s, c);

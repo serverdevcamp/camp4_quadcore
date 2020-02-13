@@ -33,7 +33,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/wscn").addInterceptors(handshakeInterceptor()).setAllowedOrigins("*").withSockJS();
+        registry.addEndpoint("/wscn").addInterceptors(handshakeInterceptor()).setAllowedOrigins("*").withSockJS(); //
     }
 
     /*
