@@ -6,8 +6,8 @@ import cookie from 'react-cookies';
 const headers = {
     'Authorization': "Bearer " + cookie.load('access-token')
 };
-//const ip="localhost:8080";
-const ip = "20.41.86.4:8080";
+const ip="localhost:8080";
+//const ip = "20.41.86.4:8080";
 class SampleComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +16,6 @@ class SampleComponent extends React.Component {
     this.randomUserId = "Sdgsdfdsf";
     this.sendURL = "/message";
     
-    this.client = new Client();
     this.state = {
       accessToken: cookie.load('access-token'),
       refreshToken: cookie.load('refresh-token'),
@@ -82,6 +81,7 @@ class SampleComponent extends React.Component {
   }
   connectSocket = (e) => {
 
+    this.client = new Client();
     this.client.configure({
         
         brokerURL: `ws://${ip}/wscn/websocket?username=tlatldms&token=${cookie.load('socket-token')}`,
@@ -90,10 +90,9 @@ class SampleComponent extends React.Component {
      
         },
 
-        connectHeaders : headers,
         // Helps during debugging, remove in production
         debug: (str) => {
-          //console.log(new Date(), str);
+          console.log(new Date(), str);
         }
       });
   
@@ -112,6 +111,7 @@ class SampleComponent extends React.Component {
         }
     }).catch(e => {
         console.log(e);
+        console.log("errrororrr");
     })  
   }
 
