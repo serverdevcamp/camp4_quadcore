@@ -17,7 +17,7 @@ class Followings extends Component {
     }
 
     componentDidMount(){
-        axios.get("http://localhost:8080/follow/flist/tlatldms", {
+        axios.get("http://20.41.86.4:8080/follow/flist/tlatldms", {
             headers: headers
            }).then(res => {
             console.log(res);

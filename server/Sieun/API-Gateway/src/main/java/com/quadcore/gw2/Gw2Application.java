@@ -41,7 +41,7 @@ public class Gw2Application {
         String authServer="http://localhost:8083/";
         String followServer="http://localhost:8086/";
         String webSocketServer = "ws://localhost:8888/";
-        String dataServer = "http://localhost:8089/";
+        String dataServer = "http://localhost:8888/";
 
         return builder.routes()
                 .route("path_route",  r-> r.path("/test")
@@ -72,15 +72,20 @@ public class Gw2Application {
                     ))
                         .uri(authServer)
                 )
+                .route("data", r->r.path("/data/**")
+                        .filters(f -> f
+                                .rewritePath("/data/(?<segment>.*)", "/data/${segment}")
+                                .filter(jwtRequestFilter.apply(new JwtRequestFilter.Config("ROLE_USER"))
+                                ))
+                        .uri(dataServer)
+                )
 
                 .route("socket", r->r.path("/wscn/**") //.and().method("GET")
                         .filters(f -> f
                                 .rewritePath("/wscn/(?<segment>.*)", "/wscn/${segment}")
-                                .filter(webSocketJwtFilter.apply(new WebSocketJwtFilter.Config("ROLE_USER")))
                         )
                         .uri(webSocketServer)
                 )
-
                 .route("admin", r->r.path("/admin/**")
                         .filters(f -> f
                                 .rewritePath("/admin/(?<segment>.*)", "/admin/${segment}")

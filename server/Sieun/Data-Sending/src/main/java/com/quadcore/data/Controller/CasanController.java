@@ -25,7 +25,6 @@ import java.util.concurrent.TimeUnit;
 
 @EnableScheduling
 @RequiredArgsConstructor
-@CrossOrigin
 @RestController
 public class CasanController {
     private final SimpMessageSendingOperations messagingTemplate;
@@ -39,16 +38,15 @@ public class CasanController {
     @Autowired
     RedisTemplate<String, Object> redisTemplate;
 
-    @GetMapping(path = "/test")
+    @GetMapping(path = "/data/test")
     public @ResponseBody List<Casan> test() {
         List<Casan> products = new ArrayList<>();
         casanRepository.findAll().forEach(products::add); //fun with Java 8
         return products;
     }
 
-    @PostMapping(path="/add")
+    @PostMapping(path="/data/add")
     public void savee(@RequestBody Map<String, Object> m) {
-        System.out.println(redisTemplate);
         Casan casan = new Casan();
         Gson gson = new Gson();
         String t1 = gson.toJson(m.get("test1"), LinkedHashMap.class);
@@ -58,23 +56,36 @@ public class CasanController {
         casanRepository.save(casan);
     }
 
+
+
+
+    @GetMapping(path="/data/search/{keyword}")
+    public Map<String, Object> gotKeyword(@PathVariable("keyword") String keyword) {
+        stringRedisTemplate.opsForSet().add("search-keywords", keyword);
+        List<Casan> c = get20(keyword);
+        Map<String, Object> map = new HashMap<>();
+        map.put("data", c);
+        map.put("errorCode", 10);
+        return map;
+    }
+
+
+
+
+
+    public List<Casan> get20(String keyword) {
+        List<Casan> c = casanRepository.findCasansBy(keyword);
+        return c;
+    }
+
+
 /*
-    @MessageMapping("/chat/message")
-    public void chat(String str) {
-        messagingTemplate.convertAndSend("/sub/chat/", str+" 아이고야");
+    @GetMapping(path="/data/get20/{keyword}")
+    public List<Casan> li(@PathVariable("keyword") String keyword) {
+
     }
 */
 
-/*
-    @GetMapping(path="/search/{keyword}")
-    public Map<String, Object>
-
-
-    @GetMapping(path="/data/get20")
-    public List<Casan> li() {
-
-    }
-*/
 
 
     public String getSHA256Token(String toHash){
@@ -110,11 +121,21 @@ public class CasanController {
 
     @Scheduled(fixedRate = 2000)
     public void greeting() {
-        List<Casan> c= casanRepository.findCasansBy(LocalDate.now(), LocalTime.now().minusSeconds(2));
-        if (!c.isEmpty()) {
-            messagingTemplate.convertAndSend("/topic/message", c);
+        Set hm = stringRedisTemplate.opsForSet().members("search-keywords");
+        for (Object s: hm) {
+
+            List<Casan> c= casanRepository.findCasansBy(LocalDate.now(), LocalTime.now().minusSeconds(2), (String)s);
+            if (!c.isEmpty()) {
+               // System.out.println("not empty key: " + s + "result: \n" + c);
+                messagingTemplate.convertAndSend("/topic/" + s, c);
+
+            }
         }
+
     }
+
+
+
 
     @SubscribeMapping("/pub/topic/message")
     public void whenSubscribe() {
