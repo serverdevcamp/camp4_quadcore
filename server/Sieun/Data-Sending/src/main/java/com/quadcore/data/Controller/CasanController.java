@@ -14,9 +14,13 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 
 @EnableScheduling
@@ -44,6 +48,7 @@ public class CasanController {
 
     @PostMapping(path="/add")
     public void savee(@RequestBody Map<String, Object> m) {
+        System.out.println(redisTemplate);
         Casan casan = new Casan();
         Gson gson = new Gson();
         String t1 = gson.toJson(m.get("test1"), LinkedHashMap.class);
@@ -70,6 +75,38 @@ public class CasanController {
 
     }
 */
+
+
+    public String getSHA256Token(String toHash){
+        String generatedToken = null;
+        String salt = String.valueOf(new Random().nextLong());
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(salt.getBytes(StandardCharsets.UTF_8));
+            byte[] bytes = md.digest(toHash.getBytes(StandardCharsets.UTF_8));
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++){
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedToken = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return generatedToken;
+    }
+
+    @GetMapping(path="/data/token/{username}")
+    public Map<String, Object> getSocketToken(@PathVariable("username") String username) {
+        String token = getSHA256Token(username);
+        System.out.println(token);
+        Map<String,Object> map = new HashMap<>();
+        map.put("errorCode", 10);
+        stringRedisTemplate.opsForValue().set("st-"+username, token);
+        stringRedisTemplate.expire("st-"+username, 30*1000, TimeUnit.MILLISECONDS); // for 30 sec
+
+        map.put("socketToken", token);
+        return map;
+    }
 
     @Scheduled(fixedRate = 2000)
     public void greeting() {

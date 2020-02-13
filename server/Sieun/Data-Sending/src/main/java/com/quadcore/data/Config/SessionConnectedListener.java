@@ -30,5 +30,4 @@ public class SessionConnectedListener implements ApplicationListener<SessionConn
         // Not sure if it's sending...?
         template.convertAndSend("/topic/message", "New user logged in");
     }
-
 }

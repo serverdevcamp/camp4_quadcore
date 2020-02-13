@@ -51,7 +51,7 @@ class Login extends Component {
     */
     findpw = () => {
        
-        axios.post("http://http://localhost:8080/auth/getpwmail", {
+        axios.post("http://localhost:8080/auth/getpwmail", {
             username : this.state.username
         }).then(res => {
             if (res.data.errorCode == 10) {

@@ -115,7 +115,7 @@ public class MainController {
             htmlStr ="안녕하세요 " + username + "님. 비밀번호 변경하를 눌러주세요"
                     + "<a href='http://"+myIp+":8080" + "/auth/vfpwemail?username="+ username +"&key="+hash+"'>비밀번호 변경하기</a></p>";
         }
-        stringRedisTemplate.expire(redisKey, 10*24*1000, TimeUnit.MILLISECONDS); // for one day
+        stringRedisTemplate.expire(redisKey, 60*24*60*1000, TimeUnit.MILLISECONDS); // for one day
 
         message.setText(htmlStr, "UTF-8", "html");
         javaMailSender.send(message);
