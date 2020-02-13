@@ -9,6 +9,8 @@ import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.WebSocketHandler;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 
@@ -28,15 +30,14 @@ public final class HandshakeInterceptor implements org.springframework.web.socke
         System.out.println("URI:" + request.getURI());
         System.out.println("before: " + stringRedisTemplate);
 
-/*
+
         HttpServletRequest req = ssreq.getServletRequest();
         String username = req.getParameter("username");
         String token = req.getParameter("token");
         System.out.println("token param : " + token);
-        //System.out.println(redisTemplate);
-        System.out.println(stringRedisTemplate);
+
         System.out.println(stringRedisTemplate.opsForValue().get("hi"));
-        System.out.println("tok : " + (String) stringRedisTemplate.opsForValue().get("st-" + username));
+        System.out.println("tok : " + (String)stringRedisTemplate.opsForValue().get("st-" + username));
 
         try {
             String tok = (String) stringRedisTemplate.opsForValue().get("st-" + username);
@@ -45,9 +46,7 @@ public final class HandshakeInterceptor implements org.springframework.web.socke
         } catch (NullPointerException e) {
             return false;
         }
- */
 
-        return true;
     }
     @Override
     public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception exception) {

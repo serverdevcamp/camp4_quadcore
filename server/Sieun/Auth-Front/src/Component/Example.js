@@ -51,7 +51,7 @@ class SampleComponent extends React.Component {
     this.client = new Client();
     this.client.configure({
         
-        brokerURL: `ws://localhost:8888/wscn/websocket?username=tlatldms&token=${cookie.load('socket-token')}`,
+        brokerURL: `ws://localhost:8080/wscn/websocket?username=tlatldms&token=${cookie.load('socket-token')}`,
         onConnect: (e) => {
           console.log(e);
           this.client.subscribe('/topic/message', message => {
