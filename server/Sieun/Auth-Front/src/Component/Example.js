@@ -46,6 +46,11 @@ class SampleComponent extends React.Component {
     })
   }
 
+  subtest = (e) => {
+    this.client.subscribe('/topic/test', message => {
+      console.log(message);
+    });
+  }
   connectSocket = (e) => {
 
     this.client = new Client();
@@ -54,13 +59,16 @@ class SampleComponent extends React.Component {
         brokerURL: `ws://localhost:8080/wscn/websocket?username=tlatldms&token=${cookie.load('socket-token')}`,
         onConnect: (e) => {
           console.log(e);
-          this.client.subscribe('/topic/message', message => {
+          this.client.subscribe('/topic/test', test => {
+            console.log("message: " + test.body);
+            /*
             var datas = JSON.parse(message.body);
             //console.log(message);
               this.setState({
                 data: datas.concat(this.state.data)
               });
-          }, {test:" this is t e s t"});
+              */
+          });
          
         },
 
@@ -98,16 +106,15 @@ class SampleComponent extends React.Component {
                 
     const ee = this.state.data.map(
       (dat, index) => {
-        var tt = JSON.parse(dat.test1);      
-        return <div key={index}>
-          {tt.user.name}
-        </div>
+        //var tt = JSON.parse(dat.test1);      
+        console.log(dat);
       });
 
         
     return (
       <div>
-        {ee}
+       
+        <button onClick={this.subtest}>구독 테스트</button>
         </div>
     );
   }

@@ -51,7 +51,7 @@ class Login extends Component {
     */
     findpw = () => {
        
-        axios.post("http://localhost:8080/auth/getpwmail", {
+        axios.post("http://20.41.86.4:8080/auth/getpwmail", {
             username : this.state.username
         }).then(res => {
             if (res.data.errorCode == 10) {
@@ -67,7 +67,7 @@ class Login extends Component {
             'Content-Type': 'application/json',
             'Authorization': "Bearer " + cookie.load('access-token')
         };
-        axios.post("http://localhost:8080/auth/out", data, {
+        axios.post("http://20.41.86.4:8080/auth/out", data, {
             headers: headers
         }).then(res => {
             if (res.data.errorCode == 10) {
@@ -82,7 +82,7 @@ class Login extends Component {
     }
 
     componentDidMount(){
-        axios.post("http://localhost:8080/auth/name", data, {
+        axios.post("http://20.41.86.4:8080/auth/name", data, {
             headers: headers
            }).then(res => {
             console.log(res);
