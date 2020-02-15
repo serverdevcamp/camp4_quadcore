@@ -6,15 +6,11 @@ import cookie from 'react-cookies';
 const headers = {
     'Authorization': "Bearer " + cookie.load('access-token')
 };
-const ip="localhost:8080";
+const ip="localhost:8082";
 //const ip = "20.41.86.4:8080";
 class SampleComponent extends React.Component {
   constructor(props) {
     super(props);
-
-    this.randomUserName ="ASdgsdf";
-    this.randomUserId = "Sdgsdfdsf";
-    this.sendURL = "/message";
     
     this.state = {
       accessToken: cookie.load('access-token'),
@@ -124,7 +120,8 @@ class SampleComponent extends React.Component {
                 
     const ee = this.state.data.map(
       (dat, index) => {
-        return <div>{dat.test2} {dat.test3}</div>
+        console.log(dat);
+        return <div>{dat.test2} {dat.entities}</div>
       });
 
         

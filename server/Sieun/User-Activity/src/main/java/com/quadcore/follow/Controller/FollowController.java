@@ -33,7 +33,7 @@ public class FollowController {
     public Map<String, Object> follow(@RequestBody Map<String, String> m) {
         String member = m.get("username");
         String tweetMember = m.get("tweetUsername");
-        logger.info(member + tweetMember);
+        //logger.info(member + tweetMember);
         memberService.updateTweetMembers(member, tweetMember);
         Map<String, Object> map = new HashMap<>();
         map.put("errorCode", 10);
@@ -43,7 +43,7 @@ public class FollowController {
 
     @GetMapping(path="/follow/flist/{username}")
     public Map<String, Object> getall(@PathVariable("username") String member) {
-        logger.info("member: " + member);
+        //logger.info("member: " + member);
         ArrayList<String> followings =memberService.findMemberByUsername(member).getTweetMembers();
         Map<String, Object> map = new HashMap<>();
         map.put("errorCode", 10);
