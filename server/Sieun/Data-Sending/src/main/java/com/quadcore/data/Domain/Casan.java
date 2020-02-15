@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
@@ -30,7 +31,7 @@ public class Casan implements Serializable {
 
     private String test1;
     private String test2;
-    private String test3;
+    private ArrayList<String> entities;
 
     @PrimaryKeyColumn(ordinal=1, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
     private LocalTime create_at= LocalTime.now();

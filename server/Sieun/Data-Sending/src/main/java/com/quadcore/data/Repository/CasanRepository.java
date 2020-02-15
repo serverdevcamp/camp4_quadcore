@@ -19,7 +19,16 @@ public interface CasanRepository extends CrudRepository<Casan, UUID> {
     @Query("SELECT * FROM examples WHERE test2=:keyword ALLOW FILTERING")
     public List<Casan> findCasansBy(@Param("keyword") String keyword);
 
+
+    // FOR REAL_TIME Socket: polling 2 secs
     @Query("SELECT * FROM examples WHERE date=:date AND create_at > :time AND test2=:keyword ALLOW FILTERING")
     public List<Casan> findCasansBy(@Param("date") LocalDate date, @Param("time") LocalTime time, @Param("keyword") String keyword);
+
+
+
+    //FOR SEARCH past data. before given date and time + limit 20
+    @Query("SELECT * FROM examples WHERE date<=:date AND create_at < :time AND entities CONTAINS :keyword limit 20 ALLOW FILTERING")
+    public List<Casan> findCasansByEntities(@Param("date") LocalDate date, @Param("time") LocalTime time, @Param("keyword") String keyword);
+//SELECT * FROM examples WHERE date='2020-02-15' AND create_at < '17:21:48.810' AND entities CONTAINS 'asd' limit 2 ALLOW FILTERING;
 
 }

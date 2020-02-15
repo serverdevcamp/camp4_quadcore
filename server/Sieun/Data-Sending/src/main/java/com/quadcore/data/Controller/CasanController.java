@@ -51,7 +51,7 @@ public class CasanController {
         String t1 = gson.toJson(m.get("test1"), LinkedHashMap.class);
         casan.setTest1(t1);
         casan.setTest2((String)m.get("test2"));
-        casan.setTest3((String)m.get("test3"));
+        casan.setEntities((ArrayList)m.get("entities"));
         casanRepository.save(casan);
     }
 
@@ -73,17 +73,19 @@ public class CasanController {
 
 
     public List<Casan> get20(String keyword) {
-        List<Casan> c = casanRepository.findCasansBy(keyword);
+        LocalDate date= LocalDate.now();
+        LocalTime time = LocalTime.now();
+        List<Casan> c = casanRepository.findCasansByEntities(date, time, keyword);
         return c;
     }
 
 
-/*
+
     @GetMapping(path="/data/get20/{keyword}")
     public List<Casan> li(@PathVariable("keyword") String keyword) {
-
+        return get20(keyword);
     }
-*/
+
 
 
 
@@ -122,7 +124,6 @@ public class CasanController {
     public void greeting() {
         Set hm = stringRedisTemplate.opsForSet().members("search-keywords");
         for (Object s: hm) {
-
             List<Casan> c= casanRepository.findCasansBy(LocalDate.now(), LocalTime.now().minusSeconds(2), (String)s);
             if (!c.isEmpty()) {
                // System.out.println("not empty key: " + s + "result: \n" + c);
