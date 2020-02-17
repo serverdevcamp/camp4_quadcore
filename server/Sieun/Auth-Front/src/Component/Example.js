@@ -6,7 +6,7 @@ import cookie from 'react-cookies';
 const headers = {
     'Authorization': "Bearer " + cookie.load('access-token')
 };
-const ip="localhost:8888";
+const ip="localhost:8082";
 //const ip = "20.41.86.4:8888";
 class SampleComponent extends React.Component {
   constructor(props) {

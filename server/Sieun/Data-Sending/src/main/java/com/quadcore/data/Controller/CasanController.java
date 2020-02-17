@@ -26,7 +26,6 @@ import java.util.concurrent.TimeUnit;
 @CrossOrigin
 @EnableScheduling
 @RequiredArgsConstructor
-@RestController
 public class CasanController {
     private final SimpMessageSendingOperations messagingTemplate;
 
