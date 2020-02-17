@@ -13,15 +13,17 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-
+@CrossOrigin
 @EnableScheduling
 @RequiredArgsConstructor
 @RestController
@@ -49,9 +51,7 @@ public class CasanController {
         Casan casan = new Casan();
         Gson gson = new Gson();
         String t1 = gson.toJson(m.get("test1"), LinkedHashMap.class);
-        casan.setTest1(t1);
-        casan.setTest2((String)m.get("test2"));
-        casan.setEntities((ArrayList)m.get("entities"));
+        casan.setHashtags((ArrayList)m.get("hashtags"));
         casanRepository.save(casan);
     }
 
@@ -73,9 +73,10 @@ public class CasanController {
 
 
     public List<Casan> get20(String keyword) {
-        LocalDate date= LocalDate.now();
-        LocalTime time = LocalTime.now();
-        List<Casan> c = casanRepository.findCasansByEntities(date, time, keyword);
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        //System.out.println("timestamp: " + timestamp.getTime());
+        List<Casan> c= casanRepository.findCasansByTimestamp(LocalDate.now().toString(),timestamp.getTime()*1000, keyword);
         return c;
     }
 
@@ -110,7 +111,6 @@ public class CasanController {
     @GetMapping(path="/data/token/{username}")
     public Map<String, Object> getSocketToken(@PathVariable("username") String username) {
         String token = getSHA256Token(username);
-        System.out.println(token);
         Map<String,Object> map = new HashMap<>();
         map.put("errorCode", 10);
         stringRedisTemplate.opsForValue().set("st-"+username, token);
@@ -120,17 +120,30 @@ public class CasanController {
         return map;
     }
 
+
     @Scheduled(fixedRate = 2000)
     public void greeting() {
         Set hm = stringRedisTemplate.opsForSet().members("search-keywords");
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis() - (2 * 1000));
+        /*
+        List<Casan> c= casanRepository.findCasansByDate(LocalDate.now().toString(),(Long)(timestamp.getTime()));
+        messagingTemplate.convertAndSend("/topic/test", c);
+         */
+        System.out.println("timestamp: " + timestamp.getTime()*1000);
+
         for (Object s: hm) {
-            List<Casan> c= casanRepository.findCasansBy(LocalDate.now(), LocalTime.now().minusSeconds(2), (String)s);
+            List<Casan> c= casanRepository.findCasansByDate(LocalDate.now().toString(),timestamp.getTime()*1000, (String)s);
+
+            //List<Casan> c= casanRepository.findCasansByEntities(LocalDate.now(), LocalTime.now().minusSeconds(2), (String)s);
             if (!c.isEmpty()) {
+                System.out.println(c);
                // System.out.println("not empty key: " + s + "result: \n" + c);
                 messagingTemplate.convertAndSend("/topic/" + s, c);
 
             }
         }
+
+
 
     }
 

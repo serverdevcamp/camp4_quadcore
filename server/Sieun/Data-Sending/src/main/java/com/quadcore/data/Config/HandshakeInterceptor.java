@@ -26,8 +26,8 @@ public final class HandshakeInterceptor implements org.springframework.web.socke
         String username = req.getParameter("username");
         String userToken = req.getParameter("token");
 
-        System.out.println(stringRedisTemplate.opsForValue().get("hi"));
-        System.out.println("tok : " + (String)stringRedisTemplate.opsForValue().get("st-" + username));
+        //System.out.println(stringRedisTemplate.opsForValue().get("hi"));
+        //System.out.println("tok : " + (String)stringRedisTemplate.opsForValue().get("st-" + username));
         try {
             String tokenInRedis = (String) stringRedisTemplate.opsForValue().get("st-" + username);
             if (tokenInRedis.equals(userToken)) {

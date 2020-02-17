@@ -44,11 +44,6 @@ public class Gw2Application {
         String dataServer = "http://localhost:8888/";
 
         return builder.routes()
-                .route("path_route",  r-> r.path("/test")
-                        .filters(f -> f
-                                .addRequestHeader("Hello", "World")
-                                .rewritePath("/test", "/"))
-                                .uri("http://localhost:8083/"))
                 .route("auth",  r-> r.path("/auth/**")
                         .filters(f -> f
                                 .rewritePath("/auth/(?<segment>.*)", "/auth/${segment}")
