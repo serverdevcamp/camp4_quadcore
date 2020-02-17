@@ -54,30 +54,79 @@ class SampleComponent extends React.Component {
   }
 
   search = () => {
+ 
     this.client.subscribe(`/topic/${this.state.sub}`, message => {
       console.log(new Date());
-       
       var datas = JSON.parse(message.body);
       console.log(datas);
       this.setState({
         data: datas.concat(this.state.data)
       });
-
     });
-
-    axios.get(`http://${ip}/data/search/${this.state.sub}`, {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    
+    if(dd<10) {
+        dd='0'+dd
+    } 
+    if(mm<10) {
+        mm='0'+mm
+    } 
+    var td = yyyy+'-'+mm+'-'+dd;
+    console.log(td);
+    console.log(encodeURIComponent(this.state.sub));
+    axios.get(`http://${ip}/data/search/${encodeURIComponent(this.state.sub)}/${td}/${(today.getTime())*1000}`, {
       headers: {
         "Authorization" : "Bearer " + cookie.load('access-token')
       }
     }).then(res => {
         if (res.data.errorCode == 10) {
           console.log("search zsuccess\n");
-          console.log(res.data.data);
+          var arr = Array.from(res.data.data);
+          console.log("arrr: ", arr);
+          console.log(this.state.sub);
+          if (arr.length) {
+            cookie.save('last-time-'+encodeURIComponent(this.state.sub), arr[arr.length-1].timestamp);
+            cookie.save('last-date-'+encodeURIComponent(this.state.sub), arr[arr.length-1].date);
+          }
+         
         }
     }).catch(e => {
         console.log(e);
     }) 
   }
+
+
+  get20=(keyword)=> {
+    if (cookie.load('last-time-'+encodeURIComponent(this.state.sub))) {
+      axios.get(`http://${ip}/data/get20/${encodeURIComponent(keyword)}/${cookie.load('last-date-'+encodeURIComponent(this.state.sub))}/${cookie.load('last-time-'+encodeURIComponent(this.state.sub))}`, {
+        headers: {
+          "Authorization" : "Bearer " + cookie.load('access-token')
+        }
+      }).then(res => {
+          if (res.data.errorCode == 10) {
+            console.log("get20 success\n");
+            var arr = res.data.data;
+            console.log(arr);
+            if (arr.length) {
+              cookie.save('last-time-'+encodeURIComponent(this.state.sub), arr[arr.length-1].timestamp);
+              cookie.save('last-date-'+encodeURIComponent(this.state.sub), arr[arr.length-1].date);
+            } else {
+              alert("없음");
+            }
+           }
+      }).catch(e => {
+          console.log(e);
+      })  
+    } else {
+      alert("없음");
+    }
+  }
+
+  
+
   connectSocket = (e) => {
 
     this.client = new Client();
@@ -87,6 +136,9 @@ class SampleComponent extends React.Component {
         onConnect: (e) => {
           console.log("connect success! \n" + e);
      
+        },
+        onDisconnect: (e) => {
+          console.log("disconnected");
         },
 
         // Helps during debugging, remove in production
@@ -133,6 +185,7 @@ class SampleComponent extends React.Component {
         
         <input onChange={this.handleChange} name="sub"/>
         <button onClick={this.search}>구독 테스트</button>
+        <button onClick={()=>this.get20(this.state.sub)}>과거20개</button>
         <br/>
         <h5>*USAGE: socket CONNECT는 자동으로 합니다. 이 위의 입력 창에 구독할 keyword를 쓰고 구독 테스트 버튼을 누르면 구독 시작입니다. 새로고침시 사라지며 현재 구독 취소는 없습니다. 
           <br />

@@ -58,10 +58,11 @@ public class CasanController {
 
 
 
-    @GetMapping(path="/data/search/{keyword}")
-    public Map<String, Object> gotKeyword(@PathVariable("keyword") String keyword) {
+    @GetMapping(path="/data/search/{keyword}/{date}/{time}")
+    public Map<String, Object> gotKeyword(@PathVariable("keyword") String keyword, @PathVariable String date, @PathVariable Long time) {
+        System.out.println("keyword subscribed : "  + keyword);
         stringRedisTemplate.opsForSet().add("search-keywords", keyword);
-        List<Casan> c = get20(keyword);
+        List<Casan> c = get20(keyword, date, time);
         Map<String, Object> map = new HashMap<>();
         map.put("data", c);
         map.put("errorCode", 10);
@@ -70,21 +71,22 @@ public class CasanController {
 
 
 
-
-
-    public List<Casan> get20(String keyword) {
-
+    public List<Casan> get20(String keyword, String date, Long time) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         //System.out.println("timestamp: " + timestamp.getTime());
-        List<Casan> c= casanRepository.findCasansByTimestamp(LocalDate.now().toString(),timestamp.getTime()*1000, keyword);
+        List<Casan> c= casanRepository.findCasansByTimestamp(date,time, keyword);
         return c;
     }
 
 
 
-    @GetMapping(path="/data/get20/{keyword}")
-    public List<Casan> li(@PathVariable("keyword") String keyword) {
-        return get20(keyword);
+    @GetMapping(path="/data/get20/{keyword}/{date}/{time}")
+    public Map<String, Object>  li(@PathVariable("keyword") String keyword, @PathVariable String date, @PathVariable Long time) {
+        List<Casan> c = get20(keyword, date, time);
+        Map<String, Object> map = new HashMap<>();
+        map.put("data", c);
+        map.put("errorCode", 10);
+        return map;
     }
 
 
@@ -125,10 +127,7 @@ public class CasanController {
     public void greeting() {
         Set hm = stringRedisTemplate.opsForSet().members("search-keywords");
         Timestamp timestamp = new Timestamp(System.currentTimeMillis() - (2 * 1000));
-        /*
-        List<Casan> c= casanRepository.findCasansByDate(LocalDate.now().toString(),(Long)(timestamp.getTime()));
-        messagingTemplate.convertAndSend("/topic/test", c);
-         */
+
         //System.out.println("timestamp: " + timestamp.getTime()*1000);
 
         for (Object s: hm) {
@@ -136,7 +135,7 @@ public class CasanController {
 
             //List<Casan> c= casanRepository.findCasansByEntities(LocalDate.now(), LocalTime.now().minusSeconds(2), (String)s);
             if (!c.isEmpty()) {
-                System.out.println(c);
+                //System.out.println(c);
                // System.out.println("not empty key: " + s + "result: \n" + c);
                 messagingTemplate.convertAndSend("/topic/" + s, c);
 
@@ -146,6 +145,7 @@ public class CasanController {
 
 
     }
+
 
 
 
