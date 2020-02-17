@@ -6,15 +6,11 @@ import cookie from 'react-cookies';
 const headers = {
     'Authorization': "Bearer " + cookie.load('access-token')
 };
-const ip="localhost:8080";
-//const ip = "20.41.86.4:8080";
+const ip="localhost:8888";
+//const ip = "20.41.86.4:8888";
 class SampleComponent extends React.Component {
   constructor(props) {
     super(props);
-
-    this.randomUserName ="ASdgsdf";
-    this.randomUserId = "Sdgsdfdsf";
-    this.sendURL = "/message";
     
     this.state = {
       accessToken: cookie.load('access-token'),
@@ -36,15 +32,15 @@ class SampleComponent extends React.Component {
 
   addData=()=> {
     axios.post(`http://${ip}/data/add`, {
-      test2:this.state.test2,
-      test3:this.state.test3
+      entities:[this.state.entities, this.state.test2],
+      test2:this.state.test2
     },{
       headers: {
         "Authorization" : "Bearer " + cookie.load('access-token')
       }
     }).then(res => {
         if (res.data.errorCode == 10) {
-          console.log("search zsuccess\n");
+          console.log("search success\n");
         }
     }).catch(e => {
         console.log(e);
@@ -59,8 +55,10 @@ class SampleComponent extends React.Component {
 
   search = () => {
     this.client.subscribe(`/topic/${this.state.sub}`, message => {
-      console.log(message.body);   
+      console.log(new Date());
+       
       var datas = JSON.parse(message.body);
+      console.log(datas);
       this.setState({
         data: datas.concat(this.state.data)
       });
@@ -74,6 +72,7 @@ class SampleComponent extends React.Component {
     }).then(res => {
         if (res.data.errorCode == 10) {
           console.log("search zsuccess\n");
+          console.log(res.data.data);
         }
     }).catch(e => {
         console.log(e);
@@ -124,7 +123,8 @@ class SampleComponent extends React.Component {
                 
     const ee = this.state.data.map(
       (dat, index) => {
-        return <div>{dat.test2} {dat.test3}</div>
+        var user = JSON.parse(dat.user);
+        return <div><br/>user: {user.name} <br/> text: {dat.text} <br /> time: {dat.timestamp}<br/></div>
       });
 
         
@@ -139,14 +139,14 @@ class SampleComponent extends React.Component {
           http://20.41.86.4:8080/data/add  로
           access token을 header에 붙이고
           json body에
-          "test1": "어쩌구", "test2": **KEYWORD**, "test3":"저쩌구" 붙이고
+          "test1": "어쩌구", "entities": **KEYWORD**, "test2":"저쩌구" 붙이고
           POST 요청을 보내주세욤. <br />
-          아니면 성공적으로 로그인 한 상태로 KEYWORDINPUT1에 test2에 들어가는 keyword를 쓰고, 아무INPUT에 아무말이나 쓰고 데이터추가 버튼을 눌러주세욤.
+          아니면 성공적으로 로그인 한 상태로 KEYWORDINPUT에 entities에 들어가는 keyword를 쓰고, 아무INPUT에 아무말이나 쓰고 데이터추가 버튼을 눌러주세욤.
 
           
           </h5>
-          <input onChange={this.handleChange} name="test2" placeholder="KEYWORDINPUT"/>
-          <input onChange={this.handleChange} name="test3" placeholder="아무INPUT"/>
+          <input onChange={this.handleChange} name="entities" placeholder="KEYWORDINPUT"/>
+          <input onChange={this.handleChange} name="test2" placeholder="아무INPUT"/>
           <button onClick={this.addData}>데이터 추가</button>
         {ee}
         </div>

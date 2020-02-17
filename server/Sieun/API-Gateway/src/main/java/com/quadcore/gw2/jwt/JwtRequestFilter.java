@@ -70,8 +70,9 @@ public class JwtRequestFilter extends
                 errorCode = 55;
             } else if (ex.getClass() == IllegalArgumentException.class) {
                 errorCode = 51;
+            } else {
+                logger.warn("999: " + ex);
             }
-
             byte[] bytes = errorCodeMaker(errorCode).getBytes(StandardCharsets.UTF_8);
             DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
             return exchange.getResponse().writeWith(Flux.just(buffer));
@@ -87,11 +88,8 @@ public class JwtRequestFilter extends
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
             String token = exchange.getRequest().getHeaders().get("Authorization").get(0).substring(7);
-            logger.info("token : " + token);
             Map<String, Object> userInfo = jwtValidator.getUserParseInfo(token);
-            logger.info("role of Request user : " + userInfo.get("role"));
             ArrayList<String> arr = (ArrayList<String>)userInfo.get("role");
-            logger.info("roelsdfsdf: " + userInfo.get("role") + userInfo.get("role").getClass());
             if ( !arr.contains(config.getRole())) {
                 throw new IllegalArgumentException();
             }

@@ -19,7 +19,7 @@ public class MemberService {
 
     public void updateTweetMembers (String member, String tweetMember) {
         Member mem = repository.findMemberByUsername(member);
-        System.out.println("in service: " + mem);
+        //System.out.println("in service: " + mem);
         ArrayList<String> fl = mem.getTweetMembers();
         fl.add(tweetMember);
         mem.setTweetMembers(fl);

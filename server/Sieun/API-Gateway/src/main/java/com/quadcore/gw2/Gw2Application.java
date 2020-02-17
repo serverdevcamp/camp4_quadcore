@@ -44,26 +44,28 @@ public class Gw2Application {
         String dataServer = "http://localhost:8888/";
 
         return builder.routes()
-                .route("path_route",  r-> r.path("/test")
-                        .filters(f -> f
-                                .addRequestHeader("Hello", "World")
-                                .rewritePath("/test", "/"))
-                                .uri("http://localhost:8083/"))
                 .route("auth",  r-> r.path("/auth/**")
                         .filters(f -> f
                                 .rewritePath("/auth/(?<segment>.*)", "/auth/${segment}")
                                 //.filter(jwtRequestFilter.apply(new JwtRequestFilter.Config("dummy", true, true)))
+                                /*
                                 .hystrix(config -> config
                                 .setName("fallbackpoint")
-                                .setFallbackUri("forward:/fallback")))
+                                .setFallbackUri("forward:/fallback"))
+                                 */
+                        )
                         .uri(authServer))
                 .route("follow",  r-> r.path("/follow/**")
                         .filters(f -> f
                                 .rewritePath("/follow/(?<segment>.*)", "/follow/${segment}")
                                 .filter(jwtRequestFilter.apply(new JwtRequestFilter.Config("ROLE_USER")))
+                                /*
                                 .hystrix(config -> config
                                         .setName("fallbackpoint")
-                                        .setFallbackUri("forward:/fallback")))
+                                        .setFallbackUri("forward:/fallback"))
+                                */
+                        )
+
                         .uri(followServer))
                 .route("user", r->r.path("/user/**")
                     .filters(f -> f

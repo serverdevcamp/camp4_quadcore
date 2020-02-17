@@ -221,7 +221,7 @@ public class MainController {
     public Map<String, Object> login(@RequestBody Map<String, String> m) throws Exception {
         Map<String, Object> map = new HashMap<>();
         final String username = m.get("username");
-        logger.info("test input username: " + username);
+        //logger.info("test input username: " + username);
 
         Member member = memberRepository.findByUsername(username);
 
@@ -242,8 +242,8 @@ public class MainController {
         //generate Token and save in redis
         stringRedisTemplate.opsForValue().set("refresh-" + username, refreshToken);
 
-        logger.info("generated access token: " + accessToken);
-        logger.info("generated refresh token: " + refreshToken);
+        //logger.info("generated access token: " + accessToken);
+        //logger.info("generated refresh token: " + refreshToken);
         map.put("errorCode", 10);
         map.put("accessToken", accessToken);
         map.put("refreshToken", refreshToken);
