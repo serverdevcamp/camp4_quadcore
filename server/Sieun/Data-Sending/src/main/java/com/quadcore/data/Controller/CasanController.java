@@ -129,7 +129,7 @@ public class CasanController {
         List<Casan> c= casanRepository.findCasansByDate(LocalDate.now().toString(),(Long)(timestamp.getTime()));
         messagingTemplate.convertAndSend("/topic/test", c);
          */
-        System.out.println("timestamp: " + timestamp.getTime()*1000);
+        //System.out.println("timestamp: " + timestamp.getTime()*1000);
 
         for (Object s: hm) {
             List<Casan> c= casanRepository.findCasansByDate(LocalDate.now().toString(),timestamp.getTime()*1000, (String)s);
