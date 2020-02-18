@@ -37,7 +37,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-
+@EnableScheduling
 @RestController
 @RequestMapping
 public class MainController {
