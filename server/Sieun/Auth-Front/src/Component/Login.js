@@ -6,7 +6,7 @@ const headers = {
     'Authorization': "Bearer " + cookie.load('access-token')
 };
 //const ip="20.41.86.4:8080";
-const ip="localhost:8082";
+const ip="localhost:5000";
 const data = {
     accessToken: cookie.load('access-token')
 };

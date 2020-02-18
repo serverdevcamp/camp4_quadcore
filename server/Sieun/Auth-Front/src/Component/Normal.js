@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import cookie from 'react-cookies';
-
+const ip="localhost:5000";
 class Normal extends Component {
     constructor(props) {
         super(props)
@@ -14,7 +14,7 @@ class Normal extends Component {
     }
 
     logout = () => {
-        axios.post("http://20.41.86.4:8080/auth/logout", {
+        axios.post(`http://${ip}/auth/logout`, {
             accessToken: this.state.accessToken,
         }).then(res => {
             console.log(res);
@@ -25,7 +25,7 @@ class Normal extends Component {
     }
 
     requestAccessToken = () => {
-        axios.post("http://20.41.86.4:8080/auth/refresh", {
+        axios.post(`http://${ip}/auth/refresh`, {
             accessToken: this.state.accessToken,
             refreshToken: this.state.refreshToken,
         }).then(res => {
@@ -47,7 +47,7 @@ class Normal extends Component {
         })
     }
     componentDidMount(){
-        axios.get("http://20.41.86.4:8080/user/normal",{
+        axios.get(`http://${ip}/user/normal`,{
             headers: {
                 "Authorization" : "Bearer "+ this.state.accessToken
             }

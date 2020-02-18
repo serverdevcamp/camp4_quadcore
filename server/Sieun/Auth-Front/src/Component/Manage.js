@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import ManageItem from './ManageItem';
 import cookie from 'react-cookies';
+const ip="localhost:5000";
 const headers = {
     'Content-Type': 'application/json',
     'Authorization' : "Bearer "+ cookie.load('access-token')
@@ -20,7 +21,7 @@ class Manage extends Component {
     }
     
     componentDidMount(){
-        axios.get("http://20.41.86.4:8080/admin/getusers", {
+        axios.get(`http://${ip}/admin/getusers`, {
             headers: headers
         }).then(res => {
             if (res.data.errorCode == 10) {
