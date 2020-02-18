@@ -76,7 +76,6 @@ public class Gw2Application {
                 )
                 .route("data", r->r.path("/data/**")
                         .filters(f -> f
-                                .rewritePath("/data/(?<segment>.*)", "/data/${segment}")
                                 .filter(jwtRequestFilter.apply(new JwtRequestFilter.Config("ROLE_USER"))
                                 ))
                         .uri(dataServer)

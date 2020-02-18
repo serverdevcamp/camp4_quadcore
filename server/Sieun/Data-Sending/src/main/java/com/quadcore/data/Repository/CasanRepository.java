@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface CasanRepository extends CrudRepository<Casan, UUID> {
+public interface CasanRepository extends CrudRepository<Casan, Long> {
 
     /*
     @Query("SELECT * FROM examples WHERE date=:date AND create_at > :time")

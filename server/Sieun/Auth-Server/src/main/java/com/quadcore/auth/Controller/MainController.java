@@ -108,12 +108,12 @@ public class MainController {
             redisKey = "email-" + username;
             stringRedisTemplate.opsForValue().set(redisKey, hash);
             htmlStr = "안녕하세요 " + username + "님. 인증하기를 눌러주세요"
-                    + "<a href='http://"+myIp+":8080" + "/auth/verify?username="+ username +"&key="+hash+"'>인증하기</a></p>";
+                    + "<a href='http://"+myIp+":5000" + "/auth/verify?username="+ username +"&key="+hash+"'>인증하기</a></p>";
         } else if (type == 1) {
             redisKey = "changepw-" + username;
             stringRedisTemplate.opsForValue().set(redisKey, hash);
             htmlStr ="안녕하세요 " + username + "님. 비밀번호 변경하를 눌러주세요"
-                    + "<a href='http://"+myIp+":8080" + "/auth/vfpwemail?username="+ username +"&key="+hash+"'>비밀번호 변경하기</a></p>";
+                    + "<a href='http://"+myIp+":5000" + "/auth/vfpwemail?username="+ username +"&key="+hash+"'>비밀번호 변경하기</a></p>";
         }
         stringRedisTemplate.expire(redisKey, 60*24*60*1000, TimeUnit.MILLISECONDS); // for one day
 

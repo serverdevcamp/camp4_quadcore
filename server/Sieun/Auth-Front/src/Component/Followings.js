@@ -6,7 +6,7 @@ const headers = {
     'Content-Type': 'application/json',
     'Authorization' : "Bearer "+ cookie.load('access-token')
 };
-const ip="localhost:8082";
+const ip="localhost:5000";
 class Followings extends Component {
     constructor(props) {
         super(props)

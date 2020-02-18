@@ -114,6 +114,7 @@ public class CasanController {
         String token = getSHA256Token(username);
         Map<String,Object> map = new HashMap<>();
         map.put("errorCode", 10);
+        System.out.println("username: " + username);
         stringRedisTemplate.opsForValue().set("st-"+username, token);
         stringRedisTemplate.expire("st-"+username, 30*1000, TimeUnit.MILLISECONDS); // for 30 sec
 
