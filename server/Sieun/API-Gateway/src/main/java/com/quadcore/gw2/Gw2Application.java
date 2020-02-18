@@ -82,9 +82,6 @@ public class Gw2Application {
                 )
 
                 .route("socket", r->r.path("/wscn/**") //.and().method("GET")
-                        .filters(f -> f
-                                .rewritePath("/wscn/(?<segment>.*)", "/wscn/${segment}")
-                        )
                         .uri(webSocketServer)
                 )
                 .route("admin", r->r.path("/admin/**")
