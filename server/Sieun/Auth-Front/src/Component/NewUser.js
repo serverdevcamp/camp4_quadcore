@@ -4,7 +4,7 @@ import  { Redirect } from 'react-router-dom'
 import validator from 'validator';
 
 
-const ip="localhost:5000";
+const ip="20.41.86.4:5000";
 
 class NewUser extends Component {
     constructor(props) {

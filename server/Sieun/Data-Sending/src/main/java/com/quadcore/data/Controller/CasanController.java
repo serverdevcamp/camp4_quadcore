@@ -23,6 +23,7 @@ import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+@RestController
 @CrossOrigin
 @EnableScheduling
 @RequiredArgsConstructor
@@ -44,6 +45,8 @@ public class CasanController {
         casanRepository.findAll().forEach(products::add); //fun with Java 8
         return products;
     }
+
+
 
     @PostMapping(path="/data/add")
     public void savee(@RequestBody Map<String, Object> m) {
