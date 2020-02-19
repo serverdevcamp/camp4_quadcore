@@ -125,10 +125,10 @@ public class CasanController {
     }
 
 
-    @Scheduled(fixedRate = 2000)
+    @Scheduled(fixedRate = 5000)
     public void greeting() {
         Set hm = stringRedisTemplate.opsForSet().members("search-keywords");
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis() - (2 * 1000));
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis() - (5 * 1000));
 
         //System.out.println("timestamp: " + timestamp.getTime()*1000);
 
