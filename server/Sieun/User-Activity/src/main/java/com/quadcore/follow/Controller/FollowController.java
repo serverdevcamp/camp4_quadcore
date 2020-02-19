@@ -43,6 +43,12 @@ public class FollowController {
         String member = m.get("username");
         String tweetMember = m.get("tweetUsername");
         logger.info(member+" start to follow " + tweetMember);
+
+        logger.info("repo: "+memberRepository + " and service : " + memberService);
+
+        logger.info("AAAAALLLL: " + memberRepository.findAll());
+
+        logger.info("in controller: " + memberRepository.findMemberByUsername(member));
         memberService.updateTweetMembers(member, tweetMember);
         Map<String, Object> map = new HashMap<>();
         map.put("errorCode", 10);

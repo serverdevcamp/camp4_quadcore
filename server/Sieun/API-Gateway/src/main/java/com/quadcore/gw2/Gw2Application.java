@@ -34,8 +34,6 @@ public class Gw2Application {
         return corsConfiguration;
     }
 
-
-
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder, JwtRequestFilter jwtRequestFilter, WebSocketJwtFilter webSocketJwtFilter) {
         String authServer="http://localhost:8083/";
