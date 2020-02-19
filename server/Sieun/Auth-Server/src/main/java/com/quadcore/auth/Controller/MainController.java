@@ -138,6 +138,8 @@ public class MainController {
             f.setUsername(username);
             f.setTweetMembers(x);
             f.setId(String.valueOf(f.hashCode()));
+
+            logger.info("followrepository: " + followRepository);
             followRepository.save(f);
 
 

@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.quadcore.data.Domain.Casan;
 import com.quadcore.data.Repository.CasanRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -27,6 +29,9 @@ import java.util.concurrent.TimeUnit;
 @EnableScheduling
 @RequiredArgsConstructor
 public class CasanController {
+
+    private final Logger logger = LoggerFactory.getLogger(CasanController.class);
+
     private final SimpMessageSendingOperations messagingTemplate;
 
     @Autowired
@@ -63,7 +68,7 @@ public class CasanController {
     public Map<String, Object> gotKeyword(@PathVariable("keyword") String keyword, @PathVariable String date, @PathVariable Long time) {
         System.out.println("keyword subscribed : "  + keyword);
         stringRedisTemplate.opsForSet().add("search-keywords", keyword);
-        List<Casan> c = get20(keyword, date, time);
+        List<Casan> c = getPastData(keyword, date, time);
         Map<String, Object> map = new HashMap<>();
         map.put("data", c);
         map.put("errorCode", 10);
@@ -71,8 +76,7 @@ public class CasanController {
     }
 
 
-
-    public List<Casan> get20(String keyword, String date, Long time) {
+    public List<Casan> getPastData(String keyword, String date, Long time) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         //System.out.println("timestamp: " + timestamp.getTime());
         List<Casan> c= casanRepository.findCasansByTimestamp(date,time, keyword);
@@ -83,7 +87,7 @@ public class CasanController {
 
     @GetMapping(path="/data/get20/{keyword}/{date}/{time}")
     public Map<String, Object>  li(@PathVariable("keyword") String keyword, @PathVariable String date, @PathVariable Long time) {
-        List<Casan> c = get20(keyword, date, time);
+        List<Casan> c = getPastData(keyword, date, time);
         Map<String, Object> map = new HashMap<>();
         map.put("data", c);
         map.put("errorCode", 10);
@@ -145,9 +149,6 @@ public class CasanController {
 
             }
         }
-
-
-
     }
 
 

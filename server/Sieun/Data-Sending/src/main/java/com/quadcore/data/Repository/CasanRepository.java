@@ -15,35 +15,18 @@ import java.util.UUID;
 @Repository
 public interface CasanRepository extends CrudRepository<Casan, Long> {
 
-    /*
-    @Query("SELECT * FROM examples WHERE date=:date AND create_at > :time")
-    public List<Casan> findCasansBy(@Param("date") LocalDate date, @Param("time") LocalTime time);
-
-    @Query("SELECT * FROM examples WHERE test2=:keyword ALLOW FILTERING")
-    public List<Casan> findCasansBy(@Param("keyword") String keyword);
-
-
-    // FOR REAL_TIME Socket: polling 2 secs
-    @Query("SELECT * FROM examples WHERE date=:date AND create_at > :time AND test2=:keyword ALLOW FILTERING")
-    public List<Casan> findCasansBy(@Param("date") LocalDate date, @Param("time") LocalTime time, @Param("keyword") String keyword);
-
-
-    //public List<Casan> findCasansByEntities(@Param("date") LocalDate date, @Param("time") LocalTime time, @Param("keyword") String keyword);
-//SELECT * FROM examples WHERE date='2020-02-15' AND create_at < '17:21:48.810' AND entities CONTAINS 'asd' limit 2 ALLOW FILTERING;
-
- */
-
-    //FOR SEARCH past data. before given date and time + limit 20
+    //FOR SEARCH past data. before given date and time + limit 10
     @Query("SELECT * FROM bts.master_dataset WHERE date <= :date AND timestamp < :timestamp AND hashtags CONTAINS :keyword limit 10 ALLOW FILTERING")
     public List<Casan> findCasansByTimestamp(@Param("date") String date, @Param("timestamp")Long timestamp, @Param("keyword")String keyword);
 
 
 
+    //real - time data (recent 5)
     @Query("SELECT * FROM bts.master_dataset WHERE date >= :date AND timestamp > :timestamp AND hashtags CONTAINS :keyword limit 5 ALLOW FILTERING")
     public List<Casan> findCasansByDate(@Param("date") String date, @Param("timestamp")Long timestamp, @Param("keyword")String keyword);
 
 
-    //user로
+    //for HOME column: search by user
     @Query("SELECT * FROM bts.master_dataset WHERE timestamp < :timestamp AND user=:user limit 5 ALLOW FILTERING")
     public List<Casan> findCasansByUser(@Param("date") String date, @Param("timestamp") Long timestamp, @Param("user") String user);
 }

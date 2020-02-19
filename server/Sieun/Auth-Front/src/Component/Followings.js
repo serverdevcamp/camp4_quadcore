@@ -6,7 +6,7 @@ const headers = {
     'Content-Type': 'application/json',
     'Authorization' : "Bearer "+ cookie.load('access-token')
 };
-const ip="localhost:5000";
+const ip="20.41.86.4:5000";
 class Followings extends Component {
     constructor(props) {
         super(props)
@@ -17,7 +17,7 @@ class Followings extends Component {
     }
 
     componentDidMount(){
-        axios.get(`http://${ip}/follow/flist/tlatldms`, {
+        axios.get(`http://20.41.86.4:5000/follow/flist/tlatldms`, {
             headers: headers
            }).then(res => {
             console.log(res);

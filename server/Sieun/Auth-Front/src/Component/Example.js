@@ -57,9 +57,7 @@ class SampleComponent extends React.Component {
  
     this.client.subscribe(`/topic/${this.state.sub}`, message => {
       console.log(message);
-      console.log(new Date());
       var datas = JSON.parse(message.body);
-      console.log(datas);
       this.setState({
         data: datas.concat(this.state.data)
       });
@@ -159,7 +157,7 @@ class SampleComponent extends React.Component {
         if (res.data.errorCode == 10) {
           cookie.save('socket-token', res.data.socketToken, { path: '/' })
           this.connectSocket();
-        }
+        } 
     }).catch(e => {
         console.log(e);
         console.log("errrororrr");
