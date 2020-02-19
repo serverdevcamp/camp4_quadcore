@@ -34,12 +34,16 @@ public interface CasanRepository extends CrudRepository<Casan, Long> {
  */
 
     //FOR SEARCH past data. before given date and time + limit 20
-    @Query("SELECT * FROM bts.master_dataset WHERE date <= :date AND timestamp < :timestamp AND hashtags CONTAINS :keyword limit 5 ALLOW FILTERING")
+    @Query("SELECT * FROM bts.master_dataset WHERE date <= :date AND timestamp < :timestamp AND hashtags CONTAINS :keyword limit 10 ALLOW FILTERING")
     public List<Casan> findCasansByTimestamp(@Param("date") String date, @Param("timestamp")Long timestamp, @Param("keyword")String keyword);
+
+
 
     @Query("SELECT * FROM bts.master_dataset WHERE date >= :date AND timestamp > :timestamp AND hashtags CONTAINS :keyword limit 5 ALLOW FILTERING")
     public List<Casan> findCasansByDate(@Param("date") String date, @Param("timestamp")Long timestamp, @Param("keyword")String keyword);
 
+
+    //user로
     @Query("SELECT * FROM bts.master_dataset WHERE timestamp < :timestamp AND user=:user limit 5 ALLOW FILTERING")
     public List<Casan> findCasansByUser(@Param("date") String date, @Param("timestamp") Long timestamp, @Param("user") String user);
 }
