@@ -23,8 +23,18 @@ public class MemberService {
     public void updateTweetMembers (String member, String tweetMember) {
         Member mem = repository.findMemberByUsername(member);
 
-        System.out.println("updateTweetmemver of : " + mem);
-        ArrayList<String> fl = mem.getTweetMembers();
+        ArrayList<String> fl;
+
+        if (mem == null) {
+            mem = new Member();
+            mem.setUsername(member);
+            mem.setId(String.valueOf(mem.hashCode()));
+            fl = new ArrayList<>();
+        } else {
+            fl = mem.getTweetMembers();
+        }
+        System.out.println("update of: " + mem);
+
         fl.add(tweetMember);
         mem.setTweetMembers(fl);
         repository.save(mem);
