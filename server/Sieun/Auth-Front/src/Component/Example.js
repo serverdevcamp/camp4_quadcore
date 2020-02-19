@@ -56,6 +56,7 @@ class SampleComponent extends React.Component {
   search = () => {
  
     this.client.subscribe(`/topic/${this.state.sub}`, message => {
+      console.log(message);
       console.log(new Date());
       var datas = JSON.parse(message.body);
       console.log(datas);
@@ -75,7 +76,7 @@ class SampleComponent extends React.Component {
         mm='0'+mm
     } 
     var td = yyyy+'-'+mm+'-'+dd;
-    console.log(td);
+  
     console.log(encodeURIComponent(this.state.sub));
     axios.get(`http://${ip}/data/search/${encodeURIComponent(this.state.sub)}/${td}/${(today.getTime())*1000}`, {
       headers: {
@@ -83,7 +84,6 @@ class SampleComponent extends React.Component {
       }
     }).then(res => {
         if (res.data.errorCode == 10) {
-          console.log("search zsuccess\n");
           var arr = Array.from(res.data.data);
           console.log("arrr: ", arr);
           console.log(this.state.sub);
