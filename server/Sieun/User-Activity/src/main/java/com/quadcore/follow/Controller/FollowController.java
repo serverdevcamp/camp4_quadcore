@@ -90,6 +90,7 @@ public class FollowController {
     }
 
 
+    //for HOME column: past data
     @GetMapping(path="/follow/searchuser/{userid}/{date}/{time}")
     public Map<String, Object> getUserPosts(@PathVariable("userid") Long userid, @PathVariable("date") String date, @PathVariable("time") Long time) {
         Timestamp weekstamp = new Timestamp(System.currentTimeMillis() - (60 * 60 * 24 * 7 * 1000)); //a week
@@ -100,11 +101,18 @@ public class FollowController {
         Map<String, Object> map = new HashMap<>();
         map.put("data", c);
         map.put("errorCode", 10);
-
         return map;
     }
 
 
+    //1 sec
+    @GetMapping(path="/follow/updateuser/{userid}/{date}/{time}")
+    public Map<String, Object> updateUserHome(@PathVariable("userid") Long userid, @PathVariable("date") String date, @PathVariable("time") Long time) {
 
-
+        List<Casan> c = casanRepository.findCasansByTimestamp(date,time, userid);
+        Map<String, Object> map = new HashMap<>();
+        map.put("data", c);
+        map.put("errorCode", 10);
+        return map;
+    }
 }
