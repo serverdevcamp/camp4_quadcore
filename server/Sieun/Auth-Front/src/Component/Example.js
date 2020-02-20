@@ -185,17 +185,7 @@ class SampleComponent extends React.Component {
         <button onClick={this.search}>구독 테스트</button>
         <button onClick={()=>this.get20(this.state.sub)}>과거20개</button>
         <br/>
-        <h5>*USAGE: socket CONNECT는 자동으로 합니다. 이 위의 입력 창에 구독할 keyword를 쓰고 구독 테스트 버튼을 누르면 구독 시작입니다. 새로고침시 사라지며 현재 구독 취소는 없습니다. 
-          <br />
-          http://20.41.86.4:8080/data/add  로
-          access token을 header에 붙이고
-          json body에
-          "test1": "어쩌구", "entities": **KEYWORD**, "test2":"저쩌구" 붙이고
-          POST 요청을 보내주세욤. <br />
-          아니면 성공적으로 로그인 한 상태로 KEYWORDINPUT에 entities에 들어가는 keyword를 쓰고, 아무INPUT에 아무말이나 쓰고 데이터추가 버튼을 눌러주세욤.
-
-          
-          </h5>
+       
           <input onChange={this.handleChange} name="entities" placeholder="KEYWORDINPUT"/>
           <input onChange={this.handleChange} name="test2" placeholder="아무INPUT"/>
           <button onClick={this.addData}>데이터 추가</button>
