@@ -133,18 +133,9 @@ public class CasanController {
     public void greeting() {
         Set hm = stringRedisTemplate.opsForSet().members("search-keywords");
         Timestamp timestamp = new Timestamp(System.currentTimeMillis() - (3 * 1000));
-
-        //System.out.println("timestamp: " + timestamp.getTime()*1000);
-
         for (Object s: hm) {
-		System.out.println("s: " + s);
-
             List<Casan> c= casanRepository.findCasansByDate(LocalDate.now().toString(),timestamp.getTime()*1000, (String)s);
-
-            //List<Casan> c= casanRepository.findCasansByEntities(LocalDate.now(), LocalTime.now().minusSeconds(2), (String)s);
             if (!c.isEmpty()) {
-                System.out.println(c);
-               // System.out.println("not empty key: " + s + "result: \n" + c);
                 messagingTemplate.convertAndSend("/topic/" + s, c);
 
             }

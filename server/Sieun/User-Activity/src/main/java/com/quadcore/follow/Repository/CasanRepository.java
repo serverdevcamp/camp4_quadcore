@@ -28,7 +28,3 @@ public interface CasanRepository extends CassandraRepository<Casan, Long> {
 
 
 
-<<<<<<< HEAD
- */
-=======
->>>>>>> 4657ec3093200bc3a8cd2cf8f2916b17a6f1f24d
