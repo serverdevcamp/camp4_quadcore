@@ -1,3 +1,5 @@
+/*
+
 package com.quadcore.follow.Domain;
 
 import lombok.AllArgsConstructor;
@@ -18,3 +20,6 @@ public class Member {
     private String username;
     private ArrayList<String> tweetMembers;
 }
+
+
+ */

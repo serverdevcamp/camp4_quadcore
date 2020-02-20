@@ -1,3 +1,4 @@
+/*
 package com.quadcore.follow.Service;
 
 import com.quadcore.follow.Domain.Member;
@@ -40,3 +41,6 @@ public class MemberService {
         repository.save(mem);
     }
 }
+
+
+ */
