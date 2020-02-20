@@ -61,15 +61,15 @@ class Followings extends Component {
     
 
     
-      getPastData=()=> {
+      getPastHomeData=()=> {
         
-          axios.get(`http://${ip}/follow/searchuser/${this.state.userid}/${this.state.ld}/${this.state.lt}`, {
+          axios.get(`http://${ip}/follow/searchuser/${this.state.userid}/${this.state.ld}/${(today.getTime() - 5000)*1000}`, {
             headers: {
               "Authorization" : "Bearer " + cookie.load('access-token')
             }
           }).then(res => {
               if (res.data.errorCode == 10) {
-                console.log("get20 success\n");
+                console.log("get past home data (5sec) success\n");
                 var arr = res.data.data;
                 console.log(arr);
                 if (arr.length) {
@@ -87,7 +87,44 @@ class Followings extends Component {
       
       }
     
-      
+      //should manually set timer and (now-1minute)
+      getRecentData=()=> {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        
+        if(dd<10) {
+            dd='0'+dd
+        } 
+        if(mm<10) {
+            mm='0'+mm
+        } 
+        var td = yyyy+'-'+mm+'-'+dd;
+
+        axios.get(`http://${ip}/follow/updateuser/${this.state.userid}/${td}/${this.state.lt}`, {
+          headers: {
+            "Authorization" : "Bearer " + cookie.load('access-token')
+          }
+        }).then(res => {
+            if (res.data.errorCode == 10) {
+              console.log("get20 success\n");
+              var arr = res.data.data;
+              console.log(arr);
+              if (arr.length) {
+                  this.setState({
+                      lt:arr[arr.length-1].timestamp,
+                      ld:arr[arr.length-1].date
+                  });
+              } else {
+                alert("없음");
+              }
+             }
+        }).catch(e => {
+            console.log(e);
+        })  
+    
+    }
     
 
     
@@ -122,6 +159,8 @@ class Followings extends Component {
                
                 <button onClick={this.firstData}>지금</button>
                 <button onClick={this.getPastData}>getpast10</button>
+                <button onClick={this.getPastHomeData}>최근 5초전데이터 get</button>
+                
             </div>
         )
     }
