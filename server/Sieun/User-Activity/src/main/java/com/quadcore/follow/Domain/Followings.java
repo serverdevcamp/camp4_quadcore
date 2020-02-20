@@ -15,8 +15,9 @@ public class Followings implements Serializable {
     private static final long serialVersionUID = -7353484588260422449L;
 
     @Id
-    @Column(nullable=false, unique=true)
+    @Column(nullable=false, unique=true, length=20)
     private String username;
 
+    @Column(columnDefinition = "TEXT")
     private String tweetMembers;
 }
