@@ -1,6 +1,7 @@
 package com.quadcore.follow.Repository;
 
 import com.quadcore.follow.Domain.Casan;
+import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.data.cassandra.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CasanRepository extends CrudRepository<Casan, Long> {
+public interface CasanRepository extends CassandraRepository<Casan, Long> {
 
 
     //for HOME column: search by user
