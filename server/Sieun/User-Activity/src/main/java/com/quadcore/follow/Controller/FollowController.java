@@ -1,8 +1,10 @@
 package com.quadcore.follow.Controller;
 
 //import com.quadcore.follow.Domain.Casan;
+import com.quadcore.follow.Domain.Casan;
 import com.quadcore.follow.Domain.Followings;
 //import com.quadcore.follow.Domain.Member;
+import com.quadcore.follow.Repository.CasanRepository;
 import com.quadcore.follow.Repository.FollowingRepository;
 //import com.quadcore.follow.Repository.MemberRepository;
 //import com.quadcore.follow.Service.MemberService;
@@ -27,12 +29,13 @@ public class FollowController {
     @Autowired
     FollowingRepository followingRepository;
 
-/*
+    @Autowired
+    private CasanRepository casanRepository;
+
+    /*
     @Autowired
     MemberRepository memberRepository;
 
-    @Autowired
-    private CasanRepository casanRepository;
 
 
     @Autowired
@@ -86,22 +89,22 @@ public class FollowController {
         return map;
     }
 
-    /*
+
 
     @GetMapping(path="/follow/searchuser/{username}")
     public Map<String, Object> getUserPosts(@PathVariable("username") String username) {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis() - (5 * 1000));
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis() - (60 * 60 * 24 * 7 * 1000)); //a week
 
         //System.out.println("timestamp: " + timestamp.getTime()*1000);
 
-        List<Casan> c = casanRepository.findCasansByUser(LocalDate.now().toString(),timestamp.getTime()*1000, tweetuser);
+        List<Casan> c = casanRepository.findCasansByUser(LocalDate.now().toString(),timestamp.getTime()*1000, username);
         Map<String, Object> map = new HashMap<>();
         map.put("data", c);
         map.put("errorCode", 10);
 
         return map;
     }
-     */
+
 
 
 }
