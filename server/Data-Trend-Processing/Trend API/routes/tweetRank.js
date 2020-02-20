@@ -8,10 +8,10 @@ const moment = require('moment');
 // 실시간 인기 트윗 랭킹 보여주기 
 router.get('/', async (req, res) => {
     console.log('hello');
-    let currentTime = moment().format("DD/MM/YYYY");
+    let currentTime = moment().format("YYYY/MM/DD/HH/mm");
     try {
-        result = await redis.get(1582177025585388, 0);
-        console.log(result);
+        result = await redis.get(currentTime, 0);
+        //console.log(result);
         if(!result) {
             res.status(200).send({
                 state : 'fail',
