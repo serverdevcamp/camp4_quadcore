@@ -1,25 +1,25 @@
 package com.quadcore.follow.Controller;
 
 //import com.quadcore.follow.Domain.Casan;
-import com.quadcore.follow.Domain.Casan;
-import com.quadcore.follow.Domain.Followings;
+        import com.quadcore.follow.Domain.Casan;
+        import com.quadcore.follow.Domain.Followings;
 //import com.quadcore.follow.Domain.Member;
-import com.quadcore.follow.Repository.CasanRepository;
-import com.quadcore.follow.Repository.FollowingRepository;
+        import com.quadcore.follow.Repository.CasanRepository;
+        import com.quadcore.follow.Repository.FollowingRepository;
 //import com.quadcore.follow.Repository.MemberRepository;
 //import com.quadcore.follow.Service.MemberService;
-import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+        import lombok.AllArgsConstructor;
+        import org.slf4j.Logger;
+        import org.slf4j.LoggerFactory;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+        import java.sql.Timestamp;
+        import java.time.LocalDate;
+        import java.util.ArrayList;
+        import java.util.HashMap;
+        import java.util.List;
+        import java.util.Map;
 
 @RestController
 
@@ -52,7 +52,8 @@ public class FollowController {
     @PostMapping(path = "/follow/add")
     public Map<String, Object> follow(@RequestBody Map<String,String> m) {
         String username = m.get("username");
-        String tweetMember = m.get("tweetUserId"ername+" start to follow " + tweetMember);
+        String tweetMember = m.get("tweetUserId");
+        logger.info(username+" start to follow " + tweetMember);
 //        logger.info("repo: "+memberRepository + " and service : " + memberService);
 //        logger.info("AAAAALLLL: " + memberRepository.findAll());
 //        logger.info("in controller: " + memberRepository.findMemberByUsername(member));
@@ -89,14 +90,13 @@ public class FollowController {
     }
 
 
-/*
-    @GetMapping(path="/follow/searchuser/{username}")
-    public Map<String, Object> getUserPosts(@PathVariable("username") String username) {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis() - (60 * 60 * 24 * 7 * 1000)); //a week
-
+    @GetMapping(path="/follow/searchuser/{userid}/{date}/{time}")
+    public Map<String, Object> getUserPosts(@PathVariable("userid") Long userid, @PathVariable("date") String date, @PathVariable("time") Long time) {
+        Timestamp weekstamp = new Timestamp(System.currentTimeMillis() - (60 * 60 * 24 * 7 * 1000)); //a week
+        //Timestamp nowstamp =new Timestamp(System.currentTimeMillis());
         //System.out.println("timestamp: " + timestamp.getTime()*1000);
 
-        List<Casan> c = casanRepository.findCasansByUser(LocalDate.now().toString(),timestamp.getTime()*1000, username);
+        List<Casan> c = casanRepository.findCasansByUser(date,weekstamp.getTime()*1000,time, userid);
         Map<String, Object> map = new HashMap<>();
         map.put("data", c);
         map.put("errorCode", 10);
@@ -105,7 +105,6 @@ public class FollowController {
     }
 
 
- */
 
 
 }

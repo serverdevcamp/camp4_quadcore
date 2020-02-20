@@ -38,7 +38,7 @@ public class Casan implements Serializable {
     private String date = LocalDate.now().toString();
     private int favorite_count, quote_count, reply_count, retweet_count;
     private String create_at, entities, extended_entities, extended_tweet, lang, quoted_status, retweeted_status, text, user;
-    private long id;
+    private long id, user_id;
     private boolean is_quote_status, media_status, reply_status, retweeted, truncated;
 
 }
