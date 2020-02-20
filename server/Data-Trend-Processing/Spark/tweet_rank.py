@@ -1,7 +1,7 @@
 import pyspark
 from pyspark.sql.functions import *
 from pyspark.sql.types import *
-import json, time, redis
+import json, time, datetime, redis
 import pyspark.sql.functions as f
 
 myRedis = redis.Redis(host='10.240.14.39', port=6379, password='12341234', db=0)
@@ -110,7 +110,10 @@ if __name__ == "__main__":
             .options(table="master_dataset", keyspace="bts") \
             .load()
         # 현재시간 마이크로 세컨즈 까지
-        current_time = int(time.time() * 1000000)
+        current_time = int(time.time() * 1000000)  # 현재시간 마이크로 세컨즈 까지
+        # redis 저장 포맷 시간 형식 ( 년/월/일/시/분) 으로
+        current_time_format = datetime.datetime.fromtimestamp(int(current_time / 1000000)).strftime('%Y/%m/%d/%H/%M')
+        print(current_time_format)
         print(current_time)  # 현재시간 출력
         # 현재 시간 부터 30초 전까지 data 불러오기
         lines = lines.selectExpr(schema) \
@@ -120,7 +123,7 @@ if __name__ == "__main__":
         result = process_tweet(lines)
         if result is not False:
             # print(result)
-            save_tweet(result, current_time)
+            save_tweet(result, current_time_format)
         else:
             print('there is no data')
         time.sleep(20)
