@@ -52,8 +52,7 @@ public class FollowController {
     @PostMapping(path = "/follow/add")
     public Map<String, Object> follow(@RequestBody Map<String,String> m) {
         String username = m.get("username");
-        String tweetMember = m.get("tweetUserId");
-        logger.info(username+" start to follow " + tweetMember);
+        String tweetMember = m.get("tweetUserId"ername+" start to follow " + tweetMember);
 //        logger.info("repo: "+memberRepository + " and service : " + memberService);
 //        logger.info("AAAAALLLL: " + memberRepository.findAll());
 //        logger.info("in controller: " + memberRepository.findMemberByUsername(member));
@@ -90,7 +89,7 @@ public class FollowController {
     }
 
 
-
+/*
     @GetMapping(path="/follow/searchuser/{username}")
     public Map<String, Object> getUserPosts(@PathVariable("username") String username) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis() - (60 * 60 * 24 * 7 * 1000)); //a week
@@ -105,6 +104,8 @@ public class FollowController {
         return map;
     }
 
+
+ */
 
 
 }
