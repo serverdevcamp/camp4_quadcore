@@ -1,4 +1,4 @@
-/*
+
 package com.quadcore.follow.Domain;
 
 import lombok.Data;
@@ -34,4 +34,3 @@ public class Casan implements Serializable {
 
 
 
- */

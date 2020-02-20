@@ -1,5 +1,4 @@
 
-/*
 package com.quadcore.follow.Repository;
 
 import com.quadcore.follow.Domain.Casan;
@@ -15,11 +14,10 @@ import java.util.List;
 public interface CasanRepository extends CassandraRepository<Casan, Long> {
 
 
-    //for HOME column: search by user
-    @Query("SELECT * FROM bts.master_dataset WHERE timestamp < :timestamp AND user=:user limit 5 ALLOW FILTERING")
+    //for HOME column: search by user 1 week
+    @Query("SELECT * FROM bts.master_dataset WHERE timestamp > :timestamp AND user=:user limit 5 ALLOW FILTERING")
     public List<Casan> findCasansByUser(@Param("date") String date, @Param("timestamp") Long timestamp, @Param("user") String user);
 }
 
 
 
- */
