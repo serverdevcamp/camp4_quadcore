@@ -1,10 +1,11 @@
 package com.quadcore.follow.Controller;
 
-import com.quadcore.follow.Domain.Casan;
-import com.quadcore.follow.Domain.Member;
-import com.quadcore.follow.Repository.CasanRepository;
-import com.quadcore.follow.Repository.MemberRepository;
-import com.quadcore.follow.Service.MemberService;
+//import com.quadcore.follow.Domain.Casan;
+import com.quadcore.follow.Domain.Followings;
+//import com.quadcore.follow.Domain.Member;
+import com.quadcore.follow.Repository.FollowingRepository;
+//import com.quadcore.follow.Repository.MemberRepository;
+//import com.quadcore.follow.Service.MemberService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,51 +25,71 @@ import java.util.Map;
 public class FollowController {
 
     @Autowired
-    MemberRepository memberRepository;
+    FollowingRepository followingRepository;
 
+/*
+    @Autowired
+    MemberRepository memberRepository;
 
     @Autowired
     private CasanRepository casanRepository;
 
+
     @Autowired
     MemberService memberService;
+
+ */
     Logger logger = LoggerFactory.getLogger(FollowController.class);
 
     public void sendMail() {
 
     }
 
+
     @PostMapping(path = "/follow/add")
-    public Map<String, Object> follow(@RequestBody Map<String, String> m) {
-        String member = m.get("username");
-        String tweetMember = m.get("tweetUsername");
-        logger.info(member+" start to follow " + tweetMember);
-
-        logger.info("repo: "+memberRepository + " and service : " + memberService);
-
-        logger.info("AAAAALLLL: " + memberRepository.findAll());
-
-        logger.info("in controller: " + memberRepository.findMemberByUsername(member));
-        memberService.updateTweetMembers(member, tweetMember);
+    public Map<String, Object> follow(@RequestBody Map<String,String> m) {
+        String username = m.get("username");
+        String tweetMember = m.get("tweetUserId");
+        logger.info(username+" start to follow " + tweetMember);
+//        logger.info("repo: "+memberRepository + " and service : " + memberService);
+//        logger.info("AAAAALLLL: " + memberRepository.findAll());
+//        logger.info("in controller: " + memberRepository.findMemberByUsername(member));
+//        memberService.updateTweetMembers(member, tweetMember);
+        Followings nf = followingRepository.findByUsername(username);
+        if (nf == null) {
+            nf= new Followings();
+            nf.setUsername(username);
+            nf.setTweetMembers(tweetMember);
+            followingRepository.save(nf);
+        } else {
+            nf.setTweetMembers(nf.getTweetMembers() + "/" + tweetMember);
+            followingRepository.save(nf);
+        }
+//        followingRepository.save(nf);
         Map<String, Object> map = new HashMap<>();
         map.put("errorCode", 10);
         return map;
     }
+
+
 
 
     @GetMapping(path="/follow/flist/{username}")
-    public Map<String, Object> getall(@PathVariable("username") String member) {
+    public Map<String, Object> getall(@PathVariable("username") String memb) {
         //logger.info("member: " + member);
-        ArrayList<String> followings =memberService.findMemberByUsername(member).getTweetMembers();
+        Followings m = followingRepository.findByUsername(memb);
+        String st = m.getTweetMembers();
+        //ArrayList<String> followings =memberService.findMemberByUsername(member).getTweetMembers();
         Map<String, Object> map = new HashMap<>();
         map.put("errorCode", 10);
-        map.put("followings", followings);
+        map.put("followings", st.split("/"));
         return map;
     }
 
-    @GetMapping(path="/follow/searchuser/{tweetuser}")
-    public Map<String, Object> getUserPosts(@PathVariable("tweetuser") String tweetuser) {
-        logger.info("get posts of: " + tweetuser);
+    /*
+
+    @GetMapping(path="/follow/searchuser/{username}")
+    public Map<String, Object> getUserPosts(@PathVariable("username") String username) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis() - (5 * 1000));
 
         //System.out.println("timestamp: " + timestamp.getTime()*1000);
@@ -80,7 +101,7 @@ public class FollowController {
 
         return map;
     }
-
+     */
 
 
 }

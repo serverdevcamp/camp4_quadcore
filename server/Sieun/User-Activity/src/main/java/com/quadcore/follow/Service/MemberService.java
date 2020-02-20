@@ -1,3 +1,4 @@
+/*
 package com.quadcore.follow.Service;
 
 import com.quadcore.follow.Domain.Member;
@@ -22,6 +23,7 @@ public class MemberService {
 
     public void updateTweetMembers (String member, String tweetMember) {
         Member mem = repository.findMemberByUsername(member);
+
         ArrayList<String> fl;
 
         if (mem == null) {
@@ -33,8 +35,12 @@ public class MemberService {
             fl = mem.getTweetMembers();
         }
         System.out.println("update of: " + mem);
+
         fl.add(tweetMember);
         mem.setTweetMembers(fl);
         repository.save(mem);
     }
 }
+
+
+ */

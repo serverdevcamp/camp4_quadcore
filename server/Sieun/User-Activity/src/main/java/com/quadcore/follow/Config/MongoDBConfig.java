@@ -1,4 +1,4 @@
-
+/*
 
 package com.quadcore.follow.Config;
 
@@ -22,3 +22,6 @@ public class MongoDBConfig implements InitializingBean {
     }
 }
 
+
+
+ */
