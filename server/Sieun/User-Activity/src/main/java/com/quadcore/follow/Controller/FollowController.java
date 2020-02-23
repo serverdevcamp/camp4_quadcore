@@ -96,6 +96,7 @@ public class FollowController {
         Timestamp weekstamp = new Timestamp(System.currentTimeMillis() - (60 * 60 * 24 * 7 * 1000)); //a week
         //Timestamp nowstamp =new Timestamp(System.currentTimeMillis());
         //System.out.println("timestamp: " + timestamp.getTime()*1000);
+        logger.info("search user of: " + userid);
 
         List<Casan> c = casanRepository.findCasansByUser(date,weekstamp.getTime()*1000,time, userid);
         Map<String, Object> map = new HashMap<>();
@@ -108,7 +109,7 @@ public class FollowController {
     //1 sec
     @GetMapping(path="/follow/updateuser/{userid}/{date}/{time}")
     public Map<String, Object> updateUserHome(@PathVariable("userid") Long userid, @PathVariable("date") String date, @PathVariable("time") Long time) {
-
+        logger.info("recent data request of: " + userid);
         List<Casan> c = casanRepository.findCasansByTimestamp(date,time, userid);
         Map<String, Object> map = new HashMap<>();
         map.put("data", c);
