@@ -85,23 +85,6 @@ def save_tweet(data,time):
 
 
 if __name__ == "__main__":
-#     # 카산드라로부터 data 불러오기 (10초 마다)
-#     lines = spark.read \
-#         .format("org.apache.spark.sql.cassandra") \
-#         .options(table="master_dataset", keyspace="bts") \
-#         .load()
-#     # 현재시간 마이크로 세컨즈 까지
-#     current_time = int(time.time() * 1000000)
-#     print(current_time)  # 현재시간 출력
-#     # 현재 시간 부터 10초 전까지 data 불러오기
-# #     lines = lines.selectExpr(schema) \
-# #         .where((lines.timestamp >= current_time - 10000000) & (lines.timestamp <= current_time) & (
-# #                 lines.retweeted == True)).limit(10).cache()
-#     lines = lines.selectExpr(schema) \
-#              .where((lines.timestamp >= current_time - 60000000) & (lines.timestamp <= current_time) & (
-#                 lines.retweeted == True)).limit(100).cache()
-#     #lines.show()
-#     process_tweet(lines)
         while True:
             # 현재시간 마이크로 세컨즈 까지
             current_time = int(time.time() * 1000000)  # 현재시간 마이크로 세컨즈 까지
