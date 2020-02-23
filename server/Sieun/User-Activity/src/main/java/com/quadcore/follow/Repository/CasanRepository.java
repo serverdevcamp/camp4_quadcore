@@ -21,7 +21,7 @@ public interface CasanRepository extends CassandraRepository<Casan, Long> {
 
     //for HOME column: recent 1 minute
     @Query("SELECT * FROM bts.master_dataset WHERE date >= :date AND timestamp > :timestamp AND user_id=:userid limit 10 ALLOW FILTERING")
-    public List<Casan> findCasansByTimestamp(@Param("date") String date, @Param("timestamp") Long timestamp, @Param("user") Long userid);
+    public List<Casan> findCasansByTimestamp(@Param("date") String date, @Param("timestamp") Long timestamp, @Param("userid") Long userid);
 
 }
 
