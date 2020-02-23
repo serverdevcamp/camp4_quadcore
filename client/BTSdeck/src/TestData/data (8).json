@@ -1,0 +1,90 @@
+{
+   "created_at":"Tue Jan 28 06:40:24 +0000 2020",
+   "id":1222046750032027648,
+   "id_str":"1222046750032027648",
+   "text":"AWS Lambda(Python)\u3063\u3066 context.client_context.env['ENV_NAME'] \u3067\u74b0\u5883\u5909\u6570\u306e\u5024\u53d6\u308c\u308b\u306e\uff1f\nhttps:\/\/t.co\/imUfoAyaj0",
+   "source":"\u003ca href=\"http:\/\/twitter.com\/download\/iphone\" rel=\"nofollow\"\u003eTwitter for iPhone\u003c\/a\u003e",
+   "truncated":false,
+   "in_reply_to_status_id":null,
+   "in_reply_to_status_id_str":null,
+   "in_reply_to_user_id":null,
+   "in_reply_to_user_id_str":null,
+   "in_reply_to_screen_name":null,
+   "user":{
+      "id":11435192,
+      "id_str":"11435192",
+      "name":"\u3072\u3067",
+      "screen_name":"hide32767",
+      "location":"\u3069\u3053\u304b",
+      "url":"http:\/\/nicovideo.g.hatena.ne.jp\/hdkINO33\/",
+      "description":"\u30cb\u30b3\u30cb\u30b3\u30a2\u30a4\u30de\u30b9\u90e8\u3060\u3063\u305f\u305d\u306e\u8fba\u306e\u4eba\u3002http:\/\/www.nicovideo.jp\/user\/577035",
+      "translator_type":"none",
+      "protected":false,
+      "verified":false,
+      "followers_count":1011,
+      "friends_count":928,
+      "listed_count":45,
+      "favourites_count":102053,
+      "statuses_count":61074,
+      "created_at":"Sat Dec 22 16:47:55 +0000 2007",
+      "utc_offset":null,
+      "time_zone":null,
+      "geo_enabled":false,
+      "lang":null,
+      "contributors_enabled":false,
+      "is_translator":false,
+      "profile_background_color":"9AE4E8",
+      "profile_background_image_url":"http:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png",
+      "profile_background_image_url_https":"https:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png",
+      "profile_background_tile":true,
+      "profile_link_color":"0000FF",
+      "profile_sidebar_border_color":"87BC44",
+      "profile_sidebar_fill_color":"E0FF92",
+      "profile_text_color":"000000",
+      "profile_use_background_image":true,
+      "profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/2428547771\/cva9lnoa0ri3o8gskzs8_normal.png",
+      "profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/2428547771\/cva9lnoa0ri3o8gskzs8_normal.png",
+      "default_profile":false,
+      "default_profile_image":false,
+      "following":null,
+      "follow_request_sent":null,
+      "notifications":null
+   },
+   "geo":null,
+   "coordinates":null,
+   "place":null,
+   "contributors":null,
+   "is_quote_status":false,
+   "quote_count":0,
+   "reply_count":0,
+   "retweet_count":0,
+   "favorite_count":0,
+   "entities":{
+      "hashtags":[
+
+      ],
+      "urls":[
+         {
+            "url":"https:\/\/t.co\/imUfoAyaj0",
+            "expanded_url":"https:\/\/docs.aws.amazon.com\/ja_jp\/lambda\/latest\/dg\/python-context-object.html",
+            "display_url":"docs.aws.amazon.com\/ja_jp\/lambda\/l\u2026",
+            "indices":[
+               73,
+               96
+            ]
+         }
+      ],
+      "user_mentions":[
+
+      ],
+      "symbols":[
+
+      ]
+   },
+   "favorited":false,
+   "retweeted":false,
+   "possibly_sensitive":false,
+   "filter_level":"low",
+   "lang":"ja",
+   "timestamp_ms":"1580193624395"
+}
