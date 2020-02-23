@@ -62,8 +62,6 @@ public class CasanController {
     }
 
 
-
-
     @GetMapping(path="/data/search/{keyword}/{date}/{time}")
     public Map<String, Object> gotKeyword(@PathVariable("keyword") String keyword, @PathVariable String date, @PathVariable Long time) {
         System.out.println("keyword subscribed : "  + keyword);
@@ -84,7 +82,6 @@ public class CasanController {
     }
 
 
-
     @GetMapping(path="/data/get20/{keyword}/{date}/{time}")
     public Map<String, Object>  li(@PathVariable("keyword") String keyword, @PathVariable String date, @PathVariable Long time) {
         List<Casan> c = getPastData(keyword, date, time);
@@ -93,8 +90,6 @@ public class CasanController {
         map.put("errorCode", 10);
         return map;
     }
-
-
 
 
     public String getSHA256Token(String toHash){

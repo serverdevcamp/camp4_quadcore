@@ -62,13 +62,25 @@ class Followings extends Component {
 
     
       getPastHomeData=()=> {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
         
-          axios.get(`http://${ip}/follow/searchuser/${this.state.userid}/${this.state.ld}/${(today.getTime() - 5000)*1000}`, {
+        if(dd<10) {
+            dd='0'+dd
+        } 
+        if(mm<10) {
+            mm='0'+mm
+        } 
+        var td = yyyy+'-'+mm+'-'+dd;
+
+          axios.get(`http://${ip}/follow/searchuser/${this.state.userid}/${this.state.ld}/${this.state.lt}`, {
             headers: {
               "Authorization" : "Bearer " + cookie.load('access-token')
             }
           }).then(res => {
-              if (res.data.errorCode == 10) {
+            if (res.data.errorCode == 10) {
                 console.log("get past home data (5sec) success\n");
                 var arr = res.data.data;
                 console.log(arr);
@@ -80,7 +92,9 @@ class Followings extends Component {
                 } else {
                   alert("없음");
                 }
-               }
+            } else {
+                console.log("errorrrrr");
+            }
           }).catch(e => {
               console.log(e);
           })  
@@ -102,7 +116,7 @@ class Followings extends Component {
         } 
         var td = yyyy+'-'+mm+'-'+dd;
 
-        axios.get(`http://${ip}/follow/updateuser/${this.state.userid}/${td}/${this.state.lt}`, {
+        axios.get(`http://${ip}/follow/updateuser/${this.state.userid}/${td}/${(today.getTime() - 5000)*1000}`, {
           headers: {
             "Authorization" : "Bearer " + cookie.load('access-token')
           }
@@ -158,8 +172,8 @@ class Followings extends Component {
             <div>
                
                 <button onClick={this.firstData}>지금</button>
-                <button onClick={this.getPastData}>getpast10</button>
-                <button onClick={this.getPastHomeData}>최근 5초전데이터 get</button>
+                <button onClick={this.getPastHomeData}>getpast10</button>
+                <button onClick={this.getRecentData}>최근 5초전데이터 get</button>
                 
             </div>
         )
