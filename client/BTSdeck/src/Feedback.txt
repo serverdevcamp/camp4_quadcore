@@ -1,0 +1,10 @@
+1. React Project 전체적인 파일 구조 프로세스
+2. Col 컴포넌트가 없는 것.
+3. 컴포넌트 렌더링 상속하는 부분 처리하는 부분
+4. 소켓 및 API 서버와 통신하는 부분 
+
+
+
+1. Trending |   
+2. BTS      | socket
+3. search   | socket
