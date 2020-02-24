@@ -91,14 +91,26 @@ public class FollowController {
 
 
     //for HOME column: past data
-    @GetMapping(path="/follow/searchuser/{userid}/{date}/{time}")
-    public Map<String, Object> getUserPosts(@PathVariable("userid") Long userid, @PathVariable("date") String date, @PathVariable("time") Long time) {
+    @GetMapping(path="/follow/searchuser/{username}/{date}/{time}")
+    public Map<String, Object> getUserPosts(@PathVariable("username") String username, @PathVariable("date") String date, @PathVariable("time") Long time) {
         Timestamp weekstamp = new Timestamp(System.currentTimeMillis() - (60 * 60 * 24 * 7 * 1000)); //a week
         //Timestamp nowstamp =new Timestamp(System.currentTimeMillis());
         //System.out.println("timestamp: " + timestamp.getTime()*1000);
-        logger.info("search user of: " + userid);
+        logger.info("search user of: " + username);
 
-        List<Casan> c = casanRepository.findCasansByUser(date,weekstamp.getTime()*1000,time, userid);
+        Followings m = followingRepository.findByUsername(username);
+        String st = m.getTweetMembers();
+        //ArrayList<String> followings =memberService.findMemberByUsername(member).getTweetMembers();
+
+        String[] strlist =  st.split("/");
+        Long[] result = new Long[strlist.length];
+        for (int i = 0; i < strlist.length; i++)
+            result[i] = Long.parseLong(strlist[i]);
+
+        logger.info("result: " + result);
+        //List<Casan> c = casanRepository.findCasansByUser(date,weekstamp.getTime()*1000,time, result);
+        List<Casan> c = casanRepository.findCasansByCreate_at(date,weekstamp.getTime()*1000,time, result);
+
         Map<String, Object> map = new HashMap<>();
         map.put("data", c);
         map.put("errorCode", 10);
@@ -106,7 +118,7 @@ public class FollowController {
     }
 
 
-    //1 sec
+    //recent 1 minute
     @GetMapping(path="/follow/updateuser/{userid}/{date}/{time}")
     public Map<String, Object> updateUserHome(@PathVariable("userid") Long userid, @PathVariable("date") String date, @PathVariable("time") Long time) {
         logger.info("recent data request of: " + userid);
