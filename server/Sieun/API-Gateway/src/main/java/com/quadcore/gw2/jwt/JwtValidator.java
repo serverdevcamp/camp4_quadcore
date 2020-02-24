@@ -26,7 +26,7 @@ public class JwtValidator implements Serializable {
         result.put("username", parseInfo.getSubject());
         result.put("role", parseInfo.get("role", List.class));
         result.put("isExpired", isExpired);
-        System.out.println("parseinfo in getuseroarseinfo: " + result);
+        //System.out.println("parseinfo in getuseroarseinfo: " + result);
         return result;
     }
 

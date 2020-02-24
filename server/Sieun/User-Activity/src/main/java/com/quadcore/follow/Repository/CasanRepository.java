@@ -18,7 +18,7 @@ public interface CasanRepository extends CassandraRepository<Casan, Long> {
     public List<Casan> findCasansByUser(@Param("date") String date, @Param("weekstamp") Long weekstamp, @Param("pointstamp") Long pointstamp, @Param("userid") Long userid);
 
     //for HOME column: past data, by Long list
-    @Query("SELECT * FROM bts.master_dataset WHERE timestamp > :weekstamp AND  timestamp < :pointstamp AND user_id IN :user_id limit 10 ALLOW FILTERING")
+    @Query("SELECT * FROM bts.master_dataset WHERE date >= :date AND timestamp > :weekstamp AND  timestamp < :pointstamp AND user_id IN :user_id limit 10 ALLOW FILTERING")
     public List<Casan> findCasansByCreate_at(@Param("date") String date, @Param("weekstamp") Long weekstamp, @Param("pointstamp") Long pointstamp, @Param("user_id") List<Long> user_id);
 
 

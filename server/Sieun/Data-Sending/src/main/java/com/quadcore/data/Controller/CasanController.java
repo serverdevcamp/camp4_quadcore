@@ -85,6 +85,7 @@ public class CasanController {
     @GetMapping(path="/data/get20/{keyword}/{date}/{time}")
     public Map<String, Object>  li(@PathVariable("keyword") String keyword, @PathVariable String date, @PathVariable Long time) {
         List<Casan> c = getPastData(keyword, date, time);
+        logger.info("get20 get data: " + c);
         Map<String, Object> map = new HashMap<>();
         map.put("data", c);
         map.put("errorCode", 10);
@@ -115,7 +116,7 @@ public class CasanController {
         String token = getSHA256Token(username);
         Map<String,Object> map = new HashMap<>();
         map.put("errorCode", 10);
-        System.out.println("username: " + username);
+        //System.out.println("username: " + username);
         stringRedisTemplate.opsForValue().set("st-"+username, token);
         stringRedisTemplate.expire("st-"+username, 30*1000, TimeUnit.MILLISECONDS); // for 30 sec
 
