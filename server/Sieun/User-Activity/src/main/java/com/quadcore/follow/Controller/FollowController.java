@@ -100,13 +100,13 @@ public class FollowController {
 
         Followings m = followingRepository.findByUsername(username);
         String st = m.getTweetMembers();
+        logger.info("st : " + st);
         //ArrayList<String> followings =memberService.findMemberByUsername(member).getTweetMembers();
 
         String[] strlist =  st.split("/");
-        Long[] result = new Long[strlist.length];
+        List<Long> result = new ArrayList<>();
         for (int i = 0; i < strlist.length; i++)
-            result[i] = Long.parseLong(strlist[i]);
-
+            result.add(Long.parseLong(strlist[i]));
         logger.info("result: " + result);
         //List<Casan> c = casanRepository.findCasansByUser(date,weekstamp.getTime()*1000,time, result);
         List<Casan> c = casanRepository.findCasansByCreate_at(date,weekstamp.getTime()*1000,time, result);
