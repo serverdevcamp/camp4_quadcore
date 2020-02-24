@@ -1,0 +1,186 @@
+{
+   "created_at":"Tue Jan 28 07:55:20 +0000 2020",
+   "id":1222065609703247872,
+   "id_str":"1222065609703247872",
+   "text":"#smilegateServerDev\nhttps:\/\/t.co\/OPpP0xZb0l\n\uacfc\uc5f0 \ub2f4\uae38 \uac83 \uc778\uac00?",
+   "source":"\u003ca href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\"\u003eTwitter Web App\u003c\/a\u003e",
+   "truncated":false,
+   "in_reply_to_status_id":null,
+   "in_reply_to_status_id_str":null,
+   "in_reply_to_user_id":null,
+   "in_reply_to_user_id_str":null,
+   "in_reply_to_screen_name":null,
+   "user":{
+      "id":140439875,
+      "id_str":"140439875",
+      "name":"\uae40\ucc2c\uc601",
+      "screen_name":"shinychan95",
+      "location":"Korea Incheon18820550",
+      "url":null,
+      "description":null,
+      "translator_type":"none",
+      "protected":false,
+      "verified":false,
+      "followers_count":2,
+      "friends_count":2,
+      "listed_count":0,
+      "favourites_count":0,
+      "statuses_count":2,
+      "created_at":"Wed May 05 13:59:14 +0000 2010",
+      "utc_offset":null,
+      "time_zone":null,
+      "geo_enabled":false,
+      "lang":null,
+      "contributors_enabled":false,
+      "is_translator":false,
+      "profile_background_color":"C0DEED",
+      "profile_background_image_url":"http:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png",
+      "profile_background_image_url_https":"https:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png",
+      "profile_background_tile":false,
+      "profile_link_color":"1DA1F2",
+      "profile_sidebar_border_color":"C0DEED",
+      "profile_sidebar_fill_color":"DDEEF6",
+      "profile_text_color":"333333",
+      "profile_use_background_image":true,
+      "profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/3040226453\/a0d8d5a3f0e4bd80cdffd0591afdad4f_normal.jpeg",
+      "profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/3040226453\/a0d8d5a3f0e4bd80cdffd0591afdad4f_normal.jpeg",
+      "default_profile":true,
+      "default_profile_image":false,
+      "following":null,
+      "follow_request_sent":null,
+      "notifications":null
+   },
+   "geo":null,
+   "coordinates":null,
+   "place":null,
+   "contributors":null,
+   "quoted_status_id":1218059318924169217,
+   "quoted_status_id_str":"1218059318924169217",
+   "quoted_status":{
+      "created_at":"Fri Jan 17 06:35:46 +0000 2020",
+      "id":1218059318924169217,
+      "id_str":"1218059318924169217",
+      "text":"\ud83d\ude31",
+      "source":"\u003ca href=\"http:\/\/twitter.com\/download\/iphone\" rel=\"nofollow\"\u003eTwitter for iPhone\u003c\/a\u003e",
+      "truncated":false,
+      "in_reply_to_status_id":null,
+      "in_reply_to_status_id_str":null,
+      "in_reply_to_user_id":null,
+      "in_reply_to_user_id_str":null,
+      "in_reply_to_screen_name":null,
+      "user":{
+         "id":62755629,
+         "id_str":"62755629",
+         "name":"YOUNHA",
+         "screen_name":"younhaholic",
+         "location":"south korea",
+         "url":"http:\/\/Instagram.com\/younha_holic",
+         "description":"Musician",
+         "translator_type":"none",
+         "protected":false,
+         "verified":false,
+         "followers_count":254335,
+         "friends_count":16,
+         "listed_count":4116,
+         "favourites_count":73,
+         "statuses_count":7812,
+         "created_at":"Tue Aug 04 08:09:15 +0000 2009",
+         "utc_offset":null,
+         "time_zone":null,
+         "geo_enabled":false,
+         "lang":null,
+         "contributors_enabled":false,
+         "is_translator":false,
+         "profile_background_color":"131516",
+         "profile_background_image_url":"http:\/\/abs.twimg.com\/images\/themes\/theme14\/bg.gif",
+         "profile_background_image_url_https":"https:\/\/abs.twimg.com\/images\/themes\/theme14\/bg.gif",
+         "profile_background_tile":true,
+         "profile_link_color":"009999",
+         "profile_sidebar_border_color":"EEEEEE",
+         "profile_sidebar_fill_color":"EFEFEF",
+         "profile_text_color":"333333",
+         "profile_use_background_image":true,
+         "profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1211311075871739905\/UsXtIgky_normal.jpg",
+         "profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1211311075871739905\/UsXtIgky_normal.jpg",
+         "profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/62755629\/1577634071",
+         "default_profile":false,
+         "default_profile_image":false,
+         "following":null,
+         "follow_request_sent":null,
+         "notifications":null
+      },
+      "geo":null,
+      "coordinates":null,
+      "place":null,
+      "contributors":null,
+      "quoted_status_id":1217933084986957824,
+      "quoted_status_id_str":"1217933084986957824",
+      "is_quote_status":true,
+      "quote_count":42,
+      "reply_count":782,
+      "retweet_count":5152,
+      "favorite_count":24644,
+      "entities":{
+         "hashtags":[
+
+         ],
+         "urls":[
+
+         ],
+         "user_mentions":[
+
+         ],
+         "symbols":[
+
+         ]
+      },
+      "favorited":false,
+      "retweeted":false,
+      "filter_level":"low",
+      "lang":"und"
+   },
+   "quoted_status_permalink":{
+      "url":"https:\/\/t.co\/OPpP0xZb0l",
+      "expanded":"https:\/\/twitter.com\/younhaholic\/status\/1218059318924169217",
+      "display":"twitter.com\/younhaholic\/st\u2026"
+   },
+   "is_quote_status":true,
+   "quote_count":0,
+   "reply_count":0,
+   "retweet_count":0,
+   "favorite_count":0,
+   "entities":{
+      "hashtags":[
+         {
+            "text":"smilegateServerDev",
+            "indices":[
+               0,
+               19
+            ]
+         }
+      ],
+      "urls":[
+         {
+            "url":"https:\/\/t.co\/OPpP0xZb0l",
+            "expanded_url":"https:\/\/twitter.com\/younhaholic\/status\/1218059318924169217",
+            "display_url":"twitter.com\/younhaholic\/st\u2026",
+            "indices":[
+               20,
+               43
+            ]
+         }
+      ],
+      "user_mentions":[
+
+      ],
+      "symbols":[
+
+      ]
+   },
+   "favorited":false,
+   "retweeted":false,
+   "possibly_sensitive":false,
+   "filter_level":"low",
+   "lang":"ko",
+   "timestamp_ms":"1580198120891"
+}

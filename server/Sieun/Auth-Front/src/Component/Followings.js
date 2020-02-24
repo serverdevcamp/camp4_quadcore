@@ -116,7 +116,7 @@ class Followings extends Component {
         } 
         var td = yyyy+'-'+mm+'-'+dd;
 
-        axios.get(`http://${ip}/follow/updateuser/${this.state.userid}/${td}/${(today.getTime() - 5000)*1000}`, {
+        axios.get(`http://${ip}/follow/updateuser/${this.state.userid}/${td}/${(today.getTime() - (60)*1000)*1000}`, { //1분 전
           headers: {
             "Authorization" : "Bearer " + cookie.load('access-token')
           }

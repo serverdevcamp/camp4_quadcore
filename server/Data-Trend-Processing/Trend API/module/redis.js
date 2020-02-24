@@ -1,5 +1,6 @@
 const redis = require('redis');
 const client = redis.createClient(6379,'localhost');
+client.auth(12341234);
 // redis 접속 모듈화 
 module.exports = {	
     set : async (...args) => {
