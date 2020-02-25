@@ -1,5 +1,4 @@
 import pyspark
-from pyspark.streaming import StreamingContext
 from pyspark.sql.types import *
 import json, time, datetime, redis
 from itertools import chain
@@ -143,25 +142,25 @@ def word_count(list):
 def save_hashtag(data, time):
     # key : 현재 시간 , value : 순위 결과 json 으로 redis 저장
     rank_to_json = json.dumps(data)
-    myRedis.set(time, rank_to_json, ex=60 * 60)
+    myRedis.set(time, rank_to_json, ex=60 * 60 * 24 * 7)
     print('저장완료')
 
 
 if __name__ == "__main__":
     while True:
-        # 카산드라로부터 data 불러오기  (20초마다)
-        lines = spark.read \
-            .format("org.apache.spark.sql.cassandra") \
-            .options(table="master_dataset", keyspace="bts") \
-            .load()
+        # 현재시간 마이크로 세컨즈 까지
         current_time = int(time.time() * 1000000)  # 현재시간 마이크로 세컨즈 까지
         # redis 저장 포맷 시간 형식 ( 년/월/일/시/분) 으로
         current_time_format = datetime.datetime.fromtimestamp(int(current_time / 1000000)).strftime('%Y/%m/%d/%H/%M')
+        # 카산드라로부터 data 불러오기 (30초 마다)
+        lines = spark.read \
+            .format("org.apache.spark.sql.cassandra") \
+            .options(table="master_dataset", keyspace="bts") \
+            .load().select('entities').where(col('timestamp') >= current_time - SECONDS) \
+            .where(col('timestamp') <= current_time).limit(100).cache()
         print(current_time_format)
         print(current_time)  # 현재시간 출력
-        # 현재 시간 부터 20초 전까지 data 불러오기
-        lines = lines.select('entities') \
-            .where((lines.timestamp >= current_time - SECONDS) & (lines.timestamp <= current_time)).limit(100).cache()
+
         result = get_streaming(lines)
         save_hashtag(result, current_time_format)
         time.sleep(20)
