@@ -48,12 +48,12 @@ similarwords = [
     ['지민', 'JIMIN'],
     ['제이홉', 'JHOPE'],
     ['슈가', 'SUGA'],
-    ['김태형', '태형', '뷔', 'TAEHYUNG'],
-    ['김남준', '남준', '랩몬', 'RM'],
-    ['김석진', '석진', '진', 'SEOKJIN', 'JIN']
+    ['김태형', '태형', '뷔', 'KIMTAEHYUNG', 'TAEHYUNG'],
+    ['김남준', '남준', '랩몬', 'KIMNAMJOON', 'NAMJOON'],
+    ['김석진', '석진', '진', 'KIMSEOKJIN', 'SEOKJIN']
 ]
 
-SECONDS = 20000000
+SECONDS = 10000000
 
 
 # get DStream dataframe
@@ -108,7 +108,7 @@ def process_hashtag(text):
                 words = words.replace(i, 'Suga')
         for i in similarwords[4]:
             if i in words:
-                words = words.replace(i, 'Taehyung')
+                words = words.replace(i, 'V')
         for i in similarwords[5]:
             if i in words:
                 words = words.replace(i, 'RM')
@@ -136,7 +136,7 @@ def word_count(list):
     pairs = list.map(lambda word: (word, 1))
     # 상위 10개만 가져오기 + 등장빈도 2번 이상
     wordCounts = pairs.reduceByKey(lambda x, y: x + y).filter(lambda args: args[1] > 2)
-    ranking = wordCounts.takeOrdered(20, lambda args: -args[1])
+    ranking = wordCounts.takeOrdered(15, lambda args: -args[1])
     print(ranking)
     return ranking
 
@@ -146,7 +146,7 @@ def word_count(list):
 def save_hashtag(data, time):
     # key : 현재 시간 , value : 순위 결과 json 으로 redis 저장
     rank_to_json = json.dumps(data)
-    myRedis.set(time, rank_to_json, ex=60 * 60)
+    myRedis.set('hashtag', rank_to_json, ex=60 * 60)
     print('저장완료')
 
 
@@ -161,7 +161,7 @@ if __name__ == "__main__":
             .format("org.apache.spark.sql.cassandra") \
             .options(table="master_dataset", keyspace="bts") \
             .load().select('entities').where(col('timestamp') >= current_time - SECONDS) \
-            .where(col('timestamp') <= current_time).limit(100).cache()
+            .where(col('timestamp') <= current_time).cache()
         print(current_time_format)
         print(current_time)  # 현재시간 출력
 
@@ -172,4 +172,5 @@ if __name__ == "__main__":
         else:
             print('there is no data')
         time.sleep(10)
+
 
