@@ -91,6 +91,9 @@ export default class ProfileUser extends Component {
             visible : false
         });
     }
+    componentDidMount(){
+        console.log('compo : ', this.props.rcvData)
+    }
 
     render(){
         return (
@@ -120,30 +123,23 @@ export default class ProfileUser extends Component {
                         <div style={styles.bottomItem}>
                             {/* <img src={tweetDecklogo} alt="tweetDeck" height="60" width="80"></img> */}
                             <h2>Tweets</h2>
-                            <p> Count  </p>
+                            <p> {this.props.rcvData.statuses_count}  </p>
                         </div>
                         <div>
                             {/* <img src={tweetDecklogo} alt="tweetDeck" height="60" width="80"></img> */}
                             <h2>Following</h2>
-                            <p> Count  </p>
+                            <p> {this.props.rcvData.friends_count}  </p>
                         </div>
                         <div>
                             {/* <img src={tweetDecklogo} alt="tweetDeck" height="60" width="80"></img> */}
                             <h2>Followers</h2>
-                            <p> Count </p>
+                            <p> {this.props.rcvData.followers_count} </p>
                         </div>
                         <div>
                             {/* <img src={tweetDecklogo} alt="tweetDeck" height="60" width="80"></img> */}
                             <h2>LISTED</h2>
-                            <p> Count </p>
+                            <p> {this.props.rcvData.listed_count} </p>
                         </div>
-                        {/* <div>
-                            <img src={tweetDecklogo} alt="tweetDeck" height="60" width="80"></img>
-                            <p> Twitter </p>
-                            <a></a>
-                        </div> */}
-                        {/* <h1>Id : {this.props.userName}</h1>
-                        <p>Some Contents</p> */}
                     </div>
                 </Modal>
             </div>

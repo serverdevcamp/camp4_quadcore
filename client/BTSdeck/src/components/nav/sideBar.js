@@ -101,9 +101,10 @@ class Sidebar extends Component {
           <div style={styles.logoStyle}>
             <img src={tweetDecklogo} alt="tweetDeck" height="80" width="100"></img>
           </div>
+
+          {/* <TweetButton/> */}
           <button style={styles.tweetButton} className="tweet-button" type="submit" value="Tweet">Tweet
           </button>
-          {/* <TweetButton/> */}
           <div className="search-upper">
             <div className="search">
               <input className="input-search" placeholder="Search Twitter"></input>

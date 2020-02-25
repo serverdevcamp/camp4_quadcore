@@ -27,12 +27,10 @@ class BTSColumn extends Component {
       };
       
       componentDidMount(){
-        // this.fetchData()
         console.log("component Did mount!")
-        this.getSocketToken();
-        this.initCall()
-        this.get20()
-        // this.search()
+        // this.getSocketToken();
+        // this.initCall()
+        // this.get20()
       }
 
       initCall(){
@@ -126,6 +124,7 @@ class BTSColumn extends Component {
               if (res.data.errorCode === 10) {
                 console.log("get20 success\n");
                 var arr = res.data.data;
+                // console.log("arr type : \n ", arr)
 
                 arr.map((dat, index) => {
                   this.setState({
@@ -194,13 +193,7 @@ class BTSColumn extends Component {
       const ee = this.state.data.map(
         (dat, index) => {
           var user = JSON.parse(dat.user);
-          // var user = JSON.parse(dat)
-          // this._jsonToWriteFile(dat);
           return <div>
-              {/* <br/>user: {user.name} 
-              <br/>text: {dat.text} 
-              <br/>retweeted: {dat.retweeted} 
-              <br/>time: {dat.timestamp} */}
               <Tweet rcvData={dat} />
             </div>
         });

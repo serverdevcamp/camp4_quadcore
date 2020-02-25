@@ -23,7 +23,7 @@ class SampleComponent extends React.Component {
         test:'',
         serverTime: null,
         data: []
-    };
+    }; 
 }
 
   onMessageReceive = (msg, topic) => {
@@ -80,7 +80,6 @@ class SampleComponent extends React.Component {
         // Helps during debugging, remove in production
         debug: (str) => {
           console.log(new Date(), str);
-          
         }
       });
       this.client.activate();
