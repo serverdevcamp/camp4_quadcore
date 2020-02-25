@@ -37,7 +37,7 @@ class Followings extends Component {
         } 
         var td = yyyy+'-'+mm+'-'+dd;
       
-        axios.get(`http://${ip}/follow/searchuser/${this.state.userid}/${td}/${(today.getTime())*1000}`, {
+        axios.get(`http://${ip}/follow/searchuser/tlatldms/${td}/${(today.getTime())*1000}`, {
           headers: {
             "Authorization" : "Bearer " + cookie.load('access-token')
           }
@@ -75,7 +75,7 @@ class Followings extends Component {
         } 
         var td = yyyy+'-'+mm+'-'+dd;
 
-          axios.get(`http://${ip}/follow/searchuser/${this.state.userid}/${this.state.ld}/${this.state.lt}`, {
+          axios.get(`http://${ip}/follow/searchuser/tlatldms/${this.state.ld}/${this.state.lt}`, {
             headers: {
               "Authorization" : "Bearer " + cookie.load('access-token')
             }
@@ -116,7 +116,7 @@ class Followings extends Component {
         } 
         var td = yyyy+'-'+mm+'-'+dd;
 
-        axios.get(`http://${ip}/follow/updateuser/${this.state.userid}/${td}/${(today.getTime() - 5000)*1000}`, {
+        axios.get(`http://${ip}/follow/updateuser/${this.state.userid}/${td}/${(today.getTime() - (60)*1000)*1000}`, { //1분 전
           headers: {
             "Authorization" : "Bearer " + cookie.load('access-token')
           }

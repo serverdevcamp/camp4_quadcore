@@ -40,6 +40,7 @@ public class Gw2Application {
         String followServer="http://localhost:8086/";
         String webSocketServer = "ws://localhost:8888/";
         String dataServer = "http://localhost:8888/";
+        String trendServer = "http://20.41.86.218:3888";
 
         return builder.routes()
                 .route("auth",  r-> r.path("/auth/**")
@@ -77,6 +78,12 @@ public class Gw2Application {
                                 .filter(jwtRequestFilter.apply(new JwtRequestFilter.Config("ROLE_USER"))
                                 ))
                         .uri(dataServer)
+                )
+                .route("trend", r->r.path("/trend/**")
+                        .filters(f -> f
+                                .filter(jwtRequestFilter.apply(new JwtRequestFilter.Config("ROLE_USER"))
+                                ))
+                        .uri(trendServer)
                 )
 
                 .route("socket", r->r.path("/wscn/**") //.and().method("GET")
