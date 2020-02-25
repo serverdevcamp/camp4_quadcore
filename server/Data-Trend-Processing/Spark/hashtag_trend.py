@@ -47,13 +47,13 @@ similarwords = [
     ['정국', 'JUNGKOOK'],
     ['지민', 'JIMIN'],
     ['제이홉', 'JHOPE'],
-    ['슈가', 'SUGA'],
+    ['슈가', '윤기'],
     ['김태형', '태형', '뷔', 'KIMTAEHYUNG', 'TAEHYUNG'],
     ['김남준', '남준', '랩몬', 'KIMNAMJOON', 'NAMJOON'],
     ['김석진', '석진', '진', 'KIMSEOKJIN', 'SEOKJIN']
 ]
 
-SECONDS = 10000000
+SECONDS = 30000000
 
 
 # get DStream dataframe
@@ -105,7 +105,7 @@ def process_hashtag(text):
                 words = words.replace(i, 'JHope')
         for i in similarwords[3]:
             if i in words:
-                words = words.replace(i, 'Suga')
+                words = words.replace(i, 'SUGA')
         for i in similarwords[4]:
             if i in words:
                 words = words.replace(i, 'V')
@@ -144,9 +144,9 @@ def word_count(list):
 
 
 def save_hashtag(data, time):
-    # key : 현재 시간 , value : 순위 결과 json 으로 redis 저장
+    # key : 'hashtag' , value : 순위 결과 json 으로 redis 저장
     rank_to_json = json.dumps(data)
-    myRedis.set('hashtag', rank_to_json, ex=60 * 60)
+    myRedis.set('hashtag', rank_to_json, ex=60 * 60 * 24 * 7)
     print('저장완료')
 
 
@@ -171,6 +171,6 @@ if __name__ == "__main__":
             save_hashtag(result, current_time_format)
         else:
             print('there is no data')
-        time.sleep(10)
+        time.sleep(20)
 
 
