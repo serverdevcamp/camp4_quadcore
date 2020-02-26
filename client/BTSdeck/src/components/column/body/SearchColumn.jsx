@@ -128,14 +128,14 @@ class SearchColumn extends Component {
                   cookie.save('last-time-'+encodeURIComponent(this.props.search), arr[arr.length-1].timestamp);
                   cookie.save('last-date-'+encodeURIComponent(this.props.search), arr[arr.length-1].date);
                 } else {
-                  alert("없음 2");
+                  // alert("없음 2");
                 }
                }
           }).catch(e => {
               console.log(e);
           })  
         } else {
-          alert("없음 1");
+          // alert("없음 1");
         }
       }
       // ${yunlee}

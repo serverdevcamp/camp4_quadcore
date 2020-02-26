@@ -13,7 +13,7 @@ const hashtagRank = 'trend/hashtag'
 const trendTweetTime = "2020/02/25/17/02"
 const ip = "20.41.86.4:5000";
 
-class HomeColumn extends Component {
+class RankingColumn extends Component {
     state = {
         data: [],
         items: 40,
@@ -91,7 +91,7 @@ class HomeColumn extends Component {
         )
     }
 }
-export default HomeColumn;
+export default RankingColumn;
     
         // _getTrend(){
         //     let myHeaders = new Headers();

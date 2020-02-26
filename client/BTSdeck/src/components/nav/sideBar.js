@@ -102,6 +102,7 @@ class Sidebar extends Component {
         this.setState({
             [e.target.name] : e.target.value,
         })
+
       }
 
 
@@ -116,7 +117,6 @@ class Sidebar extends Component {
           <div className="search-upper">
             <div className="search">
               <input name="search" onChange={this.handleChange} className="input-search" placeholder="Search Twitter"></input>
-              <a href="#"></a>
             </div>
           </div>
           <HomeButton/>
