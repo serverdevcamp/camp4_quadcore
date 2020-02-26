@@ -28,9 +28,9 @@ class BTSColumn extends Component {
       
       componentDidMount(){
         console.log("component Did mount!")
-        // this.getSocketToken();
-        // this.initCall()
-        // this.get20()
+        this.getSocketToken();
+        this.initCall()
+        this.get20()
       }
 
       initCall(){

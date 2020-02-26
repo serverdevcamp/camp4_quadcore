@@ -12,11 +12,11 @@ import cookie from 'react-cookies';
 
 import Tweet from '../../tweets/Tweet'
 const ip = "20.41.86.4:5000";
-const keyword = "BTS";
 
 class SearchColumn extends Component {
     state = {
         datas: [],
+        search: '',
         pageNumber: 1,
         items: 40,
         hasMore: true
@@ -25,11 +25,11 @@ class SearchColumn extends Component {
       componentDidMount(){
         // this.fetchData()
         // 주류
-        // this.getSocketToken();
-        // this.initCall()
-        // this.get20()
+        this.getSocketToken();
+        this.initCall()
+        this.get20()
       }
-
+// {this.props.search}
       initCall(){
         var today = new Date();
         var dd = today.getDate();
@@ -43,7 +43,7 @@ class SearchColumn extends Component {
             mm='0'+mm
         }
         var td = yyyy+'-'+mm+'-'+dd;
-        axios.get(`http://${ip}/data/search/${encodeURIComponent(keyword)}/${td}/${(today.getTime())*1000}`, {
+        axios.get(`http://${ip}/data/search/${encodeURIComponent(this.props.search)}/${td}/${(today.getTime())*1000}`, {
           headers: {
             "Authorization" : "Bearer " + cookie.load('access-token')
           }
@@ -51,11 +51,9 @@ class SearchColumn extends Component {
             if (res.data.errorCode === 10) {
               console.log("search zsuccess\n");
               var arr = Array.from(res.data.data);
-              // console.log("arrr: ", arr);
-              // console.log('#BTS');
               if (arr.length) {
-                cookie.save('last-time-'+encodeURIComponent(keyword), arr[arr.length-1].timestamp);
-                cookie.save('last-date-'+encodeURIComponent(keyword), arr[arr.length-1].date);
+                cookie.save('last-time-'+encodeURIComponent(this.props.search), arr[arr.length-1].timestamp);
+                cookie.save('last-date-'+encodeURIComponent(this.props.search), arr[arr.length-1].date);
               }
             }
         }).catch(e => {
@@ -70,7 +68,7 @@ class SearchColumn extends Component {
       }
 
       search = () => {
-        this.client.subscribe(`/topic/${keyword}`, message => {
+        this.client.subscribe(`/topic/${this.props.search}`, message => {
           // console.log(new Date());
           var datas = JSON.parse(message.body);
           // console.log(datas);
@@ -90,7 +88,7 @@ class SearchColumn extends Component {
             mm='0'+mm
         }
         var td = yyyy+'-'+mm+'-'+dd;
-        axios.get(`http://${ip}/data/search/${encodeURIComponent(keyword)}/${td}/${(today.getTime())*1000}`, {
+        axios.get(`http://${ip}/data/search/${encodeURIComponent(this.props.search)}/${td}/${(today.getTime())*1000}`, {
           headers: {
             "Authorization" : "Bearer " + cookie.load('access-token')
           }
@@ -98,11 +96,9 @@ class SearchColumn extends Component {
             if (res.data.errorCode === 10) {
               console.log("search zsuccess\n");
               var arr = Array.from(res.data.data);
-              // console.log("arrr: ", arr);
-              // console.log('#BTS');
               if (arr.length) {
-                cookie.save('last-time-'+encodeURIComponent(keyword), arr[arr.length-1].timestamp);
-                cookie.save('last-date-'+encodeURIComponent(keyword), arr[arr.length-1].date);
+                cookie.save('last-time-'+encodeURIComponent(this.props.search), arr[arr.length-1].timestamp);
+                cookie.save('last-date-'+encodeURIComponent(this.props.search), arr[arr.length-1].date);
               }
             }
         }).catch(e => {
@@ -112,8 +108,8 @@ class SearchColumn extends Component {
       
       get20 = () => {
         // '#BTS' <-> this.state.sub
-        if (cookie.load('last-time-'+encodeURIComponent(keyword))) {
-          axios.get(`http://${ip}/data/get20/${encodeURIComponent(keyword)}/${cookie.load('last-date-'+encodeURIComponent(keyword))}/${cookie.load('last-time-'+encodeURIComponent(keyword))}`, {
+        if (cookie.load('last-time-'+encodeURIComponent(this.props.search))) {
+          axios.get(`http://${ip}/data/get20/${encodeURIComponent(this.props.search)}/${cookie.load('last-date-'+encodeURIComponent(this.props.search))}/${cookie.load('last-time-'+encodeURIComponent(this.props.search))}`, {
             headers: {
               "Authorization" : "Bearer " + cookie.load('access-token')
             }
@@ -129,8 +125,8 @@ class SearchColumn extends Component {
                 })
                 console.log('setstate 완료');
                 if (arr.length) {
-                  cookie.save('last-time-'+encodeURIComponent(keyword), arr[arr.length-1].timestamp);
-                  cookie.save('last-date-'+encodeURIComponent(keyword), arr[arr.length-1].date);
+                  cookie.save('last-time-'+encodeURIComponent(this.props.search), arr[arr.length-1].timestamp);
+                  cookie.save('last-date-'+encodeURIComponent(this.props.search), arr[arr.length-1].date);
                 } else {
                   alert("없음 2");
                 }
@@ -184,49 +180,37 @@ class SearchColumn extends Component {
             console.log("errrororrr");
         })  
       }
-
-    
-      // fetchData = () => {
-      //   axios
-      //   .get(`https://api.openbrewerydb.org/breweries?page=${
-      //     this.state.pageNumber
-      //   }&per_page=${this.state.items}`)
-      //   .then(res => 
-      //     this.setState({
-      //       datas: [...this.state.datas, ...res.data],
-      //       pageNumber: this.state.pageNumber + 1
-      //     }))
-      // }
-
     render() {
-      // const ee = this.state.data.map(
-      //   (dat, index) => {
-      //     var user = JSON.parse(dat.user);
-      //     return <div>
-      //         <Tweet rcvData={dat} />
-      //       </div>
-      //   });
-
-
-
-        return (
+      // const ee = this.state.data.length === 0 ? 
+      //   console.log('data is empty') : this.state.datas.map(
+      //     (dat, index) => {
+      //       var user = JSON.parse(dat.user);
+      //       return <div>
+      //           <Tweet rcvData={dat} />
+      //         </div>
+      //     });
+      const ee = this.state.datas.map((dat, index) => {
+        var user = JSON.parse(dat.user);
+        return <div>
+          <Tweet rcvData={dat}/>
+        </div>
+      })
+      
+          return (
         <div className="content">
             <div className="column-header">
                 <IoIosSearch size="30" color="#38444d"/>
-                <Header name="Search"/>
+                <Header name={this.props.search}/>
             </div>
         <InfiniteScroll
           dataLength={this.state.datas.length}
-          next={this.fetchData} // fetchData를 이용하여 사용자가 맨 밑의 페이지에 도달했을 때 데이터를 더 가져옴
+          next={()=>this.get20()} // fetchData를 이용하여 사용자가 맨 밑의 페이지에 도달했을 때 데이터를 더 가져옴
           hasMore={this.state.hasMore} // boolean 형식
           height={950}
-          //loader : 로딩 스피너! API요청이 아직 처리중일 때 렌더링 
           loader={<h4>Loading...</h4>}> 
-            {/* {this.state.datas.map(brewery => (
-              <ul className="user" key={brewery.name}>
-                <li>Name: {brewery.name}</li>
-              </ul>
-            ))} */}
+          {/* {console.log('search 에서 받음 : ', this.props.search)} */}
+          {ee} 
+          {console.log('state 길이 : ', this.state.datas.length)}
         </InfiniteScroll>
         </div>
         )
