@@ -20,11 +20,21 @@ class SearchColumn extends Component {
         items: 40,
         hasMore: true
       };
-    
+
+      shouldComponentUpdate(nextProps, nextState) {
+        // 수정 상태가 아니고, info 값이 같다면 리렌더링 안함
+        console.log("nextProps : " + nextProps.search + ", props: " + this.props.search);
+        if (nextProps.search === this.props.search) {
+          return false;
+        }
+        // 나머지 경우엔 리렌더링함
+        return true;
+      }
       componentDidMount(){
         // this.fetchData()
         // 주류
-       
+        console.log("CLLLIIEENTT: " + this.props.client);
+       console.log("sssseeeeaarrrccchhhh: " + this.props.search);
         this.search()
         this.initCall()
         this.get20()

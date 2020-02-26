@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 // reactstrap components
-//import { Container } from "reactstrap";
+import { Container } from "reactstrap";
 // core components
 
 import routes from "../routes.js";
