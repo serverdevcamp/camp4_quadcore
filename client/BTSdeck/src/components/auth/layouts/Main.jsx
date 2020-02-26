@@ -7,7 +7,7 @@ import Sidebar from '../../nav/sideBar';
 
 import SearchColumn from '../../column/body/SearchColumn'
 import TrendColumn from '../../column/body/TrendColumn'
-import HomeColumn from '../../column/body/HomeColumn'
+import RankingColumn from '../../column/body/RankingColumn'
 import BtsColumn from '../../column/body/BtsColumn'
 
 class Main extends Component {
@@ -32,7 +32,7 @@ class Main extends Component {
       <div className="app">
           <Sidebar handleChange={this.handleChange} />
           <SearchColumn search={this.state.search}/>
-          <HomeColumn/>
+          <RankingColumn/>
           <TrendColumn/>
           <BtsColumn/>
       </div>

@@ -24,6 +24,9 @@ class TrendColumn extends Component {
       };
 
     componentDidMount(){
+    this.setState({
+        data: []
+    })
     this._getTrend()
     }
 
