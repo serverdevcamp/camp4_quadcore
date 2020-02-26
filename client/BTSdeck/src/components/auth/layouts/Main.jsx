@@ -31,10 +31,16 @@ class Main extends Component {
     return (
       <div className="app">
           <Sidebar handleChange={this.handleChange} />
-          <SearchColumn search={this.state.search}/>
-          <RankingColumn/>
-          <TrendColumn/>
-          <BtsColumn/>
+          <div className="columns-box">
+            <SearchColumn search={this.state.search}/>
+            <SearchColumn search={this.state.search}/>
+            <SearchColumn search={this.state.search}/>
+            <SearchColumn search={this.state.search}/>
+            <SearchColumn search={this.state.search}/>
+            <RankingColumn/>
+            <TrendColumn/>
+            <BtsColumn/>
+          </div>
       </div>
     )
   }
