@@ -29,7 +29,7 @@ class Main extends Component {
 }
   handleChange = (e) => {
     this.setState({
-        search : [e].concat(this.state.search)
+        search : this.state.search.concat([e])
     })
     console.log('main search : ', this.state.search)
   }
@@ -81,15 +81,18 @@ class Main extends Component {
   }
 
   render(){
-    const ex = this.state.search.map(
-      x => (<SearchColumn search={x} client={this.client} />)
-    );
+    const t = "asdf";
     return (
       <div className="app">
           <Sidebar handleChange={this.handleChange} />
           <div className="columns-box">
          
-            {ex}
+            {this.state.search.map(
+                x => {
+                  console.log(x);
+                  return <SearchColumn search={x} client={this.client} />
+                }
+            )}
             <RankingColumn/>
             <TrendColumn/>
             <BtsColumn/>
