@@ -77,7 +77,9 @@ public class CasanController {
     public List<Casan> getPastData(String keyword, String date, Long time) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         //System.out.println("timestamp: " + timestamp.getTime());
-        List<Casan> c= casanRepository.findCasansByTimestamp(date,time, keyword);
+        byte nowHour = (byte)LocalTime.now().getHour();
+        byte priorHour = (byte)(nowHour- 1);
+        List<Casan> c= casanRepository.findCasansByTimestamp(date, nowHour, priorHour, time, keyword);
         return c;
     }
 
@@ -129,8 +131,10 @@ public class CasanController {
     public void greeting() {
         Set hm = stringRedisTemplate.opsForSet().members("search-keywords");
         Timestamp timestamp = new Timestamp(System.currentTimeMillis() - (3 * 1000));
+        byte nowHour = (byte)LocalTime.now().getHour();
+        byte priorHour = (byte)(nowHour- 1);
         for (Object s: hm) {
-            List<Casan> c= casanRepository.findCasansByDate(LocalDate.now().toString(),timestamp.getTime()*1000, (String)s);
+            List<Casan> c= casanRepository.findCasansByDate(LocalDate.now().toString(), nowHour, priorHour,timestamp.getTime()*1000, (String)s);
             if (!c.isEmpty()) {
                 messagingTemplate.convertAndSend("/topic/" + s, c);
 
