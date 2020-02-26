@@ -7,7 +7,6 @@ import Header from '../header/Header'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import axios from 'axios'
 
-import { Client } from '@stomp/stompjs';
 import cookie from 'react-cookies';
 
 import Tweet from '../../tweets/Tweet'
@@ -25,7 +24,8 @@ class SearchColumn extends Component {
       componentDidMount(){
         // this.fetchData()
         // 주류
-        this.getSocketToken();
+       
+        this.search()
         this.initCall()
         this.get20()
       }
@@ -68,7 +68,7 @@ class SearchColumn extends Component {
       }
 
       search = () => {
-        this.client.subscribe(`/topic/${this.props.search}`, message => {
+        this.props.client.subscribe(`/topic/${this.props.search}`, message => {
           // console.log(new Date());
           var datas = JSON.parse(message.body);
           // console.log(datas);
@@ -139,47 +139,7 @@ class SearchColumn extends Component {
         }
       }
       // ${yunlee}
-      connectSocket = (e) => {
-    
-        this.client = new Client();
-        this.client.configure({
-            // tlatldms 
-            brokerURL: `ws://${ip}/wscn/websocket?username=${cookie.load('user-name')}&token=${cookie.load('socket-token')}`,
-            onConnect: (e) => {
-              console.log("connect success! \n" + e);
-              this.search()
-            },
-            onDisconnect: (e) => {
-              console.log("disconnected");
-            },
-    
-            // Helps during debugging, remove in production
-            debug: (str) => {
-              console.log(new Date(), str);
-            }
-          });
       
-          this.client.activate();
-      }
-      // console.log('asdfasdf')
-    
-      getSocketToken = (e) => {
-        axios.get(`http://${ip}/data/token/tlatldms`, {
-          headers: {
-            "Authorization" : "Bearer " + cookie.load('access-token')
-          }
-        }).then(res => {
-          if (res.data.errorCode == 10) {
-            cookie.save('socket-token', res.data.socketToken, { path: '/' })
-            console.log('구독과 좋아요 알림설정')
-            this.connectSocket();
-            // this.search()
-            }
-        }).catch(e => {
-            console.log(e);
-            console.log("errrororrr");
-        })  
-      }
     render() {
       // const ee = this.state.data.length === 0 ? 
       //   console.log('data is empty') : this.state.datas.map(
