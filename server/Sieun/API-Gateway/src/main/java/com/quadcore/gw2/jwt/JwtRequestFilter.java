@@ -18,6 +18,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalTime;
 import java.util.*;
 
 @Component
@@ -87,6 +88,7 @@ public class JwtRequestFilter extends
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
+            logger.info("TIME : " + LocalTime.now().getHour());
             String token = exchange.getRequest().getHeaders().get("Authorization").get(0).substring(7);
             Map<String, Object> userInfo = jwtValidator.getUserParseInfo(token);
             ArrayList<String> arr = (ArrayList<String>)userInfo.get("role");

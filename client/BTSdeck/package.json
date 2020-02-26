@@ -26,6 +26,7 @@
     "react-transition-group": "4.3.0",
     "react-tweet-embed": "1.2.2",
     "react-twitter-embed": "3.0.3",
+    "reactstrap": "^8.4.1",
     "socket.io": "2.3.0",
     "socket.io-client": "2.3.0",
     "twitter": "1.7.1",

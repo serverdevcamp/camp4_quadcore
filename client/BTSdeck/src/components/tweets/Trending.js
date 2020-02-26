@@ -87,52 +87,21 @@ const styles={
 }
 
 export default class Trending extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            trending: '',
-        }
-    }
-    componentWillMount(){
-        this._getList();
-    }
-
-    _getList(){
-        const apiUrl = 'dummy/trendingData.json'
-        // const { trendState } = this.state.trending.data
-
-        axios.get(apiUrl)
-            .then(data =>{
-                this.setState({
-                    trending: data
-                });
-                // console.log("trending : " + this.state.trending.data.trend_10.id)
-                // console.log("trending : " + trendState.trend_1.id)
-            })
-            .catch(error=> {
-                console.log("error : " + error)
-            })
-    }
-    // _trending = ({data}) => {
-    //     if(this.state.trending.data === undefined){}
-    // }
-
     render() {
         return (
             <div style={styles.divTweet}>
                 <div style={styles.tweetProfile}>
                     <span style={styles.tweetAuthor} >
-                        1
+                        {this.props.idx}
                     </span>
                     <div style={styles.tweetAuthorProfile}>
                          <a href="#">
                             <div style={styles.testDiv}>
-                                내용입니당
-                                {/* {while } */}
+                            {this.props.tag}
                             </div>
                          </a>
                          <div>
-                             count 트윗
+                             {this.props.count}
                          </div>
                     </div>
                 </div>

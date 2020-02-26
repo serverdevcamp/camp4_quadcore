@@ -61,12 +61,16 @@ public class CasanController {
         casanRepository.save(casan);
     }
 
+    byte nowHour = (byte)LocalTime.now().getHour();
+    byte priorHour = (byte)(nowHour- 1);
 
+
+    //when first search in Search column
     @GetMapping(path="/data/search/{keyword}/{date}/{time}")
-    public Map<String, Object> gotKeyword(@PathVariable("keyword") String keyword, @PathVariable String date, @PathVariable Long time) {
+    public Map<String, Object> registerKeyword(@PathVariable("keyword") String keyword, @PathVariable String date, @PathVariable Long time) {
         System.out.println("keyword subscribed : "  + keyword);
         stringRedisTemplate.opsForSet().add("search-keywords", keyword);
-        List<Casan> c = getPastData(keyword, date, time);
+        List<Casan> c= casanRepository.findCasansByEntities(date,time, keyword);
         Map<String, Object> map = new HashMap<>();
         map.put("data", c);
         map.put("errorCode", 10);
@@ -74,18 +78,21 @@ public class CasanController {
     }
 
 
-    public List<Casan> getPastData(String keyword, String date, Long time) {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        //System.out.println("timestamp: " + timestamp.getTime());
-        List<Casan> c= casanRepository.findCasansByTimestamp(date,time, keyword);
-        return c;
+
+    //when scroll down in Search column
+    @GetMapping(path="/data/past/{keyword}/{date}/{time}")
+    public Map<String, Object> getPastDataOfKeyword(@PathVariable("keyword") String keyword, @PathVariable String date, @PathVariable Long time) {
+        List<Casan> c= casanRepository.findCasansByEntities(date,time, keyword);
+        Map<String, Object> map = new HashMap<>();
+        map.put("data", c);
+        map.put("errorCode", 10);
+        return map;
     }
 
-
-    @GetMapping(path="/data/get20/{keyword}/{date}/{time}")
-    public Map<String, Object>  li(@PathVariable("keyword") String keyword, @PathVariable String date, @PathVariable Long time) {
-        List<Casan> c = getPastData(keyword, date, time);
-        logger.info("get20 get data: " + c);
+    //when scroll down in Bts column
+    @GetMapping(path="/data/pastbts/{date}/{time}")
+    public Map<String, Object> pastBts(@PathVariable String date, @PathVariable Long time) {
+        List<Casan> c= casanRepository.findCasansByTimestamp(date,time);
         Map<String, Object> map = new HashMap<>();
         map.put("data", c);
         map.put("errorCode", 10);
@@ -129,6 +136,11 @@ public class CasanController {
     public void greeting() {
         Set hm = stringRedisTemplate.opsForSet().members("search-keywords");
         Timestamp timestamp = new Timestamp(System.currentTimeMillis() - (3 * 1000));
+        byte nowHour = (byte)LocalTime.now().getHour();
+        byte priorHour = (byte)(nowHour- 1);
+        List<Casan> d= casanRepository.findCasansByUser(LocalDate.now().toString(), nowHour, priorHour, timestamp.getTime()*1000);
+        messagingTemplate.convertAndSend("/topic/bts", d);
+
         for (Object s: hm) {
             List<Casan> c= casanRepository.findCasansByDate(LocalDate.now().toString(),timestamp.getTime()*1000, (String)s);
             if (!c.isEmpty()) {
