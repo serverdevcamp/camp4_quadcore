@@ -197,4 +197,3 @@ if __name__ == "__main__":
             print('there is no data')
         time.sleep(20)
 
-
