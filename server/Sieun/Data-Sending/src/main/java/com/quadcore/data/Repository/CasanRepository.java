@@ -29,6 +29,6 @@ public interface CasanRepository extends CrudRepository<Casan, Long> {
 
 
     //real - time data in  BTS column
-    @Query("SELECT * FROM bts.tweet_dataset WHERE date = :date AND hour IN ( :now_hour , :prior_hour ) AND timestamp > :timestamp limit 10 ALLOW FILTERING")
+    @Query("SELECT * FROM bts.tweet_dataset WHERE date = :date AND hour IN ( :now_hour , :prior_hour ) AND timestamp > :timestamp limit 5 ALLOW FILTERING")
     public List<Casan> findCasansByUser(@Param("date") String date, @Param("now_hour") Byte now_hour, @Param("prior_hour") Byte prior_hour, @Param("timestamp")Long timestamp);
 }

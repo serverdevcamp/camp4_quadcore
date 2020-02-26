@@ -99,7 +99,7 @@ class SampleComponent extends React.Component {
 
   get20=(keyword)=> {
     if (cookie.load('last-time-'+encodeURIComponent(this.state.sub))) {
-      axios.get(`http://${ip}/data/get20/${encodeURIComponent(keyword)}/${cookie.load('last-date-'+encodeURIComponent(this.state.sub))}/${cookie.load('last-time-'+encodeURIComponent(this.state.sub))}`, {
+      axios.get(`http://${ip}/data/past/${encodeURIComponent(keyword)}/${cookie.load('last-date-'+encodeURIComponent(this.state.sub))}/${cookie.load('last-time-'+encodeURIComponent(this.state.sub))}`, {
         headers: {
           "Authorization" : "Bearer " + cookie.load('access-token')
         }
