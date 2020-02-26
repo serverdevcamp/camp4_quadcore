@@ -24,18 +24,37 @@ class TrendColumn extends Component {
       };
 
     componentDidMount(){
-    this.setState({
-        data: []
-    })
-    this._getTrend()
+    // ?? 
+        this.interval = setInterval(() => {
+            this._getTrend();
+        }, 30000);
+            
+    }
+    componentWillMount(){
+        clearInterval(this.interval);
     }
 
     _getTrend(){
         let myHeaders = new Headers();
+
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        
+        if(dd<10) {
+            dd='0'+dd
+        } 
+        if(mm<10) {
+            mm='0'+mm
+        }
+        var td = yyyy+'-'+mm+'-'+dd;
+        
         myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
         myHeaders.append("Authorization", "Bearer " + cookie.load('access-token'));
 
         let urlencoded = new URLSearchParams();
+        // urlencoded.append("time", `${td}/${(today.getTime())*1000}`)
         urlencoded.append("time", trendTweetTime);
 
         let requestOptions = {
