@@ -131,3 +131,9 @@ dmypy.json
 # Twitter App Credentials
 twitter-app-credentials.txt
 
+# Data Logs
+checkpoint
+spark-warehouse
+
+# Resources
+resources/

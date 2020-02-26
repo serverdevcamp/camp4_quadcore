@@ -16,14 +16,12 @@ import java.util.UUID;
 public interface CasanRepository extends CrudRepository<Casan, Long> {
 
     //FOR SEARCH past data. before given date and time + limit 10
-    @Query("SELECT * FROM bts.master_dataset WHERE date <= :date AND timestamp < :timestamp AND hashtags CONTAINS :keyword limit 10 ALLOW FILTERING")
-    public List<Casan> findCasansByTimestamp(@Param("date") String date, @Param("timestamp")Long timestamp, @Param("keyword")String keyword);
-
-
+    @Query("SELECT * FROM bts.tweet_dataset WHERE date = :date AND (hour = :now_hour OR hour = :prior_hour) AND timestamp < :timestamp AND hashtags CONTAINS :keyword limit 10 ALLOW FILTERING")
+    public List<Casan> findCasansByTimestamp(@Param("date") String date, @Param("now_hour") Byte now_hour, @Param("prior_hour") Byte prior_hour, @Param("timestamp")Long timestamp, @Param("keyword")String keyword);
 
     //real - time data (recent 5)
-    @Query("SELECT * FROM bts.master_dataset WHERE date >= :date AND timestamp > :timestamp AND hashtags CONTAINS :keyword limit 5 ALLOW FILTERING")
-    public List<Casan> findCasansByDate(@Param("date") String date, @Param("timestamp")Long timestamp, @Param("keyword")String keyword);
+    @Query("SELECT * FROM bts.tweet_dataset WHERE date = :date AND (hour = :hour OR hour = :hour_prior) AND timestamp > :timestamp AND hashtags CONTAINS :keyword limit 5 ALLOW FILTERING")
+    public List<Casan> findCasansByDate(@Param("date") String date, @Param("now_hour") Byte now_hour, @Param("prior_hour") Byte prior_hour, @Param("timestamp")Long timestamp, @Param("keyword")String keyword);
 
 
     //for HOME column: search by user

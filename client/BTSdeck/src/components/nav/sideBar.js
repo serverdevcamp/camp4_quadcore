@@ -95,19 +95,28 @@ const styles = {
 class Sidebar extends Component {
     state = { // sidebar state
         isSidebarExpanded: true,
+        search: '',
       };
+      
+      handleChange = (e) => {
+        this.setState({
+            [e.target.name] : e.target.value,
+        })
+
+      }
+
+
       sidebarExpanded = () => (
         <header style={styles.expandedStyle}>
           <div style={styles.logoStyle}>
             <img src={tweetDecklogo} alt="tweetDeck" height="80" width="100"></img>
           </div>
-          <button style={styles.tweetButton} className="tweet-button" type="submit" value="Tweet">Tweet
-          </button>
+
           {/* <TweetButton/> */}
+          <button onClick={()=>this.props.handleChange(this.state.search)} style={styles.tweetButton} className="tweet-button" type="submit" value="Tweet">Tweet</button>
           <div className="search-upper">
             <div className="search">
-              <input className="input-search" placeholder="Search Twitter"></input>
-              <a href="#"></a>
+              <input name="search" onChange={this.handleChange} className="input-search" placeholder="Search Twitter"></input>
             </div>
           </div>
           <HomeButton/>
