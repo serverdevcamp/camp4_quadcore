@@ -135,3 +135,5 @@ twitter-app-credentials.txt
 checkpoint
 spark-warehouse
 
+# Resources
+resources/
