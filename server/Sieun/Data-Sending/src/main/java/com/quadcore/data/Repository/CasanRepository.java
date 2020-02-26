@@ -20,7 +20,7 @@ public interface CasanRepository extends CrudRepository<Casan, Long> {
     public List<Casan> findCasansByTimestamp(@Param("date") String date, @Param("now_hour") Byte now_hour, @Param("prior_hour") Byte prior_hour, @Param("timestamp")Long timestamp, @Param("keyword")String keyword);
 
     //real - time data (recent 5)
-    @Query("SELECT * FROM bts.tweet_dataset WHERE date = :date AND (hour = :hour OR hour = :hour_prior) AND timestamp > :timestamp AND hashtags CONTAINS :keyword limit 5 ALLOW FILTERING")
+    @Query("SELECT * FROM bts.tweet_dataset WHERE date = :date AND (hour = :now_hour OR hour = :prior_hour) AND timestamp > :timestamp AND hashtags CONTAINS :keyword limit 5 ALLOW FILTERING")
     public List<Casan> findCasansByDate(@Param("date") String date, @Param("now_hour") Byte now_hour, @Param("prior_hour") Byte prior_hour, @Param("timestamp")Long timestamp, @Param("keyword")String keyword);
 
 
