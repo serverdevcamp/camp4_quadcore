@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import '../../../App.css';
 
-import {IoMdHome} from "react-icons/io"
-import Header from '../header/Header'
+import {IoMdHome} from "react-icons/io";
+import Header from '../header/Header';
 import cookie from 'react-cookies';
-import axios from 'axios'
-import InfiniteScroll from 'react-infinite-scroll-component'
+import axios from 'axios'; 
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import Trending from '../../tweets/Trending'
 
@@ -18,9 +18,9 @@ class RankingColumn extends Component {
         data: [],
         items: 40,
         hasMore: true,
-        idxs : 1
+        // idxs : 1
       };
-      
+
     componentDidMount(){
         this.interval = setInterval(() => {
             this._getTrend();
