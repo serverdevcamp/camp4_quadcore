@@ -17,12 +17,27 @@ class RankingColumn extends Component {
     state = {
         data: [],
         items: 40,
-        hasMore: true
+        hasMore: true,
+        idxs : 1
       };
-
+      
     componentDidMount(){
-        this._getTrend()
+        this.interval = setInterval(() => {
+            this._getTrend();
+            // this._test()
+        }, 30000);
+        
+        // console.log("idxs : ", this.state.idxs)
+        // this._getTrend()
     }
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
+    _test = () => {
+        console.log("data request!!!!!")
+    }
+    
     
     _getTrend = () => {
         axios.get(`http://${ip}/${hashtagRank}`, {
@@ -39,31 +54,13 @@ class RankingColumn extends Component {
                 something.map((dat, index) => {
                     console.log(dat)
                     this.setState(prevState => ({
-                        // data:this.state.data.concat(dat)
                         data: [...prevState.data, dat]
                     }))
                 })
 
-                console.log("setState 값 : \n", this.state.data)
+                // console.log("setState 값 : \n", this.state.data)
 
-                // console.log(JSON.parse(something))
-                // console.log('type : ', arr[0])
-                // console.log(typeof(something));
-
-                // arr.map((dat, index) => {
-                //     console.log(dat)
-                //     this.setState({
-                //     //     data: this.state.data.concat(dat)
-                //         data: this.state.data.dat
-                //     })
-                // })
-
-                // arr.map((dat, index) => {
-                //       this.setState({
-                //     data: this.state.data.concat(dat)
-                //   })
-                // })
-                console.log('setstate 완료');
+                // console.log('setstate 완료');
                }
           }).catch(e => {
               console.log(e);
@@ -92,33 +89,3 @@ class RankingColumn extends Component {
     }
 }
 export default RankingColumn;
-    
-        // _getTrend(){
-        //     let myHeaders = new Headers();
-        //     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-        //     myHeaders.append("Authorization", "Bearer " + cookie.load('access-token'));
-    
-        //     let urlencoded = new URLSearchParams();
-        //     urlencoded.append("time", trendTweetTime);
-    
-        //     let requestOptions = {
-        //         method: 'POST',
-        //         headers: myHeaders,
-        //         body: urlencoded,
-        //         redirect: 'follow'
-        //     };
-    
-        //     fetch(`http://${ip}/${hashtagRank}`, requestOptions)
-        //     .then(response => response.text())
-        //     .then(result => {
-        //         var datas = JSON.parse(JSON.parse(result).message);
-        //         console.log('예은데이터 : \n ',datas)
-    
-        //         datas.map((dat, index) => {
-        //             this.setState({
-        //                     data: datas.concat(dat)
-        //                 })
-        //             })
-        //     })
-        //     .catch(error => console.log('error', error));
-        // }
