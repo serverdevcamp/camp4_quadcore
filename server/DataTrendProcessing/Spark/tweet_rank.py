@@ -5,7 +5,8 @@ import json, time, redis
 import pyspark.sql.functions as f
 from datetime import datetime
 
-myRedis = redis.Redis(host='10.240.14.39', port=6379, password= '12341234', db=0)
+myRedis_current = redis.Redis(host='10.240.14.39', port=6379, password= '12341234', db=2)
+myRedis_past = redis.Redis(host='10.240.14.39', port=6379, password= '12341234', db=0)
 
 spark = pyspark.sql.SparkSession.builder \
     .appName("pysaprk_python") \
@@ -79,7 +80,8 @@ def save_tweet(data,time):
     #     .mode('append').options(table="tweet_rank", keyspace="bts").save()
     # key : 현재 시간 , value : 순위 결과 json 으로 redis 저장
     rank_to_json = json.dumps(data)
-    myRedis.set(time, rank_to_json, ex=60 * 60 * 24 * 7)  # 일주일 expire
+    myRedis_current.set('tweetRank', rank_to_json, ex=60 * 60 * 24 * 7)  # 일주일 expire
+    myRedis_past.set(time, rank_to_json, ex=60 * 60 * 24 * 7)
     print('저장완료')
 
 
