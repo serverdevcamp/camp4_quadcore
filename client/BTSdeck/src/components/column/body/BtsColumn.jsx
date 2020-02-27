@@ -7,7 +7,6 @@ import Header from '../header/Header'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import axios from 'axios'
 
-import { Client } from '@stomp/stompjs';
 import cookie from 'react-cookies';
 
 import Tweet from '../../tweets/Tweet'
@@ -23,15 +22,32 @@ class BTSColumn extends Component {
         data: [],
         pageNumber: 1,
         items: 40,
-        hasMore: true
+        hasMore: true,
+        lt: '',
+        ld: ''
       };
       
       componentDidMount(){
         console.log("component Did mount!")
-        this.getSocketToken();
-        this.initCall()
-        this.get20()
+        // this.getSocketToken();
+        //this.search()
+        //this.initCall()
+        
       }
+
+    
+      shouldComponentUpdate(nextProps, nextState) {
+       
+        if (nextProps.isLoaded !== this.props.isLoaded) {
+          console.log("shibalbhasidflksdnfkdsfs " + nextProps.client);
+          this.search(nextProps.client);
+          return true;
+        }
+      
+        return true;
+      }
+
+
 
       initCall(){
         var today = new Date();
@@ -54,11 +70,13 @@ class BTSColumn extends Component {
             if (res.data.errorCode === 10) {
               console.log("search zsuccess\n");
               var arr = Array.from(res.data.data);
-              // console.log("arrr: ", arr);
-              // console.log('#BTS');
               if (arr.length) {
-                cookie.save('last-time-'+encodeURIComponent(keyword), arr[arr.length-1].timestamp);
-                cookie.save('last-date-'+encodeURIComponent(keyword), arr[arr.length-1].date);
+                this.setState({
+                  lt: arr[arr.length-1],
+                  ld: arr[arr.length-1].date
+                })
+                // cookie.save('last-time-'+encodeURIComponent(keyword), arr[arr.length-1].timestamp);
+                // cookie.save('last-date-'+encodeURIComponent(keyword), arr[arr.length-1].date);
               }
             }
         }).catch(e => {
@@ -72,11 +90,13 @@ class BTSColumn extends Component {
         })
       }
 
-      search = () => {
-        this.client.subscribe(`/topic/${keyword}`, message => {
+      search = (c) => {
+        console.log("client:" +c);
+        
+        c.subscribe('/topic/bts', message => {
           // console.log(new Date());
           var datas = JSON.parse(message.body);
-          // console.log(datas);
+           console.log(datas);
           this.setState({
             data: datas.concat(this.state.data)
           });
@@ -93,7 +113,7 @@ class BTSColumn extends Component {
             mm='0'+mm
         }
         var td = yyyy+'-'+mm+'-'+dd;
-        axios.get(`http://${ip}/data/search/${encodeURIComponent(keyword)}/${td}/${(today.getTime())*1000}`, {
+        axios.get(`http://${ip}/data/pastbts/${td}/${(today.getTime())*1000}`, {
           headers: {
             "Authorization" : "Bearer " + cookie.load('access-token')
           }
@@ -101,22 +121,23 @@ class BTSColumn extends Component {
             if (res.data.errorCode === 10) {
               console.log("search zsuccess\n");
               var arr = Array.from(res.data.data);
-              // console.log("arrr: ", arr);
-              // console.log('#BTS');
               if (arr.length) {
-                cookie.save('last-time-'+encodeURIComponent(keyword), arr[arr.length-1].timestamp);
-                cookie.save('last-date-'+encodeURIComponent(keyword), arr[arr.length-1].date);
+                this.setState({
+                  lt: arr[arr.length-1].timestamp,
+                  ld: arr[arr.length-1].date
+                })
               }
             }
         }).catch(e => {
             console.log(e);
         }) 
+
+        
       }
       
       get20 = () => {
-        // '#BTS' <-> this.state.sub
-        if (cookie.load('last-time-'+encodeURIComponent(keyword))) {
-          axios.get(`http://${ip}/data/get20/${encodeURIComponent(keyword)}/${cookie.load('last-date-'+encodeURIComponent(keyword))}/${cookie.load('last-time-'+encodeURIComponent(keyword))}`, {
+    
+        axios.get(`http://${ip}/data/pastbts/${this.state.ld}/${this.state.lt}`, {
             headers: {
               "Authorization" : "Bearer " + cookie.load('access-token')
             }
@@ -132,66 +153,34 @@ class BTSColumn extends Component {
                   })
                 })
                 console.log('setstate 완료');
+                // if (arr.length) {
+                //   cookie.save('last-time-'+encodeURIComponent(keyword), arr[arr.length-1].timestamp);
+                //   cookie.save('last-date-'+encodeURIComponent(keyword), arr[arr.length-1].date);
+                // }
                 if (arr.length) {
-                  cookie.save('last-time-'+encodeURIComponent(keyword), arr[arr.length-1].timestamp);
-                  cookie.save('last-date-'+encodeURIComponent(keyword), arr[arr.length-1].date);
-                } else {
+                  this.setState({
+                    lt: arr[arr.length-1].timestamp,
+                    ld: arr[arr.length-1].date
+                  })
+                  console.log('lt : ',this.state.lt)
+                  console.log('ld :' , this.state.ld)
+                  // cookie.save('last-time-'+encodeURIComponent(keyword), arr[arr.length-1].timestamp);
+                  // cookie.save('last-date-'+encodeURIComponent(keyword), arr[arr.length-1].date);
+                } 
+                else {
                   // alert("없음 2");
                 }
                }
           }).catch(e => {
               console.log(e);
           })  
-        } else {
-          // alert("없음 1");
-        }
-      }
-      // ${yunlee}
-      connectSocket = (e) => {
-    
-        this.client = new Client();
-        this.client.configure({
-            // tlatldms 
-            brokerURL: `ws://${ip}/wscn/websocket?username=${cookie.load('user-name')}&token=${cookie.load('socket-token')}`,
-            onConnect: (e) => {
-              console.log("connect success! \n" + e);
-              this.search()
-            },
-            onDisconnect: (e) => {
-              console.log("disconnected");
-            },
-    
-            // Helps during debugging, remove in production
-            debug: (str) => {
-              console.log(new Date(), str);
-            }
-          });
-      
-          this.client.activate();
-      }
-      // console.log('asdfasdf')
-    
-      getSocketToken = (e) => {
-        axios.get(`http://${ip}/data/token/tlatldms`, {
-          headers: {
-            "Authorization" : "Bearer " + cookie.load('access-token')
-          }
-        }).then(res => {
-          if (res.data.errorCode == 10) {
-            cookie.save('socket-token', res.data.socketToken, { path: '/' })
-            console.log('구독과 좋아요 알림설정')
-            this.connectSocket();
-            // this.search()
-            }
-        }).catch(e => {
-            console.log(e);
-            console.log("errrororrr");
-        })  
+       
       }
 
     render() {// dat.text, user.name
       const ee = this.state.data.map(
         (dat, index) => {
+          console.log("DDDDDDDDDDDDDAAAAAAAAATTTTTTTTTt:" + dat);
           var user = JSON.parse(dat.user);
           return <div>
               <Tweet rcvData={dat} />

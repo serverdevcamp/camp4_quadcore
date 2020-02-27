@@ -53,7 +53,8 @@ class SearchColumn extends Component {
             mm='0'+mm
         }
         var td = yyyy+'-'+mm+'-'+dd;
-        axios.get(`http://${ip}/data/search/${encodeURIComponent(this.props.search)}/${td}/${(today.getTime())*1000}`, {
+        // axios.get(`http://${ip}/data/search/${encodeURIComponent(this.props.search)}/${td}/${(today.getTime())*1000}`, {
+          axios.get(`http://${ip}/data/search/${encodeURIComponent(this.props.search)}/${td}/${(today.getTime())*1000}`, {
           headers: {
             "Authorization" : "Bearer " + cookie.load('access-token')
           }
@@ -61,6 +62,13 @@ class SearchColumn extends Component {
             if (res.data.errorCode === 10) {
               console.log("search zsuccess\n");
               var arr = Array.from(res.data.data);
+              
+              arr.map((dat, index) => {
+                this.setState({
+                  data: this.state.data.concat(dat)
+                })
+              })
+              
               if (arr.length) {
                 cookie.save('last-time-'+encodeURIComponent(this.props.search), arr[arr.length-1].timestamp);
                 cookie.save('last-date-'+encodeURIComponent(this.props.search), arr[arr.length-1].date);
@@ -78,6 +86,7 @@ class SearchColumn extends Component {
       }
 
       search = () => {
+        console.log(" IN search CLIENT :" + this.props.client);
         this.props.client.subscribe(`/topic/${this.props.search}`, message => {
           // console.log(new Date());
           var datas = JSON.parse(message.body);
@@ -118,8 +127,22 @@ class SearchColumn extends Component {
       
       get20 = () => {
         // '#BTS' <-> this.state.sub
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        
+        if(dd<10) {
+            dd='0'+dd
+        } 
+        if(mm<10) {
+            mm='0'+mm
+        }
+        var td = yyyy+'-'+mm+'-'+dd;
+
         if (cookie.load('last-time-'+encodeURIComponent(this.props.search))) {
-          axios.get(`http://${ip}/data/get20/${encodeURIComponent(this.props.search)}/${cookie.load('last-date-'+encodeURIComponent(this.props.search))}/${cookie.load('last-time-'+encodeURIComponent(this.props.search))}`, {
+          // axios.get(`http://${ip}/data/get20/${encodeURIComponent(this.props.search)}/${cookie.load('last-date-'+encodeURIComponent(this.props.search))}/${cookie.load('last-time-'+encodeURIComponent(this.props.search))}`, {
+            axios.get(`http://${ip}/data/past/${this.props.search}/${td}/${this.state.datas.timestamp}`, {
             headers: {
               "Authorization" : "Bearer " + cookie.load('access-token')
             }
