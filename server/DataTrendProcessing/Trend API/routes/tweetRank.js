@@ -18,23 +18,20 @@ router.get('/', async (req, res) => {
                 state : 'fail',
                 errorCode : 40,
                 message : 'there is no data'
-              }
-            )
+            })
         } else {
             res.status(200).send({
                 state : 'success',
                 errorCode : 10,
                 message : result
-              }
-            )
+            })
         }
     } catch(err) {
         res.status(200).send({
             state : 'fail',
             errorCode : 52,
             message : err
-          }
-        )
+        })
     }
 });
 
@@ -49,23 +46,20 @@ router.post('/', async (req, res) => {
                 state : 'fail',
                 errorCode : 40,
                 message : 'there is no data'
-              }
-            )
+            })
         } else {
             res.status(200).send({
                 state : 'success',
                 errorCode : 10,
                 message : result
-              }
-            )
+            })
         }
     } catch(err) {
         res.status(200).send({
             state : 'fail',
             errorCode : 52,
             message : err
-          }
-        )
+        })
     }
 })
 module.exports = router;
