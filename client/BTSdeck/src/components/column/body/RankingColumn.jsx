@@ -7,8 +7,8 @@ import cookie from 'react-cookies';
 import axios from 'axios'; 
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import Trending from '../../tweets/Trending'
-
+import Trending from '../../tweets/Trending';
+import ICON from '../../../assets/img/graph.png';
 const hashtagRank = 'trend/hashtag'
 const trendTweetTime = "2020/02/25/17/02"
 const ip = "20.41.86.4:5000";
@@ -77,18 +77,21 @@ class RankingColumn extends Component {
         //       var user = JSON.parse(dat.user);
               return <div>
                   {/* {dat} */}
-               <Trending tag={dat[0]} count={dat[1]} idx={index} /> 
+               <Trending handleChange={this.props.handleChange} tag={dat[0]} count={dat[1]} idx={index} /> 
                 </div>
             });
         return (
             <div className="content">
             <div className="column-header">
-                <IoMdHome size="30" color="#38444d"/>
-                <Header name="Trending"/>
+                {/* <IoMdHome size="30" color="#38444d"/> */}
+                <img className="icoico" src={ICON}/>
+                <Header name="HASHTAG"/>
+               
                 </div>
                 <InfiniteScroll
           dataLength={this.state.data.length}
           height={950}
+          style={{ overflowY: 'hidden' }}
           loader={<h4>Loading...</h4>}> 
           {ee} 
         </InfiniteScroll>

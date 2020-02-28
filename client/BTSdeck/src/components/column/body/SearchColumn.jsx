@@ -254,6 +254,7 @@ class SearchColumn extends Component {
           next={()=>this.get20()} // fetchData를 이용하여 사용자가 맨 밑의 페이지에 도달했을 때 데이터를 더 가져옴
           hasMore={this.state.hasMore} // boolean 형식
           height={950}
+          style={{ overflowY: 'hidden' }}
           loader={<h4>Loading...</h4>}> 
           {/* {console.log('search 에서 받음 : ', this.props.search)} */}
           {ee} 

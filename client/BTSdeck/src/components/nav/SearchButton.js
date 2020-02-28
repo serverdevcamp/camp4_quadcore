@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {IoIosSearch} from "react-icons/io"
+import ICON from '../../assets/img/crown.png';
 
 // import Glass from '../img/magnifiGlass.png'
 
@@ -31,8 +32,9 @@ class SearchButton extends Component {
     //   const { isSidebarExpanded } = this.state;
       return(
         <div style={styles.column}>
-            <IoIosSearch size="20" color="white"/>            
-            <span>    Search</span>
+            {/* <IoIosSearch size="20" color="white"/>    */}
+            <img src={ICON} className="navicon"/>
+            <span className="navfonts">    Tweet</span>
         </div>
         );
     }

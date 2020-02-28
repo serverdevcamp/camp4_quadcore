@@ -12,7 +12,7 @@ const styles={
     divTweet : {
         marginTop: '2px',
         padding:'10px',
-        backgroundColor: '#FCF7F6',
+        backgroundColor: 'white',
         borderBottom: '1px solid #e1e8ed',
         borderRadius: '5%',
     },

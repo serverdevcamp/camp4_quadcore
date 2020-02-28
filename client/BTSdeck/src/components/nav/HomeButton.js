@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {IoMdHome} from "react-icons/io"
+import ICON from '../../assets/img/graph.png';
 
 
 const styles ={
@@ -25,8 +26,9 @@ class HomeButton extends Component {
     //   const { isSidebarExpanded } = this.state;
       return(
         <div style={styles.column}>
-            <IoMdHome size="20" color="white"/>            
-            <span>    Home</span>
+            {/* <IoMdHome size="20" color="white"/>   */}
+            <img className="navicon" src={ICON} />          
+            <span className="navfonts">    Hashtag</span>
         </div>
         );
     }

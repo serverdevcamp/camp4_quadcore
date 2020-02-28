@@ -5,6 +5,7 @@ import {IoIosSunny} from "react-icons/io"
 import Header from '../header/Header'
 
 import InfiniteScroll from 'react-infinite-scroll-component'
+import ICON from '../../../assets/img/crown.png';
 
 import cookie from 'react-cookies';
 
@@ -95,13 +96,16 @@ class TrendColumn extends Component {
         return (
         <div className="content">
             <div className="column-header">
-                <IoIosSunny size="30" color="#38444d"/>
-                <Header name="Tweet-Ranking"/>
+                {/* <IoIosSunny size="30" color="#38444d"/> */}
+                <img className="icoico" src={ICON}/>
+                <Header name="TWEET"/>
+           
             </div>
          <InfiniteScroll
           dataLength={this.state.data.length}
           hasMore={this.state.hasMore} // boolean 형식
           height={950}
+          style={{ overflowY: 'hidden' }}
         //   loader={<h4>Loading...</h4>}
           > 
           {ee}          

@@ -26,7 +26,7 @@ class TrendButton extends Component {
       return(
         <div style={styles.column}>
             <IoIosSunny size="20" color="white"/>            
-            <span>    Trending</span>
+            <span className="navfonts">    Trending</span>
         </div>
         );
     }

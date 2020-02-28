@@ -6,6 +6,7 @@ import Header from '../header/Header'
 
 import InfiniteScroll from 'react-infinite-scroll-component'
 import axios from 'axios'
+import ICON from '../../../assets/img/bts.png';
 
 import cookie from 'react-cookies';
 
@@ -185,8 +186,11 @@ class BTSColumn extends Component {
         return (
         <div className="content">
             <div className="column-header">
-                <IoIosRocket size="30" color="#38444d"/>
+                {/* <IoIosRocket size="30" color="#38444d"/> */}
+                <img className="icoico" src={ICON}/>
                 <Header name="BTS"/>
+               
+
             </div>
         <InfiniteScroll
           dataLength={this.state.data.length}
@@ -194,6 +198,7 @@ class BTSColumn extends Component {
           next={()=>this.get20()}
           hasMore={this.state.hasMore} // boolean 형식
           height={950}
+          style={{ overflowY: 'hidden' }}
           //loader : 로딩 스피너! API요청이 아직 처리중일 때 렌더링 
           loader={<h4>Loading...</h4>}> 
           {ee}          
