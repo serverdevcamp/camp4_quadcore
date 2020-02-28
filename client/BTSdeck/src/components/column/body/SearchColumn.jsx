@@ -31,7 +31,7 @@ class SearchColumn extends Component {
       //   }
       //   return true;
       // }
-      
+
       componentDidMount(){
           console.log('dfsdfsfsdfsfsdfsdfssdfsdfsfs')
           this.search()
@@ -129,7 +129,8 @@ class SearchColumn extends Component {
               if (arr.length) {
                 this.setState({
                   lt: arr[arr.length-1].timestamp,
-                  ld: arr[arr.length-1].date
+                  ld: arr[arr.length-1].date,
+                  data: this.state.data.concat(arr)
                 })
                 // cookie.save('last-time-'+encodeURIComponent(this.props.search), arr[arr.length-1].timestamp);
                 // cookie.save('last-date-'+encodeURIComponent(this.props.search), arr[arr.length-1].date);
@@ -151,11 +152,15 @@ class SearchColumn extends Component {
                 var arr = res.data.data;
                 // console.log("arr type : \n ", arr)
 
-                arr.map((dat, index) => {
-                  this.setState({
-                    data: this.state.data.concat(dat)
-                  })
-                })
+                this.setState({
+                  data: this.state.data.concat(arr)
+                });
+
+                // arr.map((dat, index) => {
+                //   this.setState({
+                //     data: this.state.data.concat(dat)
+                //   })
+                // })
                 console.log('setstate 완료');
                 // if (arr.length) {
                 //   cookie.save('last-time-'+encodeURIComponent(keyword), arr[arr.length-1].timestamp);
@@ -233,6 +238,7 @@ class SearchColumn extends Component {
       const ee = this.state.data.map((dat, index) => {
         var user = JSON.parse(dat.user);
         return <div>
+          {console.log(dat)}
           <Tweet rcvData={dat}/>
         </div>
       })

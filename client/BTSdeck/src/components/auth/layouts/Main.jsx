@@ -101,7 +101,7 @@ class Main extends Component {
             )}
             <RankingColumn/>
             <TrendColumn/>
-            {/* <BtsColumn isLoaded={this.state.isCompleted} client={this.state.cli}/> */}
+            <BtsColumn isLoaded={this.state.isCompleted} client={this.state.cli}/>
           </div>
       </div>
     )

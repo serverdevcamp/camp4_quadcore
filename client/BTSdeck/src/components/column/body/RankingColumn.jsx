@@ -23,9 +23,12 @@ class RankingColumn extends Component {
 
     componentDidMount(){
         this.interval = setInterval(() => {
+            this.setState({
+                data: []
+            })
             this._getTrend();
             // this._test()
-        }, 30000);
+        }, 10000);
         
         // console.log("idxs : ", this.state.idxs)
         // this._getTrend()
