@@ -10,7 +10,7 @@ import ICON from '../../../assets/img/crown.png';
 import cookie from 'react-cookies';
 import axios from 'axios'; 
 
-import Tweet from '../../tweets/Tweet'
+import TrendTweet from '../../tweets/TrendTweet';
 
 const ip = "20.41.86.4:5000";
 // 해시 태그 순위
@@ -128,25 +128,19 @@ class TrendColumn extends Component {
             }
         })
         .then(result => {
-            console.log('asdfasdfadfsadfadfasdfsadfsafadf\n',result)
-            // let datas = result.data.message
-            let datas = JSON.parse(result.data.message)
-            console.log("datadatassssssssssssssssss " + typeof(datas));
+            //console.log('asdfasdfadfsadfadfasdfsadfsafadf\n',result)
+            // let datas = JSON.parse(result.data.message)
+            // console.log("datadatassssssssssssssssss " + datas);
             // let parsedData = JSON.parse(datas)
             // console.log("datas : \n", datas)
-            // var datas = JSON.parse(JSON.parse(result).message)
+            // var datas = JSON.parse(JSON.parse(result).message)     
+            var arr = result.data.message
 
-
+            //console.log("arrarararrrr \n", Array.from(JSON.parse(arr)));
+            this.setState({
+                data: Array.from(JSON.parse(arr))
+             })
             
-            datas.map((dat,index) => {
-                console.log("ddddaaaaaaaaaatttttttTT:" + JSON.parse(dat));
-                // this.setState(prevState => ({
-                //     data: [... prevState.data, dat]
-                // }))
-                // this.setState({
-                //     data: datas.concat(dat)
-                // })
-            })
         })
         .catch(error => console.log('error', error))
     }
@@ -154,9 +148,11 @@ class TrendColumn extends Component {
     render() {
         const ee = this.state.data.map(
             (dat, index) => {
-              var user = JSON.parse(dat);
+              var data = JSON.parse(dat);
+              console.log("data : \n", data);
               return <div>
-                  <Tweet rcvData={user} />
+                  <TrendTweet rcvData={data} />
+                  {/* <Tweet rcvData={dat}/> */}
                 </div>
             });
         return (

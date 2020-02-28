@@ -176,7 +176,7 @@ class BTSColumn extends Component {
     render() {// dat.text, user.name
       const ee = this.state.data.map(
         (dat, index) => {
-          console.log("DDDDDDDDDDDDDAAAAAAAAATTTTTTTTTt:" + dat);
+          // console.log("DDDDDDDDDDDDDAAAAAAAAATTTTTTTTTt:" + dat);
           var user = JSON.parse(dat.user);
           return <div>
               <Tweet rcvData={dat} />
@@ -189,8 +189,6 @@ class BTSColumn extends Component {
                 {/* <IoIosRocket size="30" color="#38444d"/> */}
                 <img className="icoico" src={ICON}/>
                 <Header name="BTS"/>
-               
-
             </div>
         <InfiniteScroll
           dataLength={this.state.data.length}

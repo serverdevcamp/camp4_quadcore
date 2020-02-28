@@ -87,7 +87,6 @@ class Main extends Component {
   }
 
   render(){
-    const t = "asdf";
     return (
       <div className="app">
           <Sidebar handleChange={this.handleChange} />

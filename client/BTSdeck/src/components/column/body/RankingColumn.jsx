@@ -10,7 +10,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Trending from '../../tweets/Trending';
 import ICON from '../../../assets/img/graph.png';
 const hashtagRank = 'trend/hashtag'
-const trendTweetTime = "2020/02/25/17/02"
+// const trendTweetTime = "2020/02/25/17/02"
+
 const ip = "20.41.86.4:5000";
 
 class RankingColumn extends Component {
@@ -53,7 +54,7 @@ class RankingColumn extends Component {
                 if (res.data.errorCode === 10) {
                 console.log("trend success \n");
                 let something = JSON.parse(res.data.message)
-                console.log(something)
+                console.log("something" + something)
 
                 something.map((dat, index) => {
                     console.log(dat)
@@ -62,9 +63,6 @@ class RankingColumn extends Component {
                     }))
                 })
 
-                // console.log("setState 값 : \n", this.state.data)
-
-                // console.log('setstate 완료');
                }
           }).catch(e => {
               console.log(e);
