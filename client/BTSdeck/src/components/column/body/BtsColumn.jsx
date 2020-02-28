@@ -11,9 +11,6 @@ import cookie from 'react-cookies';
 
 import Tweet from '../../tweets/Tweet'
 
-
-const keyword = "BTS";
-
 //LOGOUT구현
 
 const ip = "20.41.86.4:5000";
@@ -34,8 +31,6 @@ class BTSColumn extends Component {
         //this.initCall()
         
       }
-
-    
       shouldComponentUpdate(nextProps, nextState) {
        
         if (nextProps.isLoaded !== this.props.isLoaded) {
@@ -49,46 +44,46 @@ class BTSColumn extends Component {
 
 
 
-      initCall(){
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth()+1; //January is 0!
-        var yyyy = today.getFullYear();
+      // initCall(){
+      //   var today = new Date();
+      //   var dd = today.getDate();
+      //   var mm = today.getMonth()+1; //January is 0!
+      //   var yyyy = today.getFullYear();
         
-        if(dd<10) {
-            dd='0'+dd
-        } 
-        if(mm<10) {
-            mm='0'+mm
-        }
-        var td = yyyy+'-'+mm+'-'+dd;
-        axios.get(`http://${ip}/data/search/${encodeURIComponent(keyword)}/${td}/${(today.getTime())*1000}`, {
-          headers: {
-            "Authorization" : "Bearer " + cookie.load('access-token')
-          }
-        }).then(res => {
-            if (res.data.errorCode === 10) {
-              console.log("search zsuccess\n");
-              var arr = Array.from(res.data.data);
-              if (arr.length) {
-                this.setState({
-                  lt: arr[arr.length-1],
-                  ld: arr[arr.length-1].date
-                })
-                // cookie.save('last-time-'+encodeURIComponent(keyword), arr[arr.length-1].timestamp);
-                // cookie.save('last-date-'+encodeURIComponent(keyword), arr[arr.length-1].date);
-              }
-            }
-        }).catch(e => {
-            console.log(e);
-        }) 
-      }
+      //   if(dd<10) {
+      //       dd='0'+dd
+      //   } 
+      //   if(mm<10) {
+      //       mm='0'+mm
+      //   }
+      //   var td = yyyy+'-'+mm+'-'+dd;
+      //   axios.get(`http://${ip}/data/search/${encodeURIComponent(keyword)}/${td}/${(today.getTime())*1000}`, {
+      //     headers: {
+      //       "Authorization" : "Bearer " + cookie.load('access-token')
+      //     }
+      //   }).then(res => {
+      //       if (res.data.errorCode === 10) {
+      //         console.log("search zsuccess\n");
+      //         var arr = Array.from(res.data.data);
+      //         if (arr.length) {
+      //           this.setState({
+      //             lt: arr[arr.length-1],
+      //             ld: arr[arr.length-1].date
+      //           })
+      //           // cookie.save('last-time-'+encodeURIComponent(keyword), arr[arr.length-1].timestamp);
+      //           // cookie.save('last-date-'+encodeURIComponent(keyword), arr[arr.length-1].date);
+      //         }
+      //       }
+      //   }).catch(e => {
+      //       console.log(e);
+      //   }) 
+      // }
     
-      handleChange = (e) => {
-        this.setState({
-          [e.target.name] : e.target.value,
-        })
-      }
+      // handleChange = (e) => {
+      //   this.setState({
+      //     [e.target.name] : e.target.value,
+      //   })
+      // }
 
       search = (c) => {
         console.log("client:" +c);
@@ -190,8 +185,6 @@ class BTSColumn extends Component {
         return (
         <div className="content">
             <div className="column-header">
-            {/* <input onChange={this.handleChange} name="sub"/> */}
-            {/* <button onClick={()=>this.get20(keyword)}>과거20개</button> */}
                 <IoIosRocket size="30" color="#38444d"/>
                 <Header name="BTS"/>
             </div>
