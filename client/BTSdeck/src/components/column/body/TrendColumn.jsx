@@ -25,6 +25,7 @@ class TrendColumn extends Component {
 
     componentDidMount(){
     // ?? 
+    this._getTrend();
         this.interval = setInterval(() => {
             this._getTrend();
         }, 10000);
