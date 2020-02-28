@@ -16,11 +16,11 @@ import java.util.UUID;
 public interface CasanRepository extends CrudRepository<Casan, Long> {
 
     //FOR BTS column past data. before given date and time + limit 10
-    @Query("SELECT * FROM bts.tweet_dataset WHERE date = :date AND timestamp < :timestamp limit 10 ALLOW FILTERING")
+    @Query("SELECT * FROM bts.tweet_dataset WHERE date <= :date AND timestamp < :timestamp limit 10 ALLOW FILTERING")
     public List<Casan> findCasansByTimestamp(@Param("date") String date, @Param("timestamp")Long timestamp);
 
     //FOR SEARCH past data. before given date and time + limit 10
-    @Query("SELECT * FROM bts.tweet_dataset WHERE date = :date AND timestamp < :timestamp AND hashtags CONTAINS :keyword limit 10 ALLOW FILTERING")
+    @Query("SELECT * FROM bts.tweet_dataset WHERE date <= :date AND timestamp < :timestamp AND hashtags CONTAINS :keyword limit 10 ALLOW FILTERING")
     public List<Casan> findCasansByEntities(@Param("date") String date, @Param("timestamp")Long timestamp, @Param("keyword")String keyword);
 
     //real - time data in SEARCH COLUMN (recent 5)
