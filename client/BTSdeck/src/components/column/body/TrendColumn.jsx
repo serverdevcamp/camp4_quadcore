@@ -27,9 +27,11 @@ class TrendColumn extends Component {
     // ?? 
     this._getTrend();
         this.interval = setInterval(() => {
+            this.setState({
+                data: []
+            })
             this._getTrend();
         }, 10000);
-            
     }
     componentWillMount(){
         clearInterval(this.interval);
@@ -71,9 +73,6 @@ class TrendColumn extends Component {
             var datas = JSON.parse(JSON.parse(result).message);
             // console.log('예은데이터 : \n ',datas)
             // console.log('cookie is : \n', cookie.load('access-token'))
-            this.setState({
-                data: []
-            })
 
             datas.map((dat, index) => {
                 this.setState({
