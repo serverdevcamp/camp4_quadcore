@@ -82,8 +82,12 @@ class RankingColumn extends Component {
                 <IoMdHome size="30" color="#38444d"/>
                 <Header name="Trending"/>
                 </div>
-                {ee}
-                {/* <WhichTweet/> */}
+                <InfiniteScroll
+          dataLength={this.state.data.length}
+          height={950}
+          loader={<h4>Loading...</h4>}> 
+          {ee} 
+        </InfiniteScroll>
           </div>
         )
     }

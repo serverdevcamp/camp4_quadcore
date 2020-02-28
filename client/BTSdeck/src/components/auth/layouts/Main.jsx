@@ -25,6 +25,7 @@ class Main extends Component {
     
     this.state = {
         search : [],
+        isCompleted : false
     };
 }
   handleChange = (e) => {
@@ -39,31 +40,36 @@ class Main extends Component {
   }
 
   connectSocket = (e) => {
-    
-    this.client = new Client();
-    this.client.configure({
+    this.setState( {
+      cli : new Client()
+    });
+    //this.client = new Client();
+    this.state.cli.configure({
         // tlatldms 
         brokerURL: `ws://${ip}/wscn/websocket?username=${cookie.load('user-name')}&token=${cookie.load('socket-token')}`,
         onConnect: (e) => {
           console.log("connect success! \n" + e);
-          
+          this.setState({
+            isCompleted : true
+          })
         },
         onDisconnect: (e) => {
           console.log("disconnected");
         },
 
-        // Helps during debugging, remove in production
+        // Helps during debugging, remove itlatldmsn production
         debug: (str) => {
-          console.log(new Date(), str);
+          //console.log(new Date(), str);
         }
       });
   
-      this.client.activate();
+      this.state.cli.activate();
   }
   // console.log('asdfasdf')
 
   getSocketToken = (e) => {
-    axios.get(`http://${ip}/data/token/tlatldms`, {
+    // axios.get(`http://${ip}/data/token/tlatldms`, {
+      axios.get(`http://${ip}/data/token/${cookie.load('user-name')}`, {
       headers: {
         "Authorization" : "Bearer " + cookie.load('access-token')
       }
@@ -90,30 +96,15 @@ class Main extends Component {
             {this.state.search.map(
                 x => {
                   console.log(x);
-                  return <SearchColumn search={x} client={this.client} />
+                  return <SearchColumn search={x} client={this.state.cli} />
                 }
             )}
             <RankingColumn/>
             <TrendColumn/>
-            <BtsColumn/>
+            <BtsColumn isLoaded={this.state.isCompleted} client={this.state.cli}/>
           </div>
       </div>
     )
   }
 }
-
-
-
-// function Main () {
-//   return (
-//     <>
-//       <div className="main-content mt-7">
-//           <Row className="justify-content-center">
-//             <p>안녕하세요 :)</p>
-//           </Row>
-//       </div>
-//     </>
-//   );
-// }
-
 export default withAuth(Main);
