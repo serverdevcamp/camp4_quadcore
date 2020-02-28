@@ -23,72 +23,11 @@ class SearchColumn extends Component {
         ld: ''
       };
 
-      // shouldComponentUpdate(nextProps, nextState) {
-       
-      //   if (nextProps.isLoaded !== this.props.isLoaded) {
-      //     this.search(nextProps.client);
-      //     return true;
-      //   }
-      //   return true;
-      // }
 
       componentDidMount(){
           console.log('dfsdfsfsdfsfsdfsdfssdfsdfsfs')
           this.search()
       }
-
-      // initCall(){
-      //   var today = new Date();
-      //   var dd = today.getDate();
-      //   var mm = today.getMonth()+1; //January is 0!
-      //   var yyyy = today.getFullYear();
-        
-      //   if(dd<10) {
-      //       dd='0'+dd
-      //   } 
-      //   if(mm<10) {
-      //       mm='0'+mm
-      //   }
-      //   var td = yyyy+'-'+mm+'-'+dd;
-      //   // axios.get(`http://${ip}/data/search/${encodeURIComponent(this.props.search)}/${td}/${(today.getTime())*1000}`, {
-      //     axios.get(`http://${ip}/data/search/${encodeURIComponent(this.props.search)}/${td}/${(today.getTime())*1000}`, {
-      //     headers: {
-      //       "Authorization" : "Bearer " + cookie.load('access-token')
-      //     }
-      //   }).then(res => {
-      //       if (res.data.errorCode === 10) {
-      //         console.log("search zsuccess\n");
-      //         var arr = Array.from(res.data.data);
-              
-      //         arr.map((dat, index) => {
-      //           this.setState({
-      //             data: this.state.data.concat(dat)
-      //           })
-      //         })
-              
-      //         if (arr.length) {
-      //           cookie.save('last-time-'+encodeURIComponent(this.props.search), arr[arr.length-1].timestamp);
-      //           cookie.save('last-date-'+encodeURIComponent(this.props.search), arr[arr.length-1].date);
-      //         }
-      //       }
-      //   }).catch(e => {
-      //       console.log(e);
-      //   }) 
-      
-    
-      // handleChange = (e) => {
-      //   this.setState({
-      //     [e.target.name] : e.target.value,
-      //   })
-      // }
-      // 'data/search/'
-      // componentDidMount(){
-        //   console.log("CLLLIIEENTT: " + this.props.client);
-        //  console.log("sssseeeeaarrrccchhhh: " + this.props.search);
-        //   this.search()
-        //   this.initCall()
-        //   this.get20()
-        // }
       search = (c) => {
         console.log(" IN search CLIENT :" + this.props.client);
         this.props.client.subscribe(`/topic/${this.props.search}`, message => {
@@ -99,12 +38,6 @@ class SearchColumn extends Component {
             data: datas.concat(this.state.data)
           });
         });
-        // c.subscribe(`/data/search/${this.props.search}`, message =>{
-        //   var datas = JSON.parse(message.body);
-        //   this.setState({
-        //     data: datas.concat(this.state.data)
-        //   })
-        // })
 
         var today = new Date();
         var dd = today.getDate();
@@ -132,8 +65,6 @@ class SearchColumn extends Component {
                   ld: arr[arr.length-1].date,
                   data: this.state.data.concat(arr)
                 })
-                // cookie.save('last-time-'+encodeURIComponent(this.props.search), arr[arr.length-1].timestamp);
-                // cookie.save('last-date-'+encodeURIComponent(this.props.search), arr[arr.length-1].date);
               }
             }
         }).catch(e => {
@@ -156,16 +87,6 @@ class SearchColumn extends Component {
                   data: this.state.data.concat(arr)
                 });
 
-                // arr.map((dat, index) => {
-                //   this.setState({
-                //     data: this.state.data.concat(dat)
-                //   })
-                // })
-                console.log('setstate 완료');
-                // if (arr.length) {
-                //   cookie.save('last-time-'+encodeURIComponent(keyword), arr[arr.length-1].timestamp);
-                //   cookie.save('last-date-'+encodeURIComponent(keyword), arr[arr.length-1].date);
-                // }
                 if (arr.length) {
                   this.setState({
                     lt: arr[arr.length-1].timestamp,
@@ -173,8 +94,6 @@ class SearchColumn extends Component {
                   })
                   console.log('lt : ',this.state.lt)
                   console.log('ld :' , this.state.ld)
-                  // cookie.save('last-time-'+encodeURIComponent(keyword), arr[arr.length-1].timestamp);
-                  // cookie.save('last-date-'+encodeURIComponent(keyword), arr[arr.length-1].date);
                 } 
                 else {
                   // alert("없음 2");
