@@ -142,7 +142,7 @@ public class CasanController {
         messagingTemplate.convertAndSend("/topic/bts", d);
 
         for (Object s: hm) {
-            System.out.println("keyword:" + (String)s);
+            //System.out.println("keyword:" + (String)s);
             List<Casan> c= casanRepository.findCasansByDate(LocalDate.now().toString(),timestamp.getTime()*1000, (String)s);
             if (!c.isEmpty()) {
                 messagingTemplate.convertAndSend("/topic/" + s, c);
