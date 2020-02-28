@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {IoIosRocket} from "react-icons/io"
 
+import ICON from '../../assets/img/bts.png';
+
 
 const styles ={
     column: {
@@ -26,8 +28,10 @@ class BtsButton extends Component {
     //   const { isSidebarExpanded } = this.state;
       return(
         <div style={styles.column}>
-            <IoIosRocket size="20" color="white"/>            
-            <span>    BTS</span>
+            {/* <IoIosRocket size="20" color="white"/>             */}
+            <img className="navicon" src={ICON} />          
+
+            <span className="navfonts">    BTS</span>
         </div>
         );
     }

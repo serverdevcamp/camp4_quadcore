@@ -120,7 +120,7 @@ class Sidebar extends Component {
             </div>
           </div>
           <HomeButton/>
-          <TrendButton/>
+         
           <SearchButton/>
           <BtsButton/>
 

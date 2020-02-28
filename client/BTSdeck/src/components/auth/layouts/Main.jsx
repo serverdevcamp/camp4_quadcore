@@ -99,7 +99,7 @@ class Main extends Component {
                   return <SearchColumn search={x} client={this.state.cli} />
                 }
             )}
-            <RankingColumn/>
+            <RankingColumn handleChange={this.handleChange}/>
             <TrendColumn/>
             <BtsColumn isLoaded={this.state.isCompleted} client={this.state.cli}/>
           </div>

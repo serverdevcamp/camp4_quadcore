@@ -7,7 +7,7 @@ const styles={
         marginTop: '2px',
         padding:'10px',
         // border: 'solid 0.5px red',
-        backgroundColor: '#FCF7F6',
+        backgroundColor: 'white',
         borderBottom: '1px solid #e1e8ed',
         borderRadius: '5%',
     },
@@ -96,7 +96,8 @@ export default class Trending extends Component {
                     </span>
                     <div style={styles.tweetAuthorProfile}>
                          <a href="#">
-                            <div style={styles.testDiv}>
+                         
+                            <div style={styles.testDiv} onClick={()=>this.props.handleChange(this.props.tag)}>
                             {this.props.tag}
                             </div>
                          </a>
