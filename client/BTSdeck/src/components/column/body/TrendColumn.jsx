@@ -167,7 +167,7 @@ class TrendColumn extends Component {
           dataLength={this.state.data.length}
           hasMore={this.state.hasMore} // boolean 형식
           height={950}
-          style={{ overflowY: 'hidden' }}
+        //   style={{ overflowY: 'hidden' }}
         //   loader={<h4>Loading...</h4>}
           > 
           {ee}          

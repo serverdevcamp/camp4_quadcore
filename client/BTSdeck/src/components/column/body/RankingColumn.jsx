@@ -89,7 +89,7 @@ class RankingColumn extends Component {
                 <InfiniteScroll
           dataLength={this.state.data.length}
           height={950}
-          style={{ overflowY: 'hidden' }}
+        //   style={{ overflowY: 'hidden' }}
           loader={<h4>Loading...</h4>}> 
           {ee} 
         </InfiniteScroll>
