@@ -57,7 +57,7 @@ class Main extends Component {
           console.log("disconnected");
         },
 
-        // Helps during debugging, remove itlatldmsn production
+        // Helps during debugging, remove in production
         debug: (str) => {
           //console.log(new Date(), str);
         }
@@ -69,7 +69,7 @@ class Main extends Component {
 
   getSocketToken = (e) => {
     // axios.get(`http://${ip}/data/token/tlatldms`, {
-      axios.get(`http://${ip}/data/token/${cookie.load('user-name')}`, {
+      axios.get(`http://${ip}/data/token/tlatldms`, {
       headers: {
         "Authorization" : "Bearer " + cookie.load('access-token')
       }
@@ -101,7 +101,7 @@ class Main extends Component {
             )}
             <RankingColumn/>
             <TrendColumn/>
-            <BtsColumn isLoaded={this.state.isCompleted} client={this.state.cli}/>
+            {/* <BtsColumn isLoaded={this.state.isCompleted} client={this.state.cli}/> */}
           </div>
       </div>
     )

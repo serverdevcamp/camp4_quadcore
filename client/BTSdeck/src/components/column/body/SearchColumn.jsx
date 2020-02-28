@@ -23,15 +23,18 @@ class SearchColumn extends Component {
         ld: ''
       };
 
-      shouldComponentUpdate(nextProps, nextState) {
+      // shouldComponentUpdate(nextProps, nextState) {
        
-        if (nextProps.isLoaded !== this.props.isLoaded) {
-          console.log("shibalbhasidflksdnfkdsfs " + nextProps.client);
-          this.search(nextProps.client);
-          return true;
-        }
+      //   if (nextProps.isLoaded !== this.props.isLoaded) {
+      //     this.search(nextProps.client);
+      //     return true;
+      //   }
+      //   return true;
+      // }
       
-        return true;
+      componentDidMount(){
+          console.log('dfsdfsfsdfsfsdfsdfssdfsdfsfs')
+          this.search()
       }
 
       // initCall(){
@@ -79,29 +82,29 @@ class SearchColumn extends Component {
       //   })
       // }
       // 'data/search/'
-      componentDidMount(){
+      // componentDidMount(){
         //   console.log("CLLLIIEENTT: " + this.props.client);
         //  console.log("sssseeeeaarrrccchhhh: " + this.props.search);
         //   this.search()
         //   this.initCall()
         //   this.get20()
-        }
+        // }
       search = (c) => {
         console.log(" IN search CLIENT :" + this.props.client);
-        // this.props.client.subscribe(`/topic/${this.props.search}`, message => {
-        //   // console.log(new Date());
-        //   var datas = JSON.parse(message.body);
-        //   // console.log(datas);
-        //   this.setState({
-        //     data: datas.concat(this.state.data)
-        //   });
-        // });
-        c.subscribe(`/data/search/${this.props.search}`, message =>{
+        this.props.client.subscribe(`/topic/${this.props.search}`, message => {
+          // console.log(new Date());
           var datas = JSON.parse(message.body);
+          // console.log(datas);
           this.setState({
             data: datas.concat(this.state.data)
-          })
-        })
+          });
+        });
+        // c.subscribe(`/data/search/${this.props.search}`, message =>{
+        //   var datas = JSON.parse(message.body);
+        //   this.setState({
+        //     data: datas.concat(this.state.data)
+        //   })
+        // })
 
         var today = new Date();
         var dd = today.getDate();
@@ -248,7 +251,7 @@ class SearchColumn extends Component {
           loader={<h4>Loading...</h4>}> 
           {/* {console.log('search 에서 받음 : ', this.props.search)} */}
           {ee} 
-          {console.log('state 길이 : ', this.state.data.length)}
+          {/* {console.log('state 길이 : ', this.state.data.length)} */}
         </InfiniteScroll>
         </div>
         )
