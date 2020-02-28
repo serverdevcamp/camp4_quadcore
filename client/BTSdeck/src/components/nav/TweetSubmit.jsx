@@ -17,8 +17,8 @@ const styles = {
 export default function TweetSubmit() {
     return (
         <div>
-        <button style={styles.tweetButton} type="submit" value="Tweet">Tweet
-        </button>
+            <button style={styles.tweetButton} type="submit" value="Tweet">Tweet
+            </button>
         </div>
     )
 }

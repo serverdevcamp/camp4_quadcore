@@ -113,7 +113,7 @@ class Sidebar extends Component {
           </div>
 
           {/* <TweetButton/> */}
-          <button onClick={()=>this.props.handleChange(this.state.search)} style={styles.tweetButton} className="tweet-button" type="submit" value="Tweet">Tweet</button>
+          <button onClick={()=>this.props.handleChange(this.state.search)} style={styles.tweetButton} className="tweet-button" type="submit" value="Tweet">Search</button>
           <div className="search-upper">
             <div className="search">
               <input name="search" onChange={this.handleChange} className="input-search" placeholder="Search Twitter"></input>

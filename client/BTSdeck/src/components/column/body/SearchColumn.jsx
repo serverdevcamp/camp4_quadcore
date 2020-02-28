@@ -23,11 +23,10 @@ class SearchColumn extends Component {
         ld: ''
       };
 
-
       componentDidMount(){
-          console.log('dfsdfsfsdfsfsdfsdfssdfsdfsfs')
           this.search()
       }
+
       search = (c) => {
         console.log(" IN search CLIENT :" + this.props.client);
         this.props.client.subscribe(`/topic/${this.props.search}`, message => {
