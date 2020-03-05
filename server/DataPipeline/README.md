@@ -2,8 +2,12 @@
 > **Filter realtime Tweets API**로부터 데이터를 받아 **Kafka**에 쌓고, 
 > **Spark**로 데이터 변형 후 **Cassandra**에 저장하는 파이프라인
 
+&nbsp;
+
 ## 🖼 Architecture
 ![architecture](./img/architecture.png)
+
+&nbsp;
 
 ## 🛠 Install & Configuration
 Master Node cluster 1개와 Slave Node cluster 4개로, 총 5개의 클러스터 노드로 구성하였다. Cassandra DB의 keyspace는 replication strategy는 NetworkTopologyStrategy, replication factor는 3, consistency level은 LOCAL_QUORUM이다.
@@ -14,6 +18,8 @@ For hardware choices first see:
 - [Spark recommendations](https://spark.apache.org/docs/0.9.0/hardware-provisioning.html)
 - [Cassandra recommendations](http://cassandra.apache.org/doc/latest/operating/hardware.html)
 
+&nbsp;
+
 ### Prerequisites and used versions
 - CentOS Linux release 7.7.1908
 - Java 8
@@ -22,6 +28,8 @@ For hardware choices first see:
 - Spark 2.4.4 built for Hadoop 2.7
 - Hadoop 2.7.7
 - kafka_2.11-2.1.1
+
+&nbsp;
 
 ### Cassandra Install
 [REFERENCE](https://www.digitalocean.com/community/tutorials/how-to-run-a-multi-node-cluster-database-with-cassandra-on-ubuntu-14-04)
@@ -86,7 +94,7 @@ Note: Non-system keyspaces don't have the same replication settings, effective o
 ```
 ***If you can see all the nodes you configured, you’ve just successfully set up a multi-node Cassandra cluster.***
 
-
+&nbsp;
 
 ## Reference
 - [twitter-topics](https://github.com/adrianva/twitter-topics)
